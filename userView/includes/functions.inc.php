@@ -1,9 +1,9 @@
 <?php
 
 // Check for empty input signup
-function emptyInputSignup($name, $email, $username, $pwd, $pwdRepeat) {
+function emptyInputSignup($name, $email, $phone, $username, $pwd, $pwdRepeat) {
 	$result;
-	if (empty($name) || empty($email) || empty($username) || empty($pwd) || empty($pwdRepeat)) {
+	if (empty($name) || empty($email) || empty($phone) || empty($username) || empty($pwd) || empty($pwdRepeat)) {
 		$result = true;
 	}
 	else {
@@ -31,6 +31,18 @@ function invalidEmail($email) {
 		$result = true;
 	}
 	else {
+		$result = false;
+	}
+	return $result;
+} 
+
+// Check invalid phone 
+function invalidPhone($phone) { 
+	$result;
+	if(!filter_var($phone, FILTER_VALIDATE_PHONE)) { 
+		$result = true;
+	} 
+	else { 
 		$result = false;
 	}
 	return $result;
@@ -75,8 +87,8 @@ function uidExists($conn, $username) {
 }
 
 // Insert new user into database
-function createUser($conn, $name, $email, $username, $pwd) {
-  $sql = "INSERT INTO users (usersName, usersEmail, usersUid, usersPwd) VALUES (?, ?, ?, ?);";
+function createUser($conn, $name, $email, $phone, $username, $pwd) {
+  $sql = "INSERT INTO users (usersName, usersEmail, usersPhone, usersUid, usersPwd) VALUES (?, ?, ?, ?, ?);";
 
 	$stmt = mysqli_stmt_init($conn);
 	if (!mysqli_stmt_prepare($stmt, $sql)) {
@@ -86,7 +98,7 @@ function createUser($conn, $name, $email, $username, $pwd) {
 
 	$hashedPwd = password_hash($pwd, PASSWORD_DEFAULT);
 
-	mysqli_stmt_bind_param($stmt, "ssss", $name, $email, $username, $hashedPwd);
+	mysqli_stmt_bind_param($stmt, "ssss", $name, $email, $phone, $username, $hashedPwd);
 	mysqli_stmt_execute($stmt);
 	mysqli_stmt_close($stmt);
 	mysqli_close($conn);
