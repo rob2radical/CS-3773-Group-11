@@ -9,19 +9,19 @@
 </section>
 
 <section class="index-categories">
-  <h2>Here are some example properties</h2>
+  <h2>Some Basic Categories</h2>
   <div class="index-categories-list">
     <div>
-      <h3>The Magnolia All Suites</h3>
+      <h3>Fun Stuff</h3>
     </div>
     <div>
-      <h3>The Lofts at Town Centre</h3>
+      <h3>Serious Stuff</h3>
     </div>
     <div>
-      <h3>Park North Hotel</h3>
+      <h3>Exciting Stuff</h3>
     </div>
     <div>
-      <h3>Town Inn Budget Rooms</h3>
+      <h3>Boring Stuff</h3>
     </div>
   </div>
 </section>
