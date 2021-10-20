@@ -18,7 +18,7 @@
     <!--A quick navigation-->
     <nav>
       <div class="wrapper">
-        <a href="index.php"><img src="img/Miago Logo.jpg" alt="Blogs logo"></a>
+        <a href="index.php"><img src="img/Miago Logo.jpg" width="1000px"alt="Miago logo"></a>
         <ul>
           <li><a href="index.php">Home</a></li>
           <li><a href="AboutUs.php">About Us</a></li>

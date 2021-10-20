@@ -39,7 +39,7 @@ function invalidEmail($email) {
 // Check invalid phone 
 function invalidPhone($phone) { 
 	$result;
-	if(!filter_var($phone, FILTER_VALIDATE_PHONE)) { 
+	if(!filter_var($phone, FILTER_VALIDATE_INT)) { 
 		$result = true;
 	} 
 	else { 
@@ -65,7 +65,7 @@ function uidExists($conn, $username) {
   $sql = "SELECT * FROM users WHERE usersUid = ? OR usersEmail = ?;";
 	$stmt = mysqli_stmt_init($conn);
 	if (!mysqli_stmt_prepare($stmt, $sql)) {
-	 	header("location: ../signup.php?error=stmtfailed");
+	 	header("location: ../userSignUp.php?error=stmtfailed");
 		exit();
 	}
 
@@ -92,17 +92,17 @@ function createUser($conn, $name, $email, $phone, $username, $pwd) {
 
 	$stmt = mysqli_stmt_init($conn);
 	if (!mysqli_stmt_prepare($stmt, $sql)) {
-	 	header("location: ../signup.php?error=stmtfailed");
+	 	header("location: ../userSignUp.php?error=stmtfailed");
 		exit();
 	}
 
 	$hashedPwd = password_hash($pwd, PASSWORD_DEFAULT);
 
-	mysqli_stmt_bind_param($stmt, "ssss", $name, $email, $phone, $username, $hashedPwd);
+	mysqli_stmt_bind_param($stmt, "sssss", $name, $email, $phone, $username, $hashedPwd);
 	mysqli_stmt_execute($stmt);
 	mysqli_stmt_close($stmt);
 	mysqli_close($conn);
-	header("location: ../signup.php?error=none");
+	header("location: ../userSignUp.php?error=none");
 	exit();
 }
 
@@ -123,7 +123,7 @@ function loginUser($conn, $username, $pwd) {
 	$uidExists = uidExists($conn, $username);
 
 	if ($uidExists === false) {
-		header("location: ../login.php?error=wronglogin");
+		header("location: ../userLogin.php?error=wronglogin");
 		exit();
 	}
 
@@ -131,7 +131,7 @@ function loginUser($conn, $username, $pwd) {
 	$checkPwd = password_verify($pwd, $pwdHashed);
 
 	if ($checkPwd === false) {
-		header("location: ../login.php?error=wronglogin");
+		header("location: ../userLogin.php?error=wronglogin");
 		exit();
 	}
 	elseif ($checkPwd === true) {
