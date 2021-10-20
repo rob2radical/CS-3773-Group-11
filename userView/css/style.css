@@ -133,3 +133,10 @@ section {
   margin: 10px auto;
   cursor: pointer;
 }
+
+/* Profile  */
+
+.profile-options {
+  display: flex;
+  justify-content: left;
+}

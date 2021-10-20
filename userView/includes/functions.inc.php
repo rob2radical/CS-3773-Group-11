@@ -39,7 +39,7 @@ function invalidEmail($email) {
 // Check invalid phone 
 function invalidPhone($phone) { 
 	$result;
-	if(!filter_var($phone, FILTER_VALIDATE_PHONE)) { 
+	if(!filter_var($phone, FILTER_VALIDATE_)) { 
 		$result = true;
 	} 
 	else { 
@@ -98,7 +98,7 @@ function createUser($conn, $name, $email, $phone, $username, $pwd) {
 
 	$hashedPwd = password_hash($pwd, PASSWORD_DEFAULT);
 
-	mysqli_stmt_bind_param($stmt, "ssss", $name, $email, $phone, $username, $hashedPwd);
+	mysqli_stmt_bind_param($stmt, "sssss", $name, $email, $phone, $username, $hashedPwd);
 	mysqli_stmt_execute($stmt);
 	mysqli_stmt_close($stmt);
 	mysqli_close($conn);
