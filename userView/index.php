@@ -4,24 +4,23 @@
 ?>
 
 <section class="index-intro">
-  <h1>Welcome to Hotel Miago</h1>
-  <p>We are here to serve you</p>
+  <h1>Welcome to Hotel Miago!</h1>
 </section>
 
 <section class="index-categories">
-  <h2>Here are some example properties</h2>
+  <h2></h2>
   <div class="index-categories-list">
-    <div>
-      <h3>The Magnolia All Suites</h3>
+    <div> 
+      <img src="img/MagnoliaAllsuites.jpg" width="203.03px" height="200px">
     </div>
     <div>
-      <h3>The Lofts at Town Centre</h3>
+    <img src="img/LoftsAtTownCentre.jpg" width="203.03px" height="200px">
     </div>
     <div>
-      <h3>Park North Hotel</h3>
+    <img src="img/ParkNorthHotel.jpg" width="203.03px" height="200px">
     </div>
     <div>
-      <h3>Town Inn Budget Rooms</h3>
+    <img src="img/TownInnBudgetRooms.jpg" width="203.03px" height="200px">
     </div>
   </div>
 </section>
