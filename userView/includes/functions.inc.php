@@ -2,7 +2,7 @@
 
 // Check for empty input signup
 function emptyInputSignup($name, $email, $phone, $username, $pwd, $pwdRepeat) {
-	$result;
+	//$result;
 	if (empty($name) || empty($email) || empty($phone) || empty($username) || empty($pwd) || empty($pwdRepeat)) {
 		$result = true;
 	}
@@ -14,7 +14,7 @@ function emptyInputSignup($name, $email, $phone, $username, $pwd, $pwdRepeat) {
 
 // Check invalid username
 function invalidUid($username) {
-	$result;
+	//$result;
 	if (!preg_match("/^[a-zA-Z0-9]*$/", $username)) {
 		$result = true;
 	}
@@ -26,7 +26,7 @@ function invalidUid($username) {
 
 // Check invalid email
 function invalidEmail($email) {
-	$result;
+	//$result;
 	if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 		$result = true;
 	}
@@ -38,7 +38,7 @@ function invalidEmail($email) {
 
 // Check invalid phone 
 function invalidPhone($phone) { 
-	$result;
+	//$result;
 	if(!filter_var($phone, FILTER_VALIDATE_INT)) { 
 		$result = true;
 	} 
@@ -50,7 +50,7 @@ function invalidPhone($phone) {
 
 // Check if passwords matches
 function pwdMatch($pwd, $pwdrepeat) {
-	$result;
+	//$result;
 	if ($pwd !== $pwdrepeat) {
 		$result = true;
 	}
@@ -108,7 +108,7 @@ function createUser($conn, $name, $email, $phone, $username, $pwd) {
 
 // Check for empty input login
 function emptyInputLogin($username, $pwd) {
-	$result;
+	//$result;
 	if (empty($username) || empty($pwd)) {
 		$result = true;
 	}
@@ -138,7 +138,7 @@ function loginUser($conn, $username, $pwd) {
 		session_start();
 		$_SESSION["userid"] = $uidExists["usersId"];
 		$_SESSION["useruid"] = $uidExists["usersUid"];
-		header("location: ../index.php?error=none");
+		header("location: ../profile.php?error=none");
 		exit();
 	}
 }
