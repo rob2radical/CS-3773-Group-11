@@ -2,7 +2,7 @@
 
 // Check for empty input signup
 function emptyInputSignup($name, $email, $phone, $username, $pwd, $pwdRepeat) {
-	$result;
+	//$result;
 	if (empty($name) || empty($email) || empty($phone) || empty($username) || empty($pwd) || empty($pwdRepeat)) {
 		$result = true;
 	}
@@ -14,7 +14,7 @@ function emptyInputSignup($name, $email, $phone, $username, $pwd, $pwdRepeat) {
 
 // Check invalid username
 function invalidUid($username) {
-	$result;
+	//$result;
 	if (!preg_match("/^[a-zA-Z0-9]*$/", $username)) {
 		$result = true;
 	}
@@ -26,7 +26,7 @@ function invalidUid($username) {
 
 // Check invalid email
 function invalidEmail($email) {
-	$result;
+	//$result;
 	if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 		$result = true;
 	}
@@ -38,8 +38,8 @@ function invalidEmail($email) {
 
 // Check invalid phone 
 function invalidPhone($phone) { 
-	$result;
-	if(!filter_var($phone, FILTER_VALIDATE_)) { 
+	//$result;
+	if(!filter_var($phone, FILTER_VALIDATE_INT)) { 
 		$result = true;
 	} 
 	else { 
@@ -50,7 +50,7 @@ function invalidPhone($phone) {
 
 // Check if passwords matches
 function pwdMatch($pwd, $pwdrepeat) {
-	$result;
+	//$result;
 	if ($pwd !== $pwdrepeat) {
 		$result = true;
 	}
@@ -65,7 +65,7 @@ function uidExists($conn, $username) {
   $sql = "SELECT * FROM users WHERE usersUid = ? OR usersEmail = ?;";
 	$stmt = mysqli_stmt_init($conn);
 	if (!mysqli_stmt_prepare($stmt, $sql)) {
-	 	header("location: ../signup.php?error=stmtfailed");
+	 	header("location: ../userSignUp.php?error=stmtfailed");
 		exit();
 	}
 
@@ -92,7 +92,7 @@ function createUser($conn, $name, $email, $phone, $username, $pwd) {
 
 	$stmt = mysqli_stmt_init($conn);
 	if (!mysqli_stmt_prepare($stmt, $sql)) {
-	 	header("location: ../signup.php?error=stmtfailed");
+	 	header("location: ../userSignUp.php?error=stmtfailed");
 		exit();
 	}
 
@@ -102,13 +102,13 @@ function createUser($conn, $name, $email, $phone, $username, $pwd) {
 	mysqli_stmt_execute($stmt);
 	mysqli_stmt_close($stmt);
 	mysqli_close($conn);
-	header("location: ../signup.php?error=none");
+	header("location: ../userSignUp.php?error=none");
 	exit();
 }
 
 // Check for empty input login
 function emptyInputLogin($username, $pwd) {
-	$result;
+	//$result;
 	if (empty($username) || empty($pwd)) {
 		$result = true;
 	}
@@ -123,7 +123,7 @@ function loginUser($conn, $username, $pwd) {
 	$uidExists = uidExists($conn, $username);
 
 	if ($uidExists === false) {
-		header("location: ../login.php?error=wronglogin");
+		header("location: ../userLogin.php?error=wronglogin");
 		exit();
 	}
 
@@ -131,7 +131,7 @@ function loginUser($conn, $username, $pwd) {
 	$checkPwd = password_verify($pwd, $pwdHashed);
 
 	if ($checkPwd === false) {
-		header("location: ../login.php?error=wronglogin");
+		header("location: ../userLogin.php?error=wronglogin");
 		exit();
 	}
 	elseif ($checkPwd === true) {
