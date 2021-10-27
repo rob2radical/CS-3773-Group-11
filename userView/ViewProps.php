@@ -1,8 +1,3 @@
-<?php
-  session_start();
-  include_once 'includes/functions.inc.php';
-?>
-
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
