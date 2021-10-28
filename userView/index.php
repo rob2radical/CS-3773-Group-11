@@ -8,6 +8,10 @@
     if (isset($_SESSION["useruid"])) { 
       echo "<h1> Hello " . $_SESSION["useruid"] . "!</h1>";
     } 
+    else  
+    { 
+      echo ""
+    }
   ?>
 </section>
 
