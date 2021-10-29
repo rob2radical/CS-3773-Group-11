@@ -227,6 +227,7 @@ function loginUser($conn, $username, $pwd) {
 		$_SESSION["usersname"] = $uidExists["usersName"];
 		$_SESSION["usersemail"] = $uidExists["usersEmail"];
 		$_SESSION["usersphone"] = $uidExists["usersPhone"];
+		$_SESSION["isAdmin"] = $uidExists["isAdmin"];
 		header("location: ../index.php?error=none");
 		exit();
 	}
