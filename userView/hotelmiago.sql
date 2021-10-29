@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 29, 2021 at 02:45 AM
+-- Generation Time: Oct 29, 2021 at 09:18 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.11
 
@@ -24,6 +24,46 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `amenities`
+--
+
+CREATE TABLE `amenities` (
+  `hotelName` varchar(100) NOT NULL,
+  `amenity` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `amenities`
+--
+
+INSERT INTO `amenities` (`hotelName`, `amenity`) VALUES
+('The Magnolia All Suites', 'Pool'),
+('The Magnolia All Suites', 'Gym'),
+('The Magnolia All Suites', 'Spa'),
+('The Magnolia All Suites', 'Business Office'),
+('The Lofts at Town Centre', 'Pool'),
+('The Lofts at Town Centre', 'Gym'),
+('The Lofts at Town Centre', 'Business Office'),
+('Park North Hotel', 'Pool'),
+('Park North Hotel', 'Gym'),
+('The Courtyard Suites', 'Pool'),
+('The Courtyard Suites', 'Gym'),
+('The Courtyard Suites', 'Spa'),
+('The Courtyard Suites', 'Business Office'),
+('Town Inn Budget Rooms', 'Pool'),
+('The Regency Rooms', 'Pool'),
+('The Regency Rooms', 'Gym'),
+('The Regency Rooms', 'Spa'),
+('The Regency Rooms', 'Business Office'),
+('Sun Palace Inn', 'Pool'),
+('Sun Palace Inn', 'Gym'),
+('HomeAway Inn', 'Pool'),
+('HomeAway Inn', 'Business Office'),
+('Rio Inn', 'Pool');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `hotels`
 --
 
@@ -35,10 +75,6 @@ CREATE TABLE `hotels` (
   `standardPrice` double NOT NULL,
   `queenPrice` double NOT NULL,
   `kingPrice` double NOT NULL,
-  `pool` tinyint(1) NOT NULL,
-  `gym` tinyint(1) NOT NULL,
-  `office` tinyint(1) NOT NULL,
-  `spa` tinyint(1) NOT NULL,
   `weekendDiff` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -46,17 +82,17 @@ CREATE TABLE `hotels` (
 -- Dumping data for table `hotels`
 --
 
-INSERT INTO `hotels` (`hotelName`, `numRoomS`, `numRoomQ`, `numRoomK`, `standardPrice`, `queenPrice`, `kingPrice`, `pool`, `gym`, `office`, `spa`, `weekendDiff`) VALUES
-('HomeAway Inn', 30, 0, 0, 50, 0, 0, 1, 0, 1, 0, 0.25),
-('Hotel Miago', 10, 7, 3, 100, 150, 250, 1, 1, 1, 1, 0.25),
-('Park North Hotel', 60, 30, 10, 50, 75, 90, 1, 1, 0, 0, 0.15),
-('Rio Inn', 25, 15, 10, 25, 55, 89, 1, 0, 0, 0, 0.2),
-('RTMD Suites', 15, 3, 2, 100, 150, 250, 1, 1, 1, 1, 0.25),
-('Sun Palace Inn', 35, 10, 5, 40, 60, 80, 1, 1, 0, 0, 0.25),
-('The Comfy Motel Place', 35, 15, 0, 30, 50, 0, 0, 0, 0, 0, 0.1),
-('The Lofts at Town Centre', 40, 15, 5, 105, 120, 190, 1, 1, 1, 0, 0.35),
-('The Magnolia All Suites', 10, 5, 5, 100, 150, 250, 1, 1, 1, 1, 0.25),
-('Town Inn Budget Rooms', 100, 35, 15, 25, 50, 60, 1, 0, 0, 0, 0.15);
+INSERT INTO `hotels` (`hotelName`, `numRoomS`, `numRoomQ`, `numRoomK`, `standardPrice`, `queenPrice`, `kingPrice`, `weekendDiff`) VALUES
+('HomeAway Inn', 30, 0, 0, 50, 0, 0, 0.25),
+('Park North Hotel', 50, 30, 20, 50, 75, 90, 0.15),
+('Rio Inn', 25, 15, 10, 25, 55, 89, 0.2),
+('Sun Palace Inn', 25, 15, 10, 40, 60, 80, 0.25),
+('The Comfy Motel Place', 25, 25, 0, 30, 50, 0, 0.1),
+('The Courtyard Suites', 10, 6, 4, 100, 150, 250, 0.25),
+('The Lofts at Town Centre', 30, 18, 12, 105, 120, 190, 0.35),
+('The Magnolia All Suites', 10, 6, 4, 100, 150, 250, 0.25),
+('The Regency Rooms', 10, 6, 4, 100, 150, 250, 0.25),
+('Town Inn Budget Rooms', 75, 45, 30, 25, 50, 60, 0.15);
 
 -- --------------------------------------------------------
 
@@ -102,7 +138,7 @@ INSERT INTO `users` (`usersId`, `usersName`, `usersEmail`, `usersPhone`, `usersU
 (3, 'course', 'dragonz4twenty@gmail.com', '5555555555', 'bruh', '$2y$10$qYgpmKxHHdi8gYxH3ZadEeKxJTI5ZM2eXhB6ZjFwX8DAwRMEpLli2', 1),
 (4, 'Juan Rodriguez', 'qsy775@my.utsa.edu', '1234567899', 'meatman', '$2y$10$AKrOPfHj8Cqvdk0iqL1HZeucaOyTwdig.BxSsFBBsKdzj78knQvtS', NULL),
 (5, 'Amber Sanchez', 'lovelylibra55@gmail.com', '2105361729', 'cashmoney', '$2y$10$ZpI3tEsqhuxAcDacs3SgquML03HvxYc.9Gl13mg/nHAyvJlPw4U8q', NULL),
-(6, 'daniel montaudon', 'danielmontaudon909@live.com', '8623242401', 'pooopooo', '$2y$10$mzcGZaAWmVNL3eAezE.gYuNwBtOhk5Q.NVvK8Z3tUlF3xrD8MArxy', 1);
+(6, 'Danny Monty', 'danielmontaudon909@live.com', '8623242401', 'pooopooo1', '$2y$10$mzcGZaAWmVNL3eAezE.gYuNwBtOhk5Q.NVvK8Z3tUlF3xrD8MArxy', 1);
 
 --
 -- Indexes for dumped tables

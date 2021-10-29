@@ -55,7 +55,7 @@
     {
       echo "<div><tr><td>" . $row["hotelName"]. "</td></tr></div>";
     }
-    echo "</table>";
+    //echo "</table>";
   }
   else
   {
