@@ -1,11 +1,3 @@
-<<<<<<< HEAD
-<?php 
-include_once "header.php"; 
-$curUser = $_SESSION["useruid"];
-
-echo "<section class=\"index-intro\">";
-echo "</section>";
-=======
 <?php 
 include_once "header.php";
 include_once "includes/dbh.inc.php";
@@ -33,4 +25,3 @@ $curUser = $_SESSION["userid"];
 <?php
   include_once 'footer.php';
 ?>
->>>>>>> b0e3a92ccb686c6f992f983982d145f5356ad372

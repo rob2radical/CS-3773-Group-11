@@ -104,43 +104,75 @@ function createUser($conn, $name, $email, $phone, $username, $pwd) {
 	mysqli_close($conn);
 	header("location: ../userSignUp.php?error=none");
 	exit();
-} 
+}
 
 // Update new user in the existing database
-function updateUser($conn, $email, $userId) { 
-	#$userId = $_SESSION["userid"];
-	$sql = "SELECT * FROM users WHERE usersId = ?"; 
-	$stmt = mysqli_stmt_init($conn);
-	if (!mysqli_stmt_prepare($stmt, $sql)) {
-	 	header("location: ../profile.php?error=stmtfailed");
-		exit();
-	}
+function updateUser($conn, $name, $email, $phone, $username, $userId)
+{
+		#$userId = $_SESSION["userid"];
+		$sql = "SELECT * FROM users WHERE usersId = ?"; 
+		$stmt = mysqli_stmt_init($conn);
+		if (!mysqli_stmt_prepare($stmt, $sql)) {
+			 header("location: ../profile.php?error=stmtfailed");
+			exit();
+		}
+	
+		mysqli_stmt_bind_param($stmt, "s", $userId);
+		mysqli_stmt_execute($stmt);
+		// "Get result" returns the results from a prepared statement
+		$resultData = mysqli_stmt_get_result($stmt);
+		$row = mysqli_fetch_assoc($resultData);
+		mysqli_stmt_close($stmt);
+	
+		//name
+		if(!empty($name) && $name != $row["usersName"]) 
+		{ 
+			$nameChange = $name;
+		} 
+		else
+		{	//echo "is not set"; 
+			$nameChange = $row["usersName"];
+		}
 
-	mysqli_stmt_bind_param($stmt, "s", $userId);
-	mysqli_stmt_execute($stmt);
-	// "Get result" returns the results from a prepared statement
-	$resultData = mysqli_stmt_get_result($stmt);
-	$row = mysqli_fetch_assoc($resultData);
-	mysqli_stmt_close($stmt);
+		//email
+		if(!empty($email) && $email != $row["usersEmail"]) 
+		{ 
+			$emailChange = $email;
+		} 
+		else
+		{	//echo "is not set"; 
+			$emailChange = $row["usersEmail"];
+		}
 
-	if(!empty($email) && $email != $row["usersEmail"]) 
-	{ 
-		$emailChange = $email;
-	} 
-	else
-	{	echo "is not set"; 
-		$emailChange = $row["usersEmail"];
-	}
+		//phone number
+		if(!empty($phone) && $phone != $row["usersPhone"]) 
+		{ 
+			$phoneChange = $phone;
+		} 
+		else
+		{	//echo "is not set"; 
+			$phoneChange = $row["usersPhone"];
+		}
 
-	$sqlUpdate = "UPDATE users SET usersEmail = ? WHERE usersId = ?"; 
-	$updateStmt = mysqli_stmt_init($conn);
-	if (!mysqli_stmt_prepare($updateStmt, $sqlUpdate)) {
-		header("location: ../profile.php?error=stmtfailed"); 
-		exit(); 
-	} 
-	mysqli_stmt_bind_param($updateStmt, "ss", $emailChange, $userId); 
-	mysqli_stmt_execute($updateStmt);
-	mysqli_stmt_close($updateStmt);
+		//username
+		if(!empty($username) && $username != $row["usersUid"]) 
+		{ 
+			$usernameChange = $username;
+		} 
+		else
+		{	//echo "is not set"; 
+			$usernameChange = $row["usersUid"];
+		}
+	
+		$sqlUpdate = "UPDATE users SET usersName = ?, usersEmail = ?, usersPhone = ?, usersUid = ? WHERE usersId = ?"; 
+		$updateStmt = mysqli_stmt_init($conn);
+		if (!mysqli_stmt_prepare($updateStmt, $sqlUpdate)) {
+			header("location: ../profile.php?error=stmtfailed"); 
+			exit(); 
+		} 
+		mysqli_stmt_bind_param($updateStmt, "sssss",$nameChange, $emailChange, $phoneChange, $usernameChange, $userId); 
+		mysqli_stmt_execute($updateStmt);
+		mysqli_stmt_close($updateStmt);
 }
 
 // Check for empty input login
