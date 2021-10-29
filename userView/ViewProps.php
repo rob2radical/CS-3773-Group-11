@@ -50,12 +50,10 @@
     <th>Standard $</th>
     <th>Queen $</th>
     <th>King $</th>
-    <th>Pool</th>
-    <th>Gym</th>
-    <th>Office</th>
-    <th>Spa</th>
+    <th>Amenities</th>
     <th>Weekend Differential</th>
   </tr>
+  </table>
   <?php
   $sql = "SELECT * FROM hotels";
   $result = $conn->query($sql);
@@ -65,10 +63,12 @@
   {
     while($row = $result-> fetch_assoc())
     {
-      echo "<div><tr><td>" . $row["hotelName"]. "</td><td>" . $row["numRoomS"] . "</td><td>" . $row["numRoomQ"] . "</td><td>". $row["numRoomK"] 
-      . "</td><td>". $row["standardPrice"] . "</td><td>" . $row["queenPrice"] . "</td><td>" . $row["kingPrice"] . "</td><td>" . $row["weekendDiff"]. "</td></tr></div>";
+      echo "<div><h1>" . $row["hotelName"]. "</h1>";
+      echo "<h2>Standard Rooms" . $row["numRoomS"] . "Queen Rooms" . $row["numRoomQ"] "King</h2><h2>" . " " . " ". $row["numRoomK"] . "</h2>"; 
+      echo "<li>" . $row["standardPrice"] . " " . $row["queenPrice"] . " " . $row["kingPrice"] . " ";
+      echo $row["weekendDiff"] . "</li></div>";
     }
-    echo "</table>";
+    //echo "</table>";
   }
   else
   {
