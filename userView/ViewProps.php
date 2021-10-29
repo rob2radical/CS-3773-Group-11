@@ -40,33 +40,20 @@
 
 <!--A quick wrapper to align the content (ends in footer.php)-->
 <div class="wrapper">
-<section class="index-categories">
-<table>
-  <tr>
-    <th>Hotel</th>
-    <th>Standard Rooms</th>
-    <th>Queen Rooms</th>
-    <th>King Rooms</th>
-    <th>Standard $</th>
-    <th>Queen $</th>
-    <th>King $</th>
-    <th>Amenities</th>
-    <th>Weekend Differential</th>
-  </tr>
-  </table>
-  <?php
-  $sql = "SELECT * FROM hotels";
-  $result = $conn->query($sql);
-
-  //. $row["pool"]. "</td></tr>" . $row["gym"]. "</td></tr>" . $row["office"]. "</td></tr>" . $row["spa"]. "</td></tr>" .
+  <section class="index-categories">
+  <table>
+    <tr>
+      <th>Hotel</th>
+    </tr>
+    <?php
+    $sql = "SELECT * FROM hotels";
+    $result = $conn->query($sql);
+    
   if($result-> num_rows > 0)
   {
     while($row = $result-> fetch_assoc())
     {
-      echo "<div><h1>" . $row["hotelName"]. "</h1>";
-      echo "<h2>Standard Rooms" . $row["numRoomS"] . "Queen Rooms" . $row["numRoomQ"] "King</h2><h2>" . " " . " ". $row["numRoomK"] . "</h2>"; 
-      echo "<li>" . $row["standardPrice"] . " " . $row["queenPrice"] . " " . $row["kingPrice"] . " ";
-      echo $row["weekendDiff"] . "</li></div>";
+      echo "<div><tr><td>" . $row["hotelName"]. "</td></tr></div>";
     }
     //echo "</table>";
   }
