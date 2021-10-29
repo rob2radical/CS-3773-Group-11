@@ -25,6 +25,7 @@
           <?php
             if (isset($_SESSION["useruid"])) {
               echo "<li><a href='profile.php'>Profile Page</a></li>";
+              echo "<li><a href='ViewProps.php'>Make a Reservation</a></li>";
               echo "<li><a href='logout.php'>Logout</a></li>";
             }
             else {

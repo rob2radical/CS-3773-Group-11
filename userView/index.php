@@ -10,7 +10,7 @@
     } 
     else  
     { 
-      echo ""
+      echo "<h1>Welcome to Hotel Miago</h1>";
     }
   ?>
 </section>
