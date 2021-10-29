@@ -173,6 +173,8 @@ function updateUser($conn, $name, $email, $phone, $username, $userId)
 		mysqli_stmt_bind_param($updateStmt, "sssss",$nameChange, $emailChange, $phoneChange, $usernameChange, $userId); 
 		mysqli_stmt_execute($updateStmt);
 		mysqli_stmt_close($updateStmt);
+		header("location: ../profile.php?error=none");
+
 }
 
 // Check for empty input login
@@ -210,6 +212,7 @@ function loginUser($conn, $username, $pwd) {
 		$_SESSION["usersname"] = $uidExists["usersName"];
 		$_SESSION["usersemail"] = $uidExists["usersEmail"];
 		$_SESSION["usersphone"] = $uidExists["usersPhone"];
+		$_SESSION["isAdmin"] = $uidExists["isAdmin"];
 		header("location: ../index.php?error=none");
 		exit();
 	}

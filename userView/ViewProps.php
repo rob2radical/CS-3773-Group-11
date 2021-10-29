@@ -1,7 +1,9 @@
 <?php 
   session_start();
   include_once 'includes/functions.inc.php';
+  include_once 'includes/dbh.inc.php';
 ?> 
+
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
@@ -24,7 +26,7 @@
           <?php
             if (isset($_SESSION["useruid"])) {
               echo "<li><a href='profile.php'>Profile Page</a></li>";
-              echo "<li><a href='ViewProps.php'>Make a Reservation</a></li>";
+              echo "<li><a href='reserveProp.php'>Make a Reservation</a></li>";
               echo "<li><a href='logout.php'>Logout</a></li>";
             }
             else {
@@ -38,5 +40,43 @@
 
 <!--A quick wrapper to align the content (ends in footer.php)-->
 <div class="wrapper">
-<section class="index-categories"> 
+<section class="index-categories">
+<table>
+  <tr>
+    <th>Hotel</th>
+    <th>Standard Rooms</th>
+    <th>Queen Rooms</th>
+    <th>King Rooms</th>
+    <th>Standard $</th>
+    <th>Queen $</th>
+    <th>King $</th>
+    <th>Pool</th>
+    <th>Gym</th>
+    <th>Office</th>
+    <th>Spa</th>
+    <th>Weekend Differential</th>
+  </tr>
+  <?php
+  $sql = "SELECT * FROM hotels";
+  $result = $conn->query($sql);
+
+  //. $row["pool"]. "</td></tr>" . $row["gym"]. "</td></tr>" . $row["office"]. "</td></tr>" . $row["spa"]. "</td></tr>" .
+  if($result-> num_rows > 0)
+  {
+    while($row = $result-> fetch_assoc())
+    {
+      echo "<div><tr><td>" . $row["hotelName"]. "</td><td>" . $row["numRoomS"] . "</td><td>" . $row["numRoomQ"] . "</td><td>". $row["numRoomK"] 
+      . "</td><td>". $row["standardPrice"] . "</td><td>" . $row["queenPrice"] . "</td><td>" . $row["kingPrice"] . "</td><td>" . $row["weekendDiff"]. "</td></tr></div>";
+    }
+    echo "</table>";
+  }
+  else
+  {
+    echo "0 results";
+  }
+  ?>
 </section>
+
+<?php
+  include_once 'footer.php';
+?>
