@@ -48,12 +48,12 @@
     <?php
     $sql = "SELECT * FROM hotels";
     $result = $conn->query($sql);
-    
+
   if($result-> num_rows > 0)
   {
     while($row = $result-> fetch_assoc())
     {
-      echo "<div><tr><td>" . $row["hotelName"]. "</td></tr></div>";
+      echo "<a href=https://youtube.com><div><tr><td>" . $row["hotelName"]. "</a></td></tr></div>";
     }
     //echo "</table>";
   }
