@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 29, 2021 at 01:53 AM
+-- Generation Time: Oct 29, 2021 at 02:45 AM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.11
 
@@ -65,7 +65,7 @@ INSERT INTO `hotels` (`hotelName`, `numRoomS`, `numRoomQ`, `numRoomK`, `standard
 --
 
 CREATE TABLE `reservations` (
-  `username` varchar(100) NOT NULL,
+  `usersId` int(100) NOT NULL,
   `hotelName` varchar(100) NOT NULL,
   `roomType` int(100) NOT NULL,
   `name` varchar(100) NOT NULL,
