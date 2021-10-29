@@ -13,7 +13,7 @@ if(isset($_POST["update"])) {
     updateUser($conn, $name, $email, $phone, $uid, $userId); 
 } 
 else {
-	header("location: ../profile.php");
+	header("location: ../profile.php?error=updateerror");
     exit();
 }
 
