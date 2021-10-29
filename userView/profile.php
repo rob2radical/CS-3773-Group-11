@@ -16,12 +16,21 @@ $curUser = $_SESSION["userid"];
       <input type="text" name="uid" placeholder="Username...">
       <button type="submit" name="update">Update Information</button>
     </form>
-  </div>
+  </div> 
+  <?php 
+  if(isset($_GET["error"])) 
+  { 
+    if($_GET["error"] == "none") 
+    { 
+      echo "<p>Your Information has been updated!</p>"; 
+    } 
+    else if($_GET["error"] == "updaterror") 
+    { 
+      echo "<p>An error occurred when attempting to update your information</p>"; 
+    }
+  }
+  ?>
 </section>
-<?php 
-
-?>
-
 <?php
   include_once 'footer.php';
 ?>

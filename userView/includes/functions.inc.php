@@ -122,46 +122,61 @@ function updateUser($conn, $name, $email, $phone, $username, $userId)
 		// "Get result" returns the results from a prepared statement
 		$resultData = mysqli_stmt_get_result($stmt);
 		$row = mysqli_fetch_assoc($resultData);
-		mysqli_stmt_close($stmt);
+		mysqli_stmt_close($stmt); 
+
+		if(empty($name) && empty($email) && empty($phone) && empty($username)) 
+		{ 
+			$result = false;
+			header("location: ../profile.php?error=updateerror");
+			return $result;
+		}
 	
 		//name
 		if(!empty($name) && $name != $row["usersName"]) 
 		{ 
 			$nameChange = $name;
+			$result = true;
 		} 
 		else
 		{	//echo "is not set"; 
 			$nameChange = $row["usersName"];
+			$result = false;
 		}
 
 		//email
 		if(!empty($email) && $email != $row["usersEmail"]) 
 		{ 
 			$emailChange = $email;
+			$result = true;
 		} 
 		else
 		{	//echo "is not set"; 
 			$emailChange = $row["usersEmail"];
+			$result = false;
 		}
 
 		//phone number
 		if(!empty($phone) && $phone != $row["usersPhone"]) 
 		{ 
 			$phoneChange = $phone;
+			$result = true;
 		} 
 		else
 		{	//echo "is not set"; 
 			$phoneChange = $row["usersPhone"];
+			$result = false;
 		}
 
 		//username
 		if(!empty($username) && $username != $row["usersUid"]) 
 		{ 
 			$usernameChange = $username;
+			$result = true;
 		} 
 		else
 		{	//echo "is not set"; 
 			$usernameChange = $row["usersUid"];
+			$result = false;
 		}
 	
 		$sqlUpdate = "UPDATE users SET usersName = ?, usersEmail = ?, usersPhone = ?, usersUid = ? WHERE usersId = ?"; 
@@ -172,7 +187,9 @@ function updateUser($conn, $name, $email, $phone, $username, $userId)
 		} 
 		mysqli_stmt_bind_param($updateStmt, "sssss",$nameChange, $emailChange, $phoneChange, $usernameChange, $userId); 
 		mysqli_stmt_execute($updateStmt);
+		header("location: ../profile.php?error=none");
 		mysqli_stmt_close($updateStmt);
+		return $result;
 }
 
 // Check for empty input login
