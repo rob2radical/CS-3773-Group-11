@@ -158,7 +158,7 @@ section {
   background-color: #203236;  /*Green*/
   border: none;
   margin-bottom: 10px;
-  justify-content: center;
+  justify-content: normal;
   color: white;
   padding: 15px 40px;
   text-align: center;
