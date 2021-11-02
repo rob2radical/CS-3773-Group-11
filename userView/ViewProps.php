@@ -41,27 +41,31 @@
 <!--A quick wrapper to align the content (ends in footer.php)-->
 <div class="wrapper">
   <section class="index-categories">
-  <table>
-    <tr>
-      <th>Hotel</th>
-    </tr>
+  <h1>Hotels</h1>    
+    <table class="signup-form-form">   
+       
+    <form action="prop.php" method="POST">
+      <div>
     <?php
     $sql = "SELECT * FROM hotels";
     $result = $conn->query($sql);
-
-  if($result-> num_rows > 0)
-  {
-    while($row = $result-> fetch_assoc())
+    $submit = "submit";
+    $buttonType = "button";
+    if($result-> num_rows > 0)
     {
-      echo "<a href=https://youtube.com><div><tr><td>" . $row["hotelName"]. "</a></td></tr></div>";
+      while($row = $result-> fetch_assoc())
+      {
+        echo "<tr><td><button type=" . $submit . " class=" . $buttonType . " onclick=https://youtube.com>" . $row["hotelName"]. "</button></td></tr>";
+      }
     }
-    //echo "</table>";
-  }
-  else
-  {
-    echo "0 results";
-  }
-  ?>
+    else
+    {
+      echo "0 results";
+    }
+    ?>
+      </div>
+    </form>
+  </table>
 </section>
 
 <?php
