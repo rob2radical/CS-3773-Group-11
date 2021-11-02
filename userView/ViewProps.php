@@ -46,23 +46,24 @@
        
     <form action="prop.php" method="POST">
       <div>
-    <?php
-    $sql = "SELECT * FROM hotels";
-    $result = $conn->query($sql);
-    $submit = "submit";
-    $buttonType = "button";
-    if($result-> num_rows > 0)
-    {
-      while($row = $result-> fetch_assoc())
-      {
-        echo "<tr><td><button type=" . $submit . " class=" . $buttonType . " onclick=https://youtube.com>" . $row["hotelName"]. "</button></td></tr>";
-      }
-    }
-    else
-    {
-      echo "0 results";
-    }
-    ?>
+        <?php
+          $sql = "SELECT * FROM hotels";
+          $result = $conn->query($sql);
+          $submit = "submit";
+          $buttonType = "button";
+        
+          if($result-> num_rows > 0)
+          {
+            while($row = $result-> fetch_assoc())
+            {
+              echo "<tr><td><input type=" . $submit . " name=" . $row["hotelId"] . " class=" . $buttonType . " value=" . $row["hotelName"] . "></td></tr>";
+            }
+          }
+          else
+          {
+            echo "0 results";
+          }
+        ?>
       </div>
     </form>
   </table>
