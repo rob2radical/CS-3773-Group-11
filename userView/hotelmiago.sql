@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 03, 2021 at 01:27 AM
+-- Generation Time: Nov 03, 2021 at 02:39 AM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.11
 
@@ -73,11 +73,11 @@ CREATE TABLE `hotels` (
   `hotelId` int(100) NOT NULL,
   `hotelName` varchar(50) NOT NULL,
   `numRoomS` int(100) NOT NULL,
-  `numRoomQ` int(100) NOT NULL,
-  `numRoomK` int(100) NOT NULL,
+  `numRoomQ` int(100) DEFAULT NULL,
+  `numRoomK` int(100) DEFAULT NULL,
   `standardPrice` double NOT NULL,
-  `queenPrice` double NOT NULL,
-  `kingPrice` double NOT NULL,
+  `queenPrice` double DEFAULT NULL,
+  `kingPrice` double DEFAULT NULL,
   `weekendDiff` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -86,11 +86,11 @@ CREATE TABLE `hotels` (
 --
 
 INSERT INTO `hotels` (`hotelId`, `hotelName`, `numRoomS`, `numRoomQ`, `numRoomK`, `standardPrice`, `queenPrice`, `kingPrice`, `weekendDiff`) VALUES
-(0, 'HomeAway Inn', 30, 0, 0, 50, 0, 0, 0.25),
+(0, 'HomeAway Inn', 30, NULL, NULL, 50, NULL, NULL, 0.25),
 (1, 'Park North Hotel', 50, 30, 20, 50, 75, 90, 0.15),
 (2, 'Rio Inn', 25, 15, 10, 25, 55, 89, 0.2),
 (3, 'Sun Palace Inn', 25, 15, 10, 40, 60, 80, 0.25),
-(4, 'The Comfy Motel Place', 25, 25, 0, 30, 50, 0, 0.1),
+(4, 'The Comfy Motel Place', 25, 25, NULL, 30, 50, NULL, 0.1),
 (5, 'The Courtyard Suites', 10, 6, 4, 100, 150, 250, 0.25),
 (6, 'The Lofts at Town Centre', 30, 18, 12, 105, 120, 190, 0.35),
 (7, 'The Magnolia All Suites', 10, 6, 4, 100, 150, 250, 0.25),
