@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 29, 2021 at 09:18 PM
+-- Generation Time: Nov 03, 2021 at 01:27 AM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.11
 
@@ -28,6 +28,8 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `amenities` (
+  `id` int(100) NOT NULL,
+  `hotelId` int(100) NOT NULL,
   `hotelName` varchar(100) NOT NULL,
   `amenity` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -36,30 +38,30 @@ CREATE TABLE `amenities` (
 -- Dumping data for table `amenities`
 --
 
-INSERT INTO `amenities` (`hotelName`, `amenity`) VALUES
-('The Magnolia All Suites', 'Pool'),
-('The Magnolia All Suites', 'Gym'),
-('The Magnolia All Suites', 'Spa'),
-('The Magnolia All Suites', 'Business Office'),
-('The Lofts at Town Centre', 'Pool'),
-('The Lofts at Town Centre', 'Gym'),
-('The Lofts at Town Centre', 'Business Office'),
-('Park North Hotel', 'Pool'),
-('Park North Hotel', 'Gym'),
-('The Courtyard Suites', 'Pool'),
-('The Courtyard Suites', 'Gym'),
-('The Courtyard Suites', 'Spa'),
-('The Courtyard Suites', 'Business Office'),
-('Town Inn Budget Rooms', 'Pool'),
-('The Regency Rooms', 'Pool'),
-('The Regency Rooms', 'Gym'),
-('The Regency Rooms', 'Spa'),
-('The Regency Rooms', 'Business Office'),
-('Sun Palace Inn', 'Pool'),
-('Sun Palace Inn', 'Gym'),
-('HomeAway Inn', 'Pool'),
-('HomeAway Inn', 'Business Office'),
-('Rio Inn', 'Pool');
+INSERT INTO `amenities` (`id`, `hotelId`, `hotelName`, `amenity`) VALUES
+(1, 7, 'The Magnolia All Suites', 'Pool'),
+(2, 7, 'The Magnolia All Suites', 'Gym'),
+(3, 7, 'The Magnolia All Suites', 'Spa'),
+(4, 7, 'The Magnolia All Suites', 'Business Office'),
+(5, 6, 'The Lofts at Town Centre', 'Pool'),
+(6, 6, 'The Lofts at Town Centre', 'Gym'),
+(7, 6, 'The Lofts at Town Centre', 'Business Office'),
+(8, 1, 'Park North Hotel', 'Pool'),
+(9, 1, 'Park North Hotel', 'Gym'),
+(10, 5, 'The Courtyard Suites', 'Pool'),
+(11, 5, 'The Courtyard Suites', 'Gym'),
+(12, 5, 'The Courtyard Suites', 'Spa'),
+(13, 5, 'The Courtyard Suites', 'Business Office'),
+(14, 9, 'Town Inn Budget Rooms', 'Pool'),
+(15, 8, 'The Regency Rooms', 'Pool'),
+(16, 8, 'The Regency Rooms', 'Gym'),
+(17, 8, 'The Regency Rooms', 'Spa'),
+(18, 8, 'The Regency Rooms', 'Business Office'),
+(19, 3, 'Sun Palace Inn', 'Pool'),
+(20, 3, 'Sun Palace Inn', 'Gym'),
+(21, 0, 'HomeAway Inn', 'Pool'),
+(22, 0, 'HomeAway Inn', 'Business Office'),
+(23, 2, 'Rio Inn', 'Pool');
 
 -- --------------------------------------------------------
 
@@ -68,6 +70,7 @@ INSERT INTO `amenities` (`hotelName`, `amenity`) VALUES
 --
 
 CREATE TABLE `hotels` (
+  `hotelId` int(100) NOT NULL,
   `hotelName` varchar(50) NOT NULL,
   `numRoomS` int(100) NOT NULL,
   `numRoomQ` int(100) NOT NULL,
@@ -82,17 +85,17 @@ CREATE TABLE `hotels` (
 -- Dumping data for table `hotels`
 --
 
-INSERT INTO `hotels` (`hotelName`, `numRoomS`, `numRoomQ`, `numRoomK`, `standardPrice`, `queenPrice`, `kingPrice`, `weekendDiff`) VALUES
-('HomeAway Inn', 30, 0, 0, 50, 0, 0, 0.25),
-('Park North Hotel', 50, 30, 20, 50, 75, 90, 0.15),
-('Rio Inn', 25, 15, 10, 25, 55, 89, 0.2),
-('Sun Palace Inn', 25, 15, 10, 40, 60, 80, 0.25),
-('The Comfy Motel Place', 25, 25, 0, 30, 50, 0, 0.1),
-('The Courtyard Suites', 10, 6, 4, 100, 150, 250, 0.25),
-('The Lofts at Town Centre', 30, 18, 12, 105, 120, 190, 0.35),
-('The Magnolia All Suites', 10, 6, 4, 100, 150, 250, 0.25),
-('The Regency Rooms', 10, 6, 4, 100, 150, 250, 0.25),
-('Town Inn Budget Rooms', 75, 45, 30, 25, 50, 60, 0.15);
+INSERT INTO `hotels` (`hotelId`, `hotelName`, `numRoomS`, `numRoomQ`, `numRoomK`, `standardPrice`, `queenPrice`, `kingPrice`, `weekendDiff`) VALUES
+(0, 'HomeAway Inn', 30, 0, 0, 50, 0, 0, 0.25),
+(1, 'Park North Hotel', 50, 30, 20, 50, 75, 90, 0.15),
+(2, 'Rio Inn', 25, 15, 10, 25, 55, 89, 0.2),
+(3, 'Sun Palace Inn', 25, 15, 10, 40, 60, 80, 0.25),
+(4, 'The Comfy Motel Place', 25, 25, 0, 30, 50, 0, 0.1),
+(5, 'The Courtyard Suites', 10, 6, 4, 100, 150, 250, 0.25),
+(6, 'The Lofts at Town Centre', 30, 18, 12, 105, 120, 190, 0.35),
+(7, 'The Magnolia All Suites', 10, 6, 4, 100, 150, 250, 0.25),
+(8, 'The Regency Rooms', 10, 6, 4, 100, 150, 250, 0.25),
+(9, 'Town Inn Budget Rooms', 75, 45, 30, 25, 50, 60, 0.15);
 
 -- --------------------------------------------------------
 
@@ -145,10 +148,16 @@ INSERT INTO `users` (`usersId`, `usersName`, `usersEmail`, `usersPhone`, `usersU
 --
 
 --
+-- Indexes for table `amenities`
+--
+ALTER TABLE `amenities`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `hotels`
 --
 ALTER TABLE `hotels`
-  ADD PRIMARY KEY (`hotelName`);
+  ADD PRIMARY KEY (`hotelId`);
 
 --
 -- Indexes for table `users`
@@ -159,6 +168,12 @@ ALTER TABLE `users`
 --
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `amenities`
+--
+ALTER TABLE `amenities`
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `users`
