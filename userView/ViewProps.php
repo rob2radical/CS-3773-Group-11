@@ -44,19 +44,25 @@
   <h1>Hotels</h1>    
     <table class="signup-form-form">   
        
-    <form action="prop.php" method="POST">
       <div>
         <?php
           $sql = "SELECT * FROM hotels";
           $result = $conn->query($sql);
           $submit = "submit";
           $buttonType = "button";
+          $prop = "prop.php";
+          $post = "post";
+          $hidden = "hidden";
+          $sessionId = "sessionID";
         
           if($result-> num_rows > 0)
           {
             while($row = $result-> fetch_assoc())
             {
-              echo "<tr><td><input type=" . $submit . " name=" . $row["hotelId"] . " class=" . $buttonType . " value=" . $row["hotelName"] . "></td></tr>";
+              echo "<form action=". $prop . " method=". $post . ">";
+              echo "<input type=" . $hidden . " id=" . $sessionId ." name=" . $sessionId . " value=" . $row["hotelId"] . ">";
+              echo "<tr><td><button type=" . $submit . " name=" . $row["hotelId"] . " class=" . $buttonType . ">" . $row["hotelName"] . "</button></td></tr>";
+              echo "</form>";
             }
           }
           else
@@ -65,7 +71,6 @@
           }
         ?>
       </div>
-    </form>
   </table>
 </section>
 
