@@ -24,7 +24,22 @@
           <li><a href="index.php">Home</a></li>
           <li><a href="ViewProps.php">View Properties</a></li>
           <?php
-            if (isset($_SESSION["useruid"])) {
+            if (isset($_SESSION["useruid"]) && ($_SESSION["isAdmin"] == 0)) {
+              echo "<li><a href='profile.php'>Profile Page</a></li>";
+              echo "<li><a href='reserveProp.php'>Make a Reservation</a></li>";
+              echo "<li><a href='logout.php'>Logout</a></li>";
+            }
+            else if(isset($_SESSION["useruid"]) && ($_SESSION["isAdmin"] == 1))
+            {
+              echo "<li><a href='adminProfile.php'>Admin Page</a></li>";
+              //echo "<li><a href='reserveProp.php'>Reservations</a></li>";
+              echo "<li><a href='logout.php'>Logout</a></li>";
+            }
+            else {
+              echo "<li><a href='userSignUp.php'>Sign up</a></li>";
+              echo "<li><a href='userLogin.php'>Log in</a></li>";
+            }
+/*             if (isset($_SESSION["useruid"])) {
               echo "<li><a href='profile.php'>Profile Page</a></li>";
               echo "<li><a href='reserveProp.php'>Make a Reservation</a></li>";
               echo "<li><a href='logout.php'>Logout</a></li>";
@@ -32,7 +47,7 @@
             else {
               echo "<li><a href='userSignUp.php'>Sign up</a></li>";
               echo "<li><a href='userLogin.php'>Log in</a></li>";
-            }
+            } */
           ?>
         </ul>
       </div>
@@ -40,11 +55,12 @@
 
 <!--A quick wrapper to align the content (ends in footer.php)-->
 <div class="wrapper">
-  <section class="index-categories">
-  <h1>Hotels</h1>    
-    <table class="signup-form-form">   
-       
-      <div>
+  <section class="signup-form">
+     
+    <table>   
+    <tr>
+      <th>Hotels</th>
+    </tr> 
         <?php
           $sql = "SELECT * FROM hotels";
           $result = $conn->query($sql);
@@ -70,7 +86,6 @@
             echo "0 results";
           }
         ?>
-      </div>
   </table>
 </section>
 
