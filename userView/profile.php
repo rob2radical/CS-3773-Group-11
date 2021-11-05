@@ -6,6 +6,14 @@ $curUser = $_SESSION["userid"];
 <div class="wrapper">
 
 <section class="signup-form">
+  <h2>User Information<h2>
+  <form action="includes/update.inc.php" method="get">
+      <input type="hidden" id="sessionID" name="sessionID" value="<?php echo $curUser; ?>">
+      <input type="text" name="name" placeholder="Full name...">
+      <input type="text" name="email" placeholder="Email...">
+      <input type="text" name="phone" placeholder="Phone Number...">
+      <input type="text" name="uid" placeholder="Username...">
+    </form>
   <h2>Update Information</h2>
   <div class="signup-form-form">
     <form action="includes/update.inc.php" method="post">
