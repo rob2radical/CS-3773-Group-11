@@ -1,5 +1,16 @@
 <?php
 
+function emptyInputHotel($hotelname, $numRoomS, $numRoomQ, $numRoomK, $standardPrice, $queenPrice, $kingPrice, $weekendDiff, $numAmenities) {
+	//$result;
+	if (empty($hotelname) || empty($numRoomS) || empty($numRoomQ) || empty($numRoomK) || empty($standardPrice) || empty($queenPrice) || empty($kingPrice) || empty($weekendDiff) || empty($numAmenities)) {
+		$result = true;
+	}
+	else {
+		$result = false;
+	}
+	return $result;
+}
+
 // Check for empty input signup
 function emptyInputSignup($name, $email, $phone, $username, $pwd, $pwdRepeat) {
 	//$result;
