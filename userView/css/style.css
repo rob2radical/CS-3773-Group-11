@@ -42,7 +42,7 @@ table {
   width: 100%;
   color: black;
   font-size: 25px;
-  text-align: left;
+  text-align: center;
 }
 
 th {
@@ -131,7 +131,8 @@ section {
 }
 
 .signup-form form {
-  width: 30%;
+  width: 25%;
+  text-align: center;
 }
 
 .signup-form form input {
@@ -155,13 +156,12 @@ section {
 }
 
 .button {
-  background-color: #203236;  /*Green*/
+  background-color: #1c232c;
   border: none;
   margin-bottom: 10px;
   justify-content: normal;
   color: white;
   padding: 15px 40px;
-  text-align: center;
   text-decoration: none;
   display: flex;
   font-size: 20px;

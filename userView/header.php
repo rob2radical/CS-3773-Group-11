@@ -23,9 +23,15 @@
           <li><a href="index.php">Home</a></li>
           <li><a href="ViewProps.php">View Properties</a></li>
           <?php
-            if (isset($_SESSION["useruid"])) {
+            if (isset($_SESSION["useruid"]) && ($_SESSION["isAdmin"] == 0)) {
               echo "<li><a href='profile.php'>Profile Page</a></li>";
               echo "<li><a href='reserveProp.php'>Make a Reservation</a></li>";
+              echo "<li><a href='logout.php'>Logout</a></li>";
+            }
+            else if(isset($_SESSION["useruid"]) && ($_SESSION["isAdmin"] == 1))
+            {
+              echo "<li><a href='adminProfile.php'>Admin Page</a></li>";
+              //echo "<li><a href='reserveProp.php'>Reservations</a></li>";
               echo "<li><a href='logout.php'>Logout</a></li>";
             }
             else {
