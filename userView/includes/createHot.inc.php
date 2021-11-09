@@ -25,38 +25,49 @@ if (isset($_POST["submit"])) {
     header("location: ../createHotel.php?error=emptyinput");
 		exit();
   }
-	// Proper username chosen
-  if (invalidUid($uid) !== false) {
-    header("location: ../userSignUp.php?error=invaliduid");
+  if (invalidHotelName($hotelname) !== false) {
+    header("location: ../createHotel.php?error=invalidhotelname");
 		exit();
   }
-  // Proper email chosen
-  if (invalidEmail($email) !== false) {
-    header("location: ../userSignUp.php?error=invalidemail");
+  if (invalidNumberInt($numRoomS) !== false) {
+    header("location: ../createHotel.php?error=invalidnumrooms");
+		exit();
+  }
+  if (invalidNumberInt($numRoomQ) !== false) {
+    header("location: ../createHotel.php?error=invalidnumroomq");
 		exit();
   } 
-  // Valid phone number entered
-  if (invalidPhone($phone) !== false) { 
-    header("location: ../userSignUp.php?error=invalidphone");
+  if (invalidNumberInt($numRoomK) !== false) {
+    header("location: ../createHotel.php?error=invalidnumroomk");
+		exit();
+  }  
+  if (invalidNumberFloat($standardPrice) !== false) { 
+    header("location: ../createHotel.php?error=invalidprices");
     exit();
   }
-  // Do the two passwords match?
-  if (pwdMatch($pwd, $pwdRepeat) !== false) {
-    header("location: ../userSignUp.php?error=passwordsdontmatch");
-		exit();
+  if (invalidNumberFloat($queenPrice) !== false) { 
+    header("location: ../createHotel.php?error=invalidpriceq");
+    exit();
+  }  
+  if (invalidNumberFloat($kingPrice) !== false) { 
+    header("location: ../createHotel.php?error=invalidpricek");
+    exit();
+  }  
+  if (invalidNumberFloat($weekendDiff) !== false) { 
+    header("location: ../createHotel.php?error=invalidweekdiff");
+    exit();
   }
-  // Is the username taken already
-  if (uidExists($conn, $username) !== false) {
-    header("location: ../userSignUp.php?error=usernametaken");
+  if (invalidNumberInt($numAmenities) !== false) {
+    header("location: ../createHotel.php?error=invalidamenities");
 		exit();
-  }
+  }  
 
-  // If we get to here, it means there are no user errors
+  // If we get to here, it means there are no hotel errors
 
-  // Now we insert the user into the database
-  createUser($conn, $name, $email, $phone, $username, $pwd);
+  // Now we insert the hotel into the database
+  createHotelq($conn, $hotelname, $numRoomS, $numRoomQ, $numRoomK, $standardPrice, $queenPrice, $kingPrice, $weekendDiff);
 
 } else {
-	header("location: ../userSignUp.php");
+	header("location: ../createHotel.php");
     exit();
 }

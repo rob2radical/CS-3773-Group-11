@@ -11,6 +11,42 @@ function emptyInputHotel($hotelname, $numRoomS, $numRoomQ, $numRoomK, $standardP
 	return $result;
 }
 
+//Check if hotel name is a valid one
+function invalidHotelName($hotelname) {
+	//$result;
+	if (!preg_match("/^[a-zA-Z0-9\s]*$/", $hotelname)) {
+		$result = true;
+	}
+	else {
+		$result = false;
+	}
+	return $result;
+}
+
+// Check invalid Integers (numberOfRooms) 
+function invalidNumberInt($numRoom) { 
+	//$result;
+	if(!filter_var($numRoom, FILTER_VALIDATE_INT)) { 
+		$result = true;
+	} 
+	else { 
+		$result = false;
+	}
+	return $result;
+}
+
+// Check for valid Float (prices and decimals)
+function invalidNumberFloat($price) { 
+	//$result;
+	if(!filter_var($price, FILTER_VALIDATE_FLOAT)) { 
+		$result = true;
+	} 
+	else { 
+		$result = false;
+	}
+	return $result;
+}
+
 // Check for empty input signup
 function emptyInputSignup($name, $email, $phone, $username, $pwd, $pwdRepeat) {
 	//$result;
@@ -96,6 +132,24 @@ function uidExists($conn, $username) {
 
 	mysqli_stmt_close($stmt);
 }
+
+// Insert new hotel into database
+function createHotelq($conn, $hotelname, $numRoomS, $numRoomQ, $numRoomK, $standardPrice, $queenPrice, $kingPrice, $weekendDiff) {
+	$sql = "INSERT INTO hotels (hotelName, numRoomS, numRoomQ, numRoomK, standardPrice, queenPrice, kingPrice, weekendDiff) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
+  
+	  $stmt = mysqli_stmt_init($conn);
+	  if (!mysqli_stmt_prepare($stmt, $sql)) {
+		   header("location: ../createHotel.php?error=stmtfailed");
+		  exit();
+	  }
+  
+	  mysqli_stmt_bind_param($stmt, "ssssssss", $hotelname, $numRoomS, $numRoomQ, $numRoomK, $standardPrice, $queenPrice, $kingPrice, $weekendDiff);
+	  mysqli_stmt_execute($stmt);
+	  mysqli_stmt_close($stmt);
+	  mysqli_close($conn);
+	  header("location: ../createHotel.php?error=none");
+	  exit();
+  }
 
 // Insert new user into database
 function createUser($conn, $name, $email, $phone, $username, $pwd) {
