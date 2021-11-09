@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 03, 2021 at 02:39 AM
+-- Generation Time: Nov 10, 2021 at 12:30 AM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.11
 
@@ -75,10 +75,10 @@ CREATE TABLE `hotels` (
   `numRoomS` int(100) NOT NULL,
   `numRoomQ` int(100) DEFAULT NULL,
   `numRoomK` int(100) DEFAULT NULL,
-  `standardPrice` double NOT NULL,
-  `queenPrice` double DEFAULT NULL,
-  `kingPrice` double DEFAULT NULL,
-  `weekendDiff` double NOT NULL
+  `standardPrice` float NOT NULL,
+  `queenPrice` float DEFAULT NULL,
+  `kingPrice` float DEFAULT NULL,
+  `weekendDiff` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -86,16 +86,17 @@ CREATE TABLE `hotels` (
 --
 
 INSERT INTO `hotels` (`hotelId`, `hotelName`, `numRoomS`, `numRoomQ`, `numRoomK`, `standardPrice`, `queenPrice`, `kingPrice`, `weekendDiff`) VALUES
-(0, 'HomeAway Inn', 30, NULL, NULL, 50, NULL, NULL, 0.25),
-(1, 'Park North Hotel', 50, 30, 20, 50, 75, 90, 0.15),
-(2, 'Rio Inn', 25, 15, 10, 25, 55, 89, 0.2),
-(3, 'Sun Palace Inn', 25, 15, 10, 40, 60, 80, 0.25),
-(4, 'The Comfy Motel Place', 25, 25, NULL, 30, 50, NULL, 0.1),
-(5, 'The Courtyard Suites', 10, 6, 4, 100, 150, 250, 0.25),
-(6, 'The Lofts at Town Centre', 30, 18, 12, 105, 120, 190, 0.35),
-(7, 'The Magnolia All Suites', 10, 6, 4, 100, 150, 250, 0.25),
-(8, 'The Regency Rooms', 10, 6, 4, 100, 150, 250, 0.25),
-(9, 'Town Inn Budget Rooms', 75, 45, 30, 25, 50, 60, 0.15);
+(1, 'HomeAway Inn', 30, NULL, NULL, 50, NULL, NULL, 0.25),
+(2, 'Park North Hotel', 50, 30, 20, 50, 75, 90, 0.15),
+(3, 'Rio Inn', 25, 15, 10, 25, 55, 89, 0.2),
+(4, 'Sun Palace Inn', 25, 15, 10, 40, 60, 80, 0.25),
+(5, 'The Comfy Motel Place', 25, 25, NULL, 30, 50, NULL, 0.1),
+(6, 'The Courtyard Suites', 10, 6, 4, 100, 150, 250, 0.25),
+(7, 'The Lofts at Town Centre', 30, 18, 12, 105, 120, 190, 0.35),
+(8, 'The Magnolia All Suites', 10, 6, 4, 100, 150, 250, 0.25),
+(9, 'The Regency Rooms', 10, 6, 4, 100, 150, 250, 0.25),
+(10, 'Town Inn Budget Rooms', 75, 45, 30, 25, 50, 60, 0.15),
+(11, 'Test Hotel', 10, 20, 30, 10, 20, 30, 0.2);
 
 -- --------------------------------------------------------
 
@@ -141,7 +142,8 @@ INSERT INTO `users` (`usersId`, `usersName`, `usersEmail`, `usersPhone`, `usersU
 (3, 'course', 'dragonz4twenty@gmail.com', '5555555555', 'bruh', '$2y$10$qYgpmKxHHdi8gYxH3ZadEeKxJTI5ZM2eXhB6ZjFwX8DAwRMEpLli2', 1),
 (4, 'Juan Rodriguez', 'qsy775@my.utsa.edu', '1234567899', 'meatman', '$2y$10$AKrOPfHj8Cqvdk0iqL1HZeucaOyTwdig.BxSsFBBsKdzj78knQvtS', NULL),
 (5, 'Amber Sanchez', 'lovelylibra55@gmail.com', '2105361729', 'cashmoney', '$2y$10$ZpI3tEsqhuxAcDacs3SgquML03HvxYc.9Gl13mg/nHAyvJlPw4U8q', NULL),
-(6, 'Danny Monty', 'danielmontaudon909@live.com', '8623242401', 'pooopooo1', '$2y$10$mzcGZaAWmVNL3eAezE.gYuNwBtOhk5Q.NVvK8Z3tUlF3xrD8MArxy', 1);
+(6, 'Danny Monty', 'danielmontaudon909@live.com', '8623242401', 'pooopooo1', '$2y$10$mzcGZaAWmVNL3eAezE.gYuNwBtOhk5Q.NVvK8Z3tUlF3xrD8MArxy', 1),
+(7, 'Daniel Ricardo Blom Montaudon', 'danielmontaudon909@live.com', '1234561234', 'yeah', '$2y$10$kyUCceXe0k402U/GQ3yiaOyzohmw0Yf7TpPfGSbRz4ar9G1cs7.Ua', NULL);
 
 --
 -- Indexes for dumped tables
@@ -176,10 +178,16 @@ ALTER TABLE `amenities`
   MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
+-- AUTO_INCREMENT for table `hotels`
+--
+ALTER TABLE `hotels`
+  MODIFY `hotelId` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `usersId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `usersId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
