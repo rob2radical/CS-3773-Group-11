@@ -69,8 +69,7 @@ if (isset($_POST["submit"])) {
   // If we get to here, it means there are no hotel errors
 
   // Now we insert the hotel into the database
-  echo "we are about to call create hotel";
-  createHotelq($conn, $hotelname, $numRoomS, $numRoomQ, $numRoomK, $standardPrice, $queenPrice, $kingPrice, $weekendDiff);
+  createHotelq($conn, $hotelname, $numRoomS, $numRoomQ, $numRoomK, $standardPrice, $queenPrice, $kingPrice, $weekendDiff, $numAmenities);
 
 } else {
 	header("location: ../createHotel.php");
