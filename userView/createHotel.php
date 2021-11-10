@@ -54,6 +54,9 @@
       else if ($_GET["error"] == "invalidamenities") {
         echo "<p>Amenities must contain a number, 0 means N/A!</p>";
       }
+      else if ($_GET["error"] == "hotelexists") {
+        echo "<p>Hotel already exists!</p>";
+      }
       else if ($_GET["error"] == "stmtfailed") {
         echo "<p>Something went wrong!</p>";
       }

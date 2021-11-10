@@ -29,6 +29,10 @@ if (isset($_POST["submit"])) {
     header("location: ../createHotel.php?error=invalidhotelname");
 		exit();
   }
+  if (hotelExists($conn, $hotelname) !== false) {
+    header("location: ../createHotel.php?error=hotelexists");
+		exit();
+  }
   if (invalidNumberInt($numRoomS) !== false) {
     header("location: ../createHotel.php?error=invalidnumrooms");
 		exit();
