@@ -61,7 +61,43 @@
         echo "<p>Something went wrong!</p>";
       }
       else if ($_GET["error"] == "none") {
-        echo "<p>Hotel Created!</p>";
+        if(isset($_GET["hotelname"]) && isset($_GET["numAmenities"]))
+        {
+          $name = $_GET["hotelname"];
+          $number = $_GET["numAmenities"];
+
+          echo "<p>Hotel " . $name . " Created!</p>";
+
+          $signup = "signup-form-form";
+          $actionform = "includes/createAmen.inc.php";
+          $post = "post";
+          $hidden = "hidden";
+          $numAmen = "numAmen";
+          $nameID = "hotel";
+          $text = "text";
+          $submit = "submit";
+          $button = "button";
+          $i = 0;
+
+          echo "<h2>Create Amenities</h2>";
+          echo "<div class=" . $signup . ">";
+          echo "<form action=" . $actionform . " method=" . $post . ">";
+          echo "<input type=" . $hidden . " id=" . $numAmen . " name=" . $numAmen . " value=" . $number . ">";
+          echo "<input type=" . $hidden . " id=" . $nameID . " name=" . $nameID . " value=" . $name . ">";
+          for($i = 0; $i < intval($number); $i = $i +1)
+          {
+            $placeholder = "Amenity#" . $i;
+            $nameholder = "Amenity" . $i;
+            echo "<input type=" . $text . " name=" . $nameholder . " placeholder=" . $placeholder . ">";
+          }
+          echo "<button type=" . $submit . " class=" . $button . " name=" . $submit . ">Create Amenities</button>";
+          echo "</form>";
+          echo "</div>";
+        }
+        else
+        {
+          echo "<p>Amenities Added!</p>";
+        }
       }
     }
   ?>

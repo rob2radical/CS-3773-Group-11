@@ -161,7 +161,7 @@ function uidExists($conn, $username) {
 }
 
 // Insert new hotel into database
-function createHotelq($conn, $hotelname, $numRoomS, $numRoomQ, $numRoomK, $standardPrice, $queenPrice, $kingPrice, $weekendDiff) {
+function createHotelq($conn, $hotelname, $numRoomS, $numRoomQ, $numRoomK, $standardPrice, $queenPrice, $kingPrice, $weekendDiff, $numAmenities) {
 	$sql = "INSERT INTO hotels (hotelName, numRoomS, numRoomQ, numRoomK, standardPrice, queenPrice, kingPrice, weekendDiff) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
   
 	if(intval($numRoomQ) == 0)
@@ -184,7 +184,7 @@ function createHotelq($conn, $hotelname, $numRoomS, $numRoomQ, $numRoomK, $stand
 	  mysqli_stmt_execute($stmt);
 	  mysqli_stmt_close($stmt);
 	  mysqli_close($conn);
-	  header("location: ../createHotel.php?error=none");
+	  header("location: ../createHotel.php?error=none&hotelname=$hotelname&numAmenities=$numAmenities");
 	  exit();
   }
 
@@ -333,4 +333,46 @@ function loginUser($conn, $username, $pwd) {
 		header("location: ../index.php?error=none");
 		exit();
 	}
+}
+
+function createAmenity($conn, $hotelID, $hotelname, $amenity){
+	$sql = "INSERT INTO amenities (hotelId, hotelName, amenity) VALUES (?, ?, ?);";
+
+	$stmt = mysqli_stmt_init($conn);
+	if (!mysqli_stmt_prepare($stmt, $sql)) {
+	 	header("location: ../createHotel.php?error=stmtfailed");
+		exit();
+	}
+
+	mysqli_stmt_bind_param($stmt, "sss", $hotelID, $hotelname, $amenity);
+	mysqli_stmt_execute($stmt);
+	mysqli_stmt_close($stmt);
+	mysqli_close($conn);
+	//header("location: ../userSignUp.php?error=none");
+	//exit();
+}
+
+function amenityExists($conn, $amenity, $hotelID){
+	$sql = "SELECT * FROM amenities WHERE hotelId = ? AND amenity = ?;";
+	$stmt = mysqli_stmt_init($conn);
+	if (!mysqli_stmt_prepare($stmt, $sql)) {
+	 	header("location: ../createHotel.php?error=stmtfailed");
+		exit();
+	}
+	mysqli_stmt_bind_param($stmt, "ss", $hotelID, $amenity);
+	mysqli_stmt_execute($stmt);
+
+	// "Get result" returns the results from a prepared statement
+	$resultData = mysqli_stmt_get_result($stmt);
+
+	if ($row = mysqli_fetch_assoc($resultData)) {
+	  $result = true;
+	  return $result;
+	}
+	else {
+	  $result = false;
+	  return $result;
+	}
+
+	mysqli_stmt_close($stmt);
 }
