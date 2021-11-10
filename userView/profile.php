@@ -1,17 +1,18 @@
 <?php 
 include_once "header.php";
 include_once "includes/dbh.inc.php";
+$curUser = $_SESSION["userid"];
 ?>
 <div class="wrapper">
 
 <section class="signup-form"> 
-  <h2>User Information<h2> 
+  <h1>User Information<h1> 
     <?php
-    if(isset($_POST["sessionID"])) 
+    if(isset($_SESSION["userid"])) 
     { 
-      $userID = $_POST["sessionID"]; 
+      $userID = $_SESSION["userid"]; 
 
-      $sql = "SELECT * from users WHERE usersId = ?";
+      $sql = "SELECT * from users WHERE usersId = ? ";
       $stmt = mysqli_stmt_init($conn);
       if (!mysqli_stmt_prepare($stmt, $sql)) {
            header("location: prop.php?error=stmtfailed");
@@ -29,7 +30,10 @@ include_once "includes/dbh.inc.php";
       $usersphone = $row["usersPhone"];
       $usersuname = $row["usersUid"];
 
-      echo "<h1>" . $username . "</h1>";
+      echo "<h2>" . $username . "</h2>";
+      echo "<h2>" . $useremail . "</h2>";
+      echo "<h2>" . $usersphone . "</h2>";
+      echo "<h2>" . $usersuname . "</h2>";
     }
     ?>
   <h2>Update Information</h2>
