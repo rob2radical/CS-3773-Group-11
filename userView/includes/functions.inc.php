@@ -2,7 +2,8 @@
 
 function emptyInputHotel($hotelname, $numRoomS, $numRoomQ, $numRoomK, $standardPrice, $queenPrice, $kingPrice, $weekendDiff, $numAmenities) {
 	//$result;
-	if (empty($hotelname) || empty($numRoomS) || empty($numRoomQ) || empty($numRoomK) || empty($standardPrice) || empty($queenPrice) || empty($kingPrice) || empty($weekendDiff) || empty($numAmenities)) {
+	//if (empty($hotelname) || empty($numRoomS) || empty($numRoomQ) || empty($numRoomK) || empty($standardPrice) || empty($queenPrice) || empty($kingPrice) || empty($weekendDiff) || empty($numAmenities))
+	if (empty($hotelname) || empty($numRoomS) || empty($standardPrice) || empty($weekendDiff) || empty($numAmenities)) {
 		$result = true;
 	}
 	else {
@@ -26,7 +27,7 @@ function invalidHotelName($hotelname) {
 // Check invalid Integers (numberOfRooms) 
 function invalidNumberInt($numRoom) { 
 	//$result;
-	if(!filter_var($numRoom, FILTER_VALIDATE_INT)) { 
+	if(!preg_match("/^[0-9]*$/", $numRoom)) { 
 		$result = true;
 	} 
 	else { 
@@ -38,7 +39,7 @@ function invalidNumberInt($numRoom) {
 // Check for valid Float (prices and decimals)
 function invalidNumberFloat($price) { 
 	//$result;
-	if(!filter_var($price, FILTER_VALIDATE_FLOAT)) { 
+	if(!preg_match("/^\d*\.?\d+$/", $price)) {
 		$result = true;
 	} 
 	else { 
@@ -107,6 +108,32 @@ function pwdMatch($pwd, $pwdrepeat) {
 	return $result;
 }
 
+function hotelExists($conn, $hotelname) {
+	$sql = "SELECT * FROM hotels WHERE hotelName = ?;";
+	  $stmt = mysqli_stmt_init($conn);
+	  if (!mysqli_stmt_prepare($stmt, $sql)) {
+		   header("location: ../createHotel.php?error=stmtfailed");
+		  exit();
+	  }
+  
+	  mysqli_stmt_bind_param($stmt, "s", $hotelname);
+	  mysqli_stmt_execute($stmt);
+  
+	  // "Get result" returns the results from a prepared statement
+	  $resultData = mysqli_stmt_get_result($stmt);
+  
+	  if ($row = mysqli_fetch_assoc($resultData)) {
+		$result = true;
+		return $result;
+	  }
+	  else {
+		$result = false;
+		return $result;
+	  }
+  
+	  mysqli_stmt_close($stmt);
+  }
+
 // Check if username is in database, if so then return data
 function uidExists($conn, $username) {
   $sql = "SELECT * FROM users WHERE usersUid = ? OR usersEmail = ?;";
@@ -137,6 +164,16 @@ function uidExists($conn, $username) {
 function createHotelq($conn, $hotelname, $numRoomS, $numRoomQ, $numRoomK, $standardPrice, $queenPrice, $kingPrice, $weekendDiff) {
 	$sql = "INSERT INTO hotels (hotelName, numRoomS, numRoomQ, numRoomK, standardPrice, queenPrice, kingPrice, weekendDiff) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
   
+	if(intval($numRoomQ) == 0)
+	{
+		$numRoomQ = NULL;
+		$queenPrice = NULL;
+	}
+	if(intval($numRoomK) == 0)
+	{
+		$numRoomK = NULL;
+		$kingPrice = NULL;
+	}
 	  $stmt = mysqli_stmt_init($conn);
 	  if (!mysqli_stmt_prepare($stmt, $sql)) {
 		   header("location: ../createHotel.php?error=stmtfailed");

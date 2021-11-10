@@ -1,6 +1,8 @@
 <?php 
 include_once "header.php";
 include_once "includes/dbh.inc.php";
+$curUser = $_SESSION["userid"];
+
 ?>
 <div class="wrapper">
 
