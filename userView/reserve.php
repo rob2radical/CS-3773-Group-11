@@ -39,15 +39,6 @@
               echo "<li><a href='userSignUp.php'>Sign up</a></li>";
               echo "<li><a href='userLogin.php'>Log in</a></li>";
             }
-/*             if (isset($_SESSION["useruid"])) {
-              echo "<li><a href='profile.php'>Profile Page</a></li>";
-              echo "<li><a href='reserveProp.php'>Make a Reservation</a></li>";
-              echo "<li><a href='logout.php'>Logout</a></li>";
-            }
-            else {
-              echo "<li><a href='userSignUp.php'>Sign up</a></li>";
-              echo "<li><a href='userLogin.php'>Log in</a></li>";
-            } */
           ?>
         </ul>
       </div>
@@ -59,14 +50,14 @@
      
     <table>   
     <tr>
-      <th>Hotels</th>
+      <th>Choose a Hotel</th>
     </tr> 
         <?php
           $sql = "SELECT * FROM hotels";
           $result = $conn->query($sql);
           $submit = "submit";
           $buttonType = "button";
-          $prop = "prop.php";
+          $prop = "reserveProp.php";
           $post = "post";
           $hidden = "hidden";
           $sessionId = "sessionID";
@@ -88,7 +79,3 @@
         ?>
   </table>
 </section>
-
-<?php
-  include_once 'footer.php';
-?>
