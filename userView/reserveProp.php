@@ -3,6 +3,7 @@
 ?>
 
 <section class="index-categories"> 
+
 </section>
 
 <?php

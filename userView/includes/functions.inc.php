@@ -363,22 +363,40 @@ function loginUser($conn, $username, $pwd) {
 	}
 }
 
-function createAmenity($conn, $hotelID, $hotelname, $amenity){
-	$sql = "INSERT INTO amenities (hotelId, hotelName, amenity) VALUES (?, ?, ?);";
+function addModAmenity($conn, $hotelID, $amenity){
+	$sql = "INSERT INTO amenities (hotelId, amenity) VALUES (?, ?);";
 
 	$stmt = mysqli_stmt_init($conn);
 	if (!mysqli_stmt_prepare($stmt, $sql)) {
-	 	header("location: ../createHotel.php?error=stmtfailed");
+	 	header("location: ../modProp.php?error=stmtfailed");
 		exit();
 	}
 
-	mysqli_stmt_bind_param($stmt, "sss", $hotelID, $hotelname, $amenity);
+	mysqli_stmt_bind_param($stmt, "ss", $hotelID, $amenity);
 	mysqli_stmt_execute($stmt);
 	mysqli_stmt_close($stmt);
 	mysqli_close($conn);
-	//header("location: ../userSignUp.php?error=none");
-	//exit();
+	header("location: ../modProp.php?error=none&id=$hotelID&amen=$amenity");
+	exit();
 }
+
+function remModAmenity($conn, $hotelID, $amenity){
+	$sql = "DELETE FROM amenities WHERE hotelId = ? AND amenity = ?;";
+
+	$stmt = mysqli_stmt_init($conn);
+	if (!mysqli_stmt_prepare($stmt, $sql)) {
+	 	header("location: ../modProp.php?error=stmtfailed");
+		exit();
+	}
+
+	mysqli_stmt_bind_param($stmt, "ss", $hotelID, $amenity);
+	mysqli_stmt_execute($stmt);
+	//mysqli_close($conn);
+	header("location: ../modProp.php?error=none&id=$hotelID");
+	mysqli_stmt_close($stmt);
+
+}
+
 
 function amenityExists($conn, $amenity, $hotelID){
 	$sql = "SELECT * FROM amenities WHERE hotelId = ? AND amenity = ?;";
@@ -405,45 +423,47 @@ function amenityExists($conn, $amenity, $hotelID){
 	mysqli_stmt_close($stmt);
 }
 
-function deleteHotel($conn, $hotelName)
+//change to hotelID
+function deleteHotel($conn, $hotelID)
 {
-	$sql = "DELETE FROM hotels WHERE hotelName = ?;";
+	$sql = "DELETE FROM hotels WHERE hotelId = ?;";
 	$stmt = mysqli_stmt_init($conn);
 	if (!mysqli_stmt_prepare($stmt, $sql)) {
 	 	header("location: ../modProp.php?error=stmtfailed");
 		exit();
 	}
-	mysqli_stmt_bind_param($stmt, "s", $hotelName);
+	mysqli_stmt_bind_param($stmt, "s", $hotelID);
 	mysqli_stmt_execute($stmt);
 
 	mysqli_stmt_close($stmt);
 }
 
-function deleteAmenities($conn, $hotelName)
+//change to hotelID
+function deleteAmenities($conn, $hotelID)
 {
-	$sql = "DELETE FROM amenities WHERE hotelName = ?;";
+	$sql = "DELETE FROM amenities WHERE hotelId = ?;";
 	$stmt = mysqli_stmt_init($conn);
 	if (!mysqli_stmt_prepare($stmt, $sql)) {
 	 	header("location: ../modProp.php?error=stmtfailed");
 		exit();
 	}
 
-	mysqli_stmt_bind_param($stmt, "s", $hotelName);
+	mysqli_stmt_bind_param($stmt, "s", $hotelID);
 	mysqli_stmt_execute($stmt);
 	header("location: ../modifyHotel.php?success=delete");
 	mysqli_stmt_close($stmt);
 }
 
-function updateHotel($conn, $hotelname, $newHName, $hnumRoomS, $hnumRoomQ, $hnumRoomK, $hstandardPrice, $hqueenPrice, $hkingPrice, $hweekendDiff){
+function updateHotel($conn, $hotelID, $newHName, $hnumRoomS, $hnumRoomQ, $hnumRoomK, $hstandardPrice, $hqueenPrice, $hkingPrice, $hweekendDiff){
 	
-	$sql = "SELECT * FROM hotels WHERE hotelName = ?"; 
+	$sql = "SELECT * FROM hotels WHERE hotelId = ?"; 
 	$stmt = mysqli_stmt_init($conn);
 	if (!mysqli_stmt_prepare($stmt, $sql)) {
 		header("location: ../modProp.php?error=stmtfailed");
 		exit();
 	}
 
-	mysqli_stmt_bind_param($stmt, "s", $hotelname);
+	mysqli_stmt_bind_param($stmt, "s", $hotelID);
 	mysqli_stmt_execute($stmt);
 	// "Get result" returns the results from a prepared statement
 	$resultData = mysqli_stmt_get_result($stmt);
@@ -457,7 +477,7 @@ function updateHotel($conn, $hotelname, $newHName, $hnumRoomS, $hnumRoomQ, $hnum
 		//return $result;
 	}
 
-	$hotelID = $row["hotelId"];
+	//$hotelID = $row["hotelId"];
 	//name
 	if(!empty($newHName) && $newHName != $row["hotelName"]) 
 	{ 
@@ -563,13 +583,13 @@ function updateHotel($conn, $hotelname, $newHName, $hnumRoomS, $hnumRoomQ, $hnum
 	mysqli_stmt_bind_param($updateStmt, "sssssssss", $nameChange, $numSChange, $numQChange, $numKChange, $priceSChange, $priceQChange, $priceKChange, $diffChange, $hotelID); 
 	mysqli_stmt_execute($updateStmt);
 
-	//header("location: ../modProp.php?error=none");
+	header("location: ../modProp.php?error=none&id=$hotelID");
 	mysqli_stmt_close($updateStmt);
 	//return $result;
 	
 }
 
-function updateAmenitiesForHotel($conn, $hotelname, $newHName, $hotelID){
+/* function updateAmenitiesForHotel($conn, $hotelname, $newHName, $hotelID){
 	$sqlUpdate = "UPDATE amenities SET hotelName = ? WHERE hotelName = ?"; 
 	$updateStmt = mysqli_stmt_init($conn);
 	if (!mysqli_stmt_prepare($updateStmt, $sqlUpdate)) {
@@ -580,4 +600,4 @@ function updateAmenitiesForHotel($conn, $hotelname, $newHName, $hotelID){
 	mysqli_stmt_execute($updateStmt); 
 	header("location: ../modProp.php?error=none&id=$hotelID");
 	mysqli_stmt_close($updateStmt);
-}
+} */
