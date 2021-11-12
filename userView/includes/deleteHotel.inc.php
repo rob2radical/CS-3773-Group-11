@@ -6,8 +6,8 @@ if(isset($_POST["deleteHot"])) {
 
     $hotelName = $_POST["hotelname"];
 
-    deleteAllAmenities($conn, $hotelName);
     deleteHotel($conn, $hotelName); 
+    deleteAmenities($conn, $hotelName);
 } 
 else {
 	header("location: ../modProp.php?error=deleteerror");
