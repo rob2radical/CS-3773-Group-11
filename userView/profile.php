@@ -29,6 +29,7 @@ $curUser = $_SESSION["userid"];
       $useremail = $row["usersEmail"];
       $usersphone = $row["usersPhone"];
       $usersuname = $row["usersUid"];
+      $userRole = $row["isAdmin"];
 
       echo "<h2>" . $username . "</h2>";
       echo "<h2>" . $useremail . "</h2>";
@@ -40,6 +41,7 @@ $curUser = $_SESSION["userid"];
   <div class="signup-form-form">
     <form action="includes/update.inc.php" method="post">
       <input type="hidden" id="sessionID" name="sessionID" value="<?php echo $curUser; ?>">
+      <input type="hidden" id="isAdmin" name="isAdmin" value="<?php echo $userRole; ?>">
       <input type="text" name="name" placeholder="Full name...">
       <input type="text" name="email" placeholder="Email...">
       <input type="text" name="phone" placeholder="Phone Number...">
@@ -57,6 +59,18 @@ $curUser = $_SESSION["userid"];
     else if($_GET["error"] == "updaterror") 
     { 
       echo "<p>An error occurred when attempting to update your information</p>"; 
+    }
+    else if($_GET["error"] == "invaliduid") 
+    { 
+      echo "<p>An invalid username was entered</p>"; 
+    }
+    else if($_GET["error"] == "invalidemail") 
+    { 
+      echo "<p>An invalid email was entered</p>"; 
+    }
+    else if($_GET["error"] == "invalidphone") 
+    { 
+      echo "<p>An invalid phone number was entered</p>";
     }
   }
   ?>

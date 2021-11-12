@@ -3,7 +3,7 @@
 function emptyInputHotel($hotelname, $numRoomS, $numRoomQ, $numRoomK, $standardPrice, $queenPrice, $kingPrice, $weekendDiff, $numAmenities) {
 	//$result;
 	//if (empty($hotelname) || empty($numRoomS) || empty($numRoomQ) || empty($numRoomK) || empty($standardPrice) || empty($queenPrice) || empty($kingPrice) || empty($weekendDiff) || empty($numAmenities))
-	if (empty($hotelname) || empty($numRoomS) || empty($standardPrice) || empty($weekendDiff) || empty($numAmenities)) {
+	if (empty($hotelname)) {
 		$result = true;
 	}
 	else {
@@ -39,7 +39,7 @@ function invalidNumberInt($numRoom) {
 // Check for valid Float (prices and decimals)
 function invalidNumberFloat($price) { 
 	//$result;
-	if(!preg_match("/^\d*\.?\d+$/", $price)) {
+	if(!preg_match("/^\d*\.?\d*$/", $price) ) {
 		$result = true;
 	} 
 	else { 
@@ -209,13 +209,20 @@ function createUser($conn, $name, $email, $phone, $username, $pwd) {
 }
 
 // Update new user in the existing database
-function updateUser($conn, $name, $email, $phone, $username, $userId)
+function updateUser($conn, $name, $email, $phone, $username, $userId, $role)
 {
 		#$userId = $_SESSION["userid"];
 		$sql = "SELECT * FROM users WHERE usersId = ?"; 
 		$stmt = mysqli_stmt_init($conn);
 		if (!mysqli_stmt_prepare($stmt, $sql)) {
-			 header("location: ../profile.php?error=stmtfailed");
+			if($role == 1)
+			{
+				header("location: ../adminProfile.php?error=stmtfailed");
+			}
+			else
+			{
+				header("location: ../profile.php?error=stmtfailed");
+			}
 			exit();
 		}
 	
@@ -229,7 +236,14 @@ function updateUser($conn, $name, $email, $phone, $username, $userId)
 		if(empty($name) && empty($email) && empty($phone) && empty($username)) 
 		{ 
 			$result = false;
-			header("location: ../profile.php?error=updateerror");
+			if($role == 1)
+			{
+				header("location: ../adminProfile.php?error=updateerror");
+			}
+			else
+			{
+				header("location: ../profile.php?error=updateerror");
+			}
 			return $result;
 		}
 	
@@ -284,12 +298,26 @@ function updateUser($conn, $name, $email, $phone, $username, $userId)
 		$sqlUpdate = "UPDATE users SET usersName = ?, usersEmail = ?, usersPhone = ?, usersUid = ? WHERE usersId = ?"; 
 		$updateStmt = mysqli_stmt_init($conn);
 		if (!mysqli_stmt_prepare($updateStmt, $sqlUpdate)) {
-			header("location: ../profile.php?error=stmtfailed"); 
+			if($role == 1)
+			{
+				header("location: ../adminProfile.php?error=stmtfailed");
+			}
+			else
+			{
+				header("location: ../profile.php?error=stmtfailed"); 
+			}
 			exit(); 
 		} 
 		mysqli_stmt_bind_param($updateStmt, "sssss",$nameChange, $emailChange, $phoneChange, $usernameChange, $userId); 
 		mysqli_stmt_execute($updateStmt);
-		header("location: ../profile.php?error=none");
+		if($role == 1)
+		{
+			header("location: ../adminProfile.php?error=none");
+		}
+		else
+		{
+			header("location: ../profile.php?error=none");
+		}
 		mysqli_stmt_close($updateStmt);
 		return $result;
 }
@@ -375,4 +403,160 @@ function amenityExists($conn, $amenity, $hotelID){
 	}
 
 	mysqli_stmt_close($stmt);
+}
+
+function deleteHotel($conn, $hotelName)
+{
+	$sql = "DELETE * FROM hotels WHERE hotelName = ?;";
+	$stmt = mysqli_stmt_init($conn);
+	if (!mysqli_stmt_prepare($stmt, $sql)) {
+	 	header("location: ../modProp.php?error=stmtfailed");
+		exit();
+	}
+	mysqli_stmt_bind_param($stmt, "s", $hotelName);
+	mysqli_stmt_execute($stmt);
+
+	header("location: ../modifyHotel.php?success=delete");
+	mysqli_stmt_close($stmt);
+}
+
+function updateHotel($conn, $hotelname, $newHName, $hnumRoomS, $hnumRoomQ, $hnumRoomK, $hstandardPrice, $hqueenPrice, $hkingPrice, $hweekendDiff){
+	
+	$sql = "SELECT * FROM hotels WHERE hotelName = ?"; 
+	$stmt = mysqli_stmt_init($conn);
+	if (!mysqli_stmt_prepare($stmt, $sql)) {
+		 header("location: ../profile.php?error=stmtfailed");
+		exit();
+	}
+
+	mysqli_stmt_bind_param($stmt, "s", $hotelname);
+	mysqli_stmt_execute($stmt);
+	// "Get result" returns the results from a prepared statement
+	$resultData = mysqli_stmt_get_result($stmt);
+	$row = mysqli_fetch_assoc($resultData);
+	mysqli_stmt_close($stmt); 
+
+	if(empty($newHName) && empty($hnumRoomS) && empty($hnumRoomQ) && empty($hnumRoomK) && empty($hstandardPrice) && empty($hqueenPrice) && empty($hkingPrice) && empty($hweekendDiff)) 
+	{ 
+		//$result = false;
+		header("location: ../modProp.php?error=updateerror");
+		//return $result;
+	}
+
+	$hotelID = $row["hotelId"];
+	//name
+	if(!empty($newHName) && $newHName != $row["hotelName"]) 
+	{ 
+		$nameChange = $newHName;
+		//$result = true;
+	} 
+	else
+	{	//echo "is not set"; 
+		$nameChange = $row["hotelName"];
+		//$result = false;
+	}
+
+	//email
+	if(!empty($hnumRoomS) && $hnumRoomS != $row["numRoomS"]) 
+	{ 
+		$numSChange = $hnumRoomS;
+		//$result = true;
+	} 
+	else
+	{	//echo "is not set"; 
+		$numSChange = $row["numRoomQ"];
+		//$result = false;
+	}
+
+	if(!empty($hnumRoomQ) && $hnumRoomQ != $row["numRoomQ"]) 
+	{ 
+		$numQChange = $hnumRoomQ;
+		//$result = true;
+	} 
+	else
+	{	//echo "is not set"; 
+		$numQChange = $row["numRoomQ"];
+		//$result = false;
+	}
+
+	if(!empty($hnumRoomK) && $hnumRoomK != $row["numRoomK"]) 
+	{ 
+		$numKChange = $hnumRoomK;
+		//$result = true;
+	} 
+	else
+	{	//echo "is not set"; 
+		$numKChange = $row["numRoomK"];
+		//$result = false;
+	}
+
+	if(!empty($hstandardPrice) && $hstandardPrice != $row["standardPrice"]) 
+	{ 
+		$priceSChange = $hstandardPrice;
+		//$result = true;
+	} 
+	else
+	{	//echo "is not set"; 
+		$priceSChange = $row["standardPrice"];
+		//$result = false;
+	}
+
+	if(!empty($hqueenPrice) && $hqueenPrice != $row["queenPrice"]) 
+	{ 
+		$priceQChange = $hqueenPrice;
+		//$result = true;
+	} 
+	else
+	{	//echo "is not set"; 
+		$priceQChange = $row["queenPrice"];
+		//$result = false;
+	}
+
+	if(!empty($hkingPrice) && $hkingPrice != $row["kingPrice"]) 
+	{ 
+		$priceKChange = $hkingPrice;
+		//$result = true;
+	} 
+	else
+	{	//echo "is not set"; 
+		$priceKChange = $row["kingPrice"];
+		//$result = false;
+	}
+
+	if(!empty($hweekendDiff) && $hweekendDiff != $row["weekendDiff"]) 
+	{ 
+		$diffChange = $hweekendDiff;
+		//$result = true;
+	} 
+	else
+	{	//echo "is not set"; 
+		$diffChange = $row["weekendDiff"];
+		//$result = false;
+	}
+
+	$sqlUpdate = "UPDATE hotels SET hotelName = ?, numRoomS = ?, numRoomQ = ?, numRoomK = ?, standardPrice = ?, queenPrice = ?, kingPrice = ?, weekendDiff = ? WHERE hotelId = ?"; 
+	$updateStmt = mysqli_stmt_init($conn);
+	if (!mysqli_stmt_prepare($updateStmt, $sqlUpdate)) {
+		header("location: ../modProp.php?error=stmtfailed"); 
+		exit(); 
+	} 
+	mysqli_stmt_bind_param($updateStmt, "sssssssss", $nameChange, $numSChange, $numQChange, $numKChange, $priceSChange, $priceQChange, $priceKChange, $diffChange, $hotelID); 
+	mysqli_stmt_execute($updateStmt);
+	//header("location: ../modProp.php?error=none");
+	mysqli_stmt_close($updateStmt);
+	//return $result;
+	
+}
+
+function updateAmenitiesForHotel($conn, $hotelname, $newHName){
+	$sqlUpdate = "UPDATE amenities SET hotelName = ? WHERE hotelName = ?"; 
+	$updateStmt = mysqli_stmt_init($conn);
+	if (!mysqli_stmt_prepare($updateStmt, $sqlUpdate)) {
+		header("location: ../modProp.php?error=stmtfailed"); 
+		exit(); 
+	} 
+	mysqli_stmt_bind_param($updateStmt, "ss", $newHName, $hotelname); 
+	mysqli_stmt_execute($updateStmt); 
+	header("location: ../modProp.php?error=none");
+	mysqli_stmt_close($updateStmt);
 }
