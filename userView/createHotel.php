@@ -1,5 +1,6 @@
 <?php
   include_once 'header.php';
+  include_once "includes/dbh.inc.php";
 ?>
 
 <div class="wrapper">
@@ -64,6 +65,23 @@
         if(isset($_GET["hotelname"]) && isset($_GET["numAmenities"]))
         {
           $name = $_GET["hotelname"];
+
+          $sql = "SELECT * FROM hotels WHERE hotelName = ?";
+          $stmt = mysqli_stmt_init($conn);
+          if (!mysqli_stmt_prepare($stmt, $sql)) {
+                header("location: createHotel.php?error=stmtfailed");
+                exit();
+          }
+        
+          mysqli_stmt_bind_param($stmt, "s", $name);
+          mysqli_stmt_execute($stmt);
+          // "Get result" returns the results from a prepared statement
+          $result = mysqli_stmt_get_result($stmt);
+          $row = mysqli_fetch_assoc($result);
+          mysqli_stmt_close($stmt);
+
+          $hotelID = $row["hotelId"];
+
           $number = $_GET["numAmenities"];
 
           echo "<p>Hotel " . $name . " Created!</p>";
@@ -86,7 +104,7 @@
             echo "<div class=" . $signup . ">";
             echo "<form action=" . $actionform . " method=" . $post . ">";
             echo "<input type=" . $hidden . " id=" . $numAmen . " name=" . $numAmen . " value=" . $number . ">";
-            echo "<input type=" . $hidden . " id=" . $nameID . " name=" . $nameID . " value=" . $name . ">";
+            echo "<input type=" . $hidden . " id=" . $nameID . " name=" . $nameID . " value=" . $hotelID . ">";
             for($i = 0; $i < intval($number); $i = $i +1)
             {
               $placeholder = "Amenity#" . $i;

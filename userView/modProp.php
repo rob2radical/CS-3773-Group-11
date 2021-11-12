@@ -39,8 +39,20 @@ include_once "includes/dbh.inc.php";
       <button type="submit" class="button" name="updateHot">Update</button>
     </form>
     <form action="includes/deleteHotel.inc.php" method="post">
-        <input type="hidden" id="hotelname" name="hotelname" value="<?php echo $hotelname; ?>">
-        <button type="submit" class="button" name="deleteHot">Delete</button>
+        <input type="hidden" id="hotelID" name="hotelID" value="<?php echo $hotelID; ?>">
+        <button type="submit" class="button" name="deleteHot">Delete Hotel</button>
+    </form>
+    </div> 
+    <div class="signup-form-form">
+    <form action="includes/addAmen.inc.php" method="post">
+        <input type="hidden" id="hotelID" name="hotelID" value="<?php echo $hotelID; ?>">
+        <input type="text" name="amenity" placeholder="Amenity to Add">
+        <button type="submit" class="button" name="addAmenities">Add Amenity</button>
+    </form>
+    <form action="includes/remAmen.inc.php" method="post">
+        <input type="hidden" id="hotelID" name="hotelID" value="<?php echo $hotelID; ?>">
+        <input type="text" name="amenity" placeholder="Amenity to Remove">
+        <button type="submit" class="button" name="remAmenities">Remove Amenity</button>
     </form>
   </div> 
   <?php 
@@ -81,6 +93,12 @@ include_once "includes/dbh.inc.php";
     }
     else if ($_GET["error"] == "hotelexists") {
         echo "<p>New Hotel Name already exists!</p>";
+    }
+    else if ($_GET["error"] == "addAmenerror") {
+        echo "<p>Something Wrong happened adding Amenity!</p>";
+    }
+    else if ($_GET["error"] == "remAmenerror") {
+        echo "<p>Something Wrong happened removing Amenity!</p>";
     }
   }
   ?>

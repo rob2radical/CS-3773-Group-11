@@ -6,9 +6,9 @@ require_once 'functions.inc.php';
 if (isset($_POST["submit"])) {
 
   // First we get the form data from the URL
-    $hotelname = $_POST["hotel"];
+    $hotelID = $_POST["hotel"];
 
-    $sql = "SELECT * FROM hotels WHERE hotelName = ?;";
+    /* $sql = "SELECT * FROM hotels WHERE hotelName = ?;";
 	  $stmt = mysqli_stmt_init($conn);
 	  if (!mysqli_stmt_prepare($stmt, $sql)) {
 		   header("location: ../createHotel.php?error=stmtfailed");
@@ -23,12 +23,13 @@ if (isset($_POST["submit"])) {
       $hotelID = $row["hotelId"];
       mysqli_stmt_close($stmt);
 
-    $numAmen = $_POST["numAmen"];
+    $numAmen = $_POST["numAmen"]; */
 
-    echo $numAmen . " " . $hotelname . " " . $hotelID;
+    //echo $numAmen . " " . $hotelname . " " . $hotelID;
+    $numAmen = $_POST["numAmen"];
     $i = 0;
 
-    $sql = "INSERT INTO amenities (hotelId, hotelName, amenity) VALUES (?, ?, ?);";
+    $sql = "INSERT INTO amenities (hotelId, amenity) VALUES (?, ?);";
     $stmt = mysqli_stmt_init($conn);
 
     for($i = 0; $i < intval($numAmen); $i = $i +1)
@@ -47,7 +48,7 @@ if (isset($_POST["submit"])) {
                     exit();
                 }
             
-                mysqli_stmt_bind_param($stmt, "sss", $hotelID, $hotelname, $amenValue);
+                mysqli_stmt_bind_param($stmt, "ss", $hotelID, $amenValue);
                 mysqli_stmt_execute($stmt);
             }
         }
