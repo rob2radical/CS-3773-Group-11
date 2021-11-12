@@ -1,14 +1,13 @@
-<?php
-    
-    include_once 'header.php';
-    include_once "includes/dbh.inc.php";
+<?php 
+include_once "header.php";
+include_once "includes/dbh.inc.php";
+//$curUser = $_SESSION["userid"];
 ?>
-
-
 <div class="wrapper">
 
-    <section class="signup-form">
-        <?php
+<section class="signup-form"> 
+  <h1>Hotel Information<h1> 
+  <?php
         if(isset($_POST["sessionID"]))
         {
             $hotelID = $_POST["sessionID"];
@@ -52,7 +51,7 @@
 
             
             
-            echo "<h1>" . $hotelname . "</h1>";
+            echo "<h2>" . $hotelname . "</h2>";
             echo "<h2>" . $roomTypes . "</h2>";
             echo "<h2>" . $roomPrices . "</h2>";
             echo "<h2>" . $weekendString . "</h2>";
@@ -83,11 +82,70 @@
                 echo "<h2> No Amenities </h2>";
             }
 
-            mysqli_stmt_close($stmtA);
-        }   
+           mysqli_stmt_close($stmtA);
+        }
         ?>
-    </section>
-</div>
+  <h2>Update Hotel Information</h2>
+  <div class="signup-form-form">
+    <form action="includes/updateHotel.inc.php" method="post">
+      <input type="hidden" id="hotelname" name="hotelname" value="<?php echo $hotelname; ?>">
+      <input type="text" name="hName" placeholder="Hotel Name">
+      <input type="text" name="hnumRoomS" placeholder="Standard Rooms">
+      <input type="text" name="hnumRoomQ" placeholder="Queen Rooms">
+      <input type="text" name="hnumRoomK" placeholder="King Rooms">
+      <input type="text" name="hstandardPrice" placeholder="$ of Standard Room">
+      <input type="text" name="hqueenPrice" placeholder="$ of Queen Room">
+      <input type="text" name="hkingPrice" placeholder="$ of King Room">
+      <input type="text" name="hweekendDiff" placeholder="Weekend Differential">
+      <button type="submit" class="button" name="updateHot">Update</button>
+    </form>
+    <form action="includes/deleteHotel.inc.php" method="post">
+        <input type="hidden" id="hotelname" name="hotelname" value="<?php echo $hotelname; ?>">
+        <button type="submit" class="button" name="deleteHot">Delete</button>
+    </form>
+  </div> 
+  <?php 
+  if(isset($_GET["error"])) 
+  { 
+    if($_GET["error"] == "none") { 
+        echo "<p>Your Information has been updated!</p>"; 
+    } 
+    else if($_GET["error"] == "updaterror") { 
+        echo "<p>An error occurred when attempting to update hotel information</p>"; 
+    }
+    else if($_GET["error"] == "deleteerror") {
+        echo "<p>An error occurred when attempting to delete hotel information</p>"; 
+    }
+    else if ($_GET["error"] == "stmtfailed") {
+        echo "<p>Something went wrong!</p>";
+    }
+    else if ($_GET["error"] == "invalidnumrooms") {
+        echo "<p>Must type a number!</p>";
+    } 
+    else if ($_GET["error"] == "invalidnumroomq") { 
+        echo "<p>Must type a number, 0 means N/A!</p>"; 
+    }
+    else if ($_GET["error"] == "invalidnumroomk") {
+        echo "<p>Must type a number, 0 means N/A!</p>";
+    }
+    else if ($_GET["error"] == "invalidprices") {
+        echo "<p>Standard rooms was not a valid numeric price!</p>";
+    }
+    else if ($_GET["error"] == "invalidpriceq") {
+        echo "<p>Queen rooms was not a valid numeric price!</p>";
+    }
+    else if ($_GET["error"] == "invalidpricek") {
+        echo "<p>King rooms was not a valid numeric price!</p>";
+    }
+    else if ($_GET["error"] == "invalidweekdiff") {
+        echo "<p>Weekend Differential was not a proper multiplier!</p>";
+    }
+    else if ($_GET["error"] == "hotelexists") {
+        echo "<p>New Hotel Name already exists!</p>";
+    }
+  }
+  ?>
+</section>
 <?php
-    include_once 'footer.php';
+  include_once 'footer.php';
 ?>
