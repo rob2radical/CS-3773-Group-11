@@ -25,7 +25,7 @@
           <?php
             if (isset($_SESSION["useruid"]) && ($_SESSION["isAdmin"] == 0)) {
               echo "<li><a href='profile.php'>Profile Page</a></li>";
-              echo "<li><a href='reserveProp.php'>Make a Reservation</a></li>";
+              echo "<li><a href='reserve.php'>Make a Reservation</a></li>";
               echo "<li><a href='logout.php'>Logout</a></li>";
             }
             else if(isset($_SESSION["useruid"]) && ($_SESSION["isAdmin"] == 1))

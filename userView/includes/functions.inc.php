@@ -10,6 +10,36 @@ function emptyInputHotel($hotelname, $numRoomS, $numRoomQ, $numRoomK, $standardP
 		$result = false;
 	}
 	return $result;
+} 
+
+function emptyReserve($checkIn, $checkOut, $name, $email, $phone, $username) 
+{ 
+	if(empty($checkIn) || empty($checkOut) || empty($name) || empty($email) || empty($phone) || empty($username)) 
+	{ 
+		$result = true;
+	}
+	else 
+	{ 
+		$result = false;
+	} 
+	return $result;
+}
+
+function invalidDate($checkIn, $checkOut) 
+{ 
+	$dt = new DateTime();
+	$date = $dt->format('m/d/Y');
+
+	if($checkIn < $date || $checkOut < $date) 
+	{ 
+		$result = true;
+	} 
+	else 
+	{ 
+		$result = false;
+	}
+	return $result;
+
 }
 
 //Check if hotel name is a valid one
