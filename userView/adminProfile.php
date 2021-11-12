@@ -76,7 +76,7 @@ $curUser = $_SESSION["userid"];
     <h2>Reservations</h2>
     <div class="signup-form-form">
     <!--create reservation button-->
-      <form action="createReservation.php" method="post">
+      <form action="reserve.php" method="post">
         <button type="submit" class="button" name="CreateRes">Create</button>
       </form>
 

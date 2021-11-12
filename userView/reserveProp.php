@@ -55,16 +55,36 @@
 
 <div class="wrapper">
   <section class="signup-form"> 
-      <h1>Length of Stay</h2>
-
-      <form action="includes/reserveRoom.inc.php" method="post">
-          <div> 
+      <h1>Reservation Information</h2> 
+      <div class="signup-form-form"> 
+        <form action="includes/reserveRoom.inc.php" method="post"> 
             <label for="check-in">Check-In Date:</label>
             <input type="date" id="check-in" name="check-in">
-          </div> 
-          <div>
-          <label for="check-out">Check-Out Date:</label>
-          <input type="date" id="check-out" name="check-out">
-          <input type="submit" name="reserve">
-          </div>
-      </form>
+            <label for="check-out">Check-Out Date:</label>
+            <input type="date" id="check-out" name="check-out">
+            <input type="text" name="name" placeholder="Full name...">
+            <input type="text" name="email" placeholder="Email...">
+            <input type="text" name="phone" placeholder="Phone Number...">
+            <input type="text" name="uid" placeholder="Username...">
+            <button type="submit" name="reserve">Reserve</button> 
+        </form>
+        </div>
+        <?php 
+        
+        if(isset($_GET["error"])) 
+        { 
+            if($_GET["error"] == "emptyinput") 
+            { 
+                echo "<p>Fill in all fields!</p>";
+            } 
+            else if($_GET["error"] == "invalidDate") 
+            { 
+                echo "<p>Invalid Check-In/Out Date!</p>";
+            }
+        } 
+       ?>
+       </section>
+
+       <?php 
+         include_once 'footer.php';
+       ?>
