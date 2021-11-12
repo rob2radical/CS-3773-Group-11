@@ -69,14 +69,14 @@
           $prop = "modProp.php";
           $post = "post";
           $hidden = "hidden";
-          $sessionId = "sessionID";
+          $hotelId = "hotelID";
         
           if($result-> num_rows > 0)
           {
             while($row = $result-> fetch_assoc())
             {
               echo "<form action=". $prop . " method=". $post . ">";
-              echo "<input type=" . $hidden . " id=" . $sessionId ." name=" . $sessionId . " value=" . $row["hotelId"] . ">";
+              echo "<input type=" . $hidden . " id=" . $hotelId ." name=" . $hotelId . " value=" . $row["hotelId"] . ">";
               echo "<tr><td><button type=" . $submit . " name=" . $row["hotelId"] . " class=" . $buttonType . ">" . $row["hotelName"] . "</button></td></tr>";
               echo "</form>";
             }

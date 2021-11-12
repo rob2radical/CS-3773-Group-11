@@ -5,6 +5,7 @@ require_once "functions.inc.php";
 if(isset($_POST["updateHot"])) {
 
     $hotelname = $_POST["hotelname"];
+    $hotelID = $_POST["hotelID"];
     $newHName = $_POST["hName"]; 
     $hnumRoomS = $_POST["hnumRoomS"]; 
     $hnumRoomQ = $_POST["hnumRoomQ"]; 
@@ -51,7 +52,7 @@ if(isset($_POST["updateHot"])) {
         exit();
     }
     updateHotel($conn, $hotelname, $newHName, $hnumRoomS, $hnumRoomQ, $hnumRoomK, $hstandardPrice, $hqueenPrice, $hkingPrice, $hweekendDiff);
-    updateAmenitiesForHotel($conn, $hotelname, $newHName); 
+    updateAmenitiesForHotel($conn, $hotelname, $newHName, $hotelID); 
 } 
 else {
 	header("location: ../modProp.php?error=updateerror");
