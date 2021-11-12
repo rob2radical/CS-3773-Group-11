@@ -5,22 +5,21 @@ $curUser = $_SESSION["userid"];
 ?>
 <div class="wrapper">
 
-<section class="signup-form">
-  <h1>User Information<h1> 
-    <?php
+<section class="signup-form"> 
+  <h1> Admin User Information<h1> 
+    <?php 
     if(isset($_SESSION["userid"])) 
     { 
-      $userID = $_SESSION["userid"]; 
+      $userID = $_SESSION["userid"];
 
       $sql = "SELECT * from users WHERE usersId = ? ";
       $stmt = mysqli_stmt_init($conn);
-      if (!mysqli_stmt_prepare($stmt, $sql)) {
-           header("location: prop.php?error=stmtfailed");
-          exit();
-      } 
-      mysqli_stmt_bind_param($stmt, "s", $userID); 
-      mysqli_stmt_execute($stmt); 
-      // "Get result" returns the results from a prepared statement
+      if(!mysqli_stmt_prepare($stmt, $sql)) { 
+        header("location: adminProfile.php?error=stmtfailed");
+        exit();
+      }
+      mysqli_stmt_bind_param($stmt, "s", $userID);
+      mysqli_stmt_execute($stmt);
       $result = mysqli_stmt_get_result($stmt);
       $row = mysqli_fetch_assoc($result);
       mysqli_stmt_close($stmt);
@@ -29,7 +28,6 @@ $curUser = $_SESSION["userid"];
       $useremail = $row["usersEmail"];
       $usersphone = $row["usersPhone"];
       $usersuname = $row["usersUid"];
-      $userRole = $row["isAdmin"];
 
       echo "<h2>" . $username . "</h2>";
       echo "<h2>" . $useremail . "</h2>";

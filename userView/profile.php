@@ -6,7 +6,8 @@ $curUser = $_SESSION["userid"];
 <div class="wrapper">
 
 <section class="signup-form"> 
-  <h1>User Information<h1> 
+  <h1><u>User Information<h1></u>
+  <br>
     <?php
     if(isset($_SESSION["userid"])) 
     { 
@@ -31,10 +32,14 @@ $curUser = $_SESSION["userid"];
       $usersuname = $row["usersUid"];
       $userRole = $row["isAdmin"];
 
-      echo "<h2>" . $username . "</h2>";
-      echo "<h2>" . $useremail . "</h2>";
-      echo "<h2>" . $usersphone . "</h2>";
-      echo "<h2>" . $usersuname . "</h2>";
+      echo "<u>Full Name</u> - $username<br>";
+      echo "<br>";
+      echo "<u>Email</u> - $useremail<br>";
+      echo "<br>";
+      echo "<u>Phone Number</u> - $usersphone<br>";
+      echo "<br>";
+      echo "<u>Username</u> - $usersuname<br>";
+      echo "<br>";
     }
     ?>
   <h2>Update Information</h2>
@@ -71,6 +76,18 @@ $curUser = $_SESSION["userid"];
     else if($_GET["error"] == "invalidphone") 
     { 
       echo "<p>An invalid phone number was entered</p>";
+    } 
+    else if ($_GET["error"] == "uidExistserror") 
+    { 
+      echo "<p>That username is already taken!";
+    }
+    else if ($_GET["error"] == "phoneExistserror") 
+    { 
+      echo "<p>That phone number is already taken!";
+    }
+    else if ($_GET["error"] == "emailExistserror") 
+    { 
+      echo "<p>That email is already taken!";
     }
   }
   ?>
