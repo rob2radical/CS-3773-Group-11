@@ -59,19 +59,16 @@
       <div class="signup-form-form"> 
         <form action="includes/reserveRoom.inc.php" method="post">
             <div>
-              <label for="room_type">Select Room Type:</label>
-              <select name="room_type" id="room_type"> 
                 <?php 
                 if(isset($_POST["sessionID"]))
                 { 
-                  echo "hello";
                   $hotelID = $_POST["sessionID"];
-                  echo "$hotelID"; 
+                  #echo "$hotelID"; 
                   $query = "SELECT * from hotels WHERE hotelId = ?";
                   
                   $stmt = mysqli_stmt_init($conn);
                   if (!mysqli_stmt_prepare($stmt, $query)) { 
-                      header("location: prop.php?error=stmtfailed");
+                      header("location: reserveProp.php?error=stmtfailed");
                       exit();
                   } 
 
@@ -79,26 +76,34 @@
                   mysqli_stmt_execute($stmt);
                   // "Get result" returns the results from a prepared statement
                   $result = mysqli_stmt_get_result($stmt);
-
-                  while($row = mysqli_fetch_assoc($result)) 
+                  $row = mysqli_fetch_assoc($result);
+                  mysqli_stmt_close($stmt);
+             
+                  if($row["numRoomS"] == 0 && $row["numRoomS"] == 0 && $row["numRoomS"] == 0) 
                   { 
-                    if(!$row["numRoomS"] == NULL) 
-                    { 
-                      echo "<option>".$row["numRoomS"]."</option>";
+                    echo "No rooms available";
+                    exit();
+
+                  }
+                  else 
+                  { 
+                    echo "<label for=room_type>Select Room Type:</label>";
+                    echo "<select name=room_type id=room_type>";
+                    if($row["numRoomS"] != NULL)
+                    {  
+                      echo "<option>Standard</option>";
                     } 
-                    if(!$row["numRoomQ"] == NULL) 
-                    { 
-                      echo "<option>".$row["numRoomQ"]."</option>";
+                    if($row["numRoomQ"] != NULL) 
+                    {  
+                      echo "<option>Queen</option>";
                     } 
-                    if(!$row["numRoomK"] == NULL) 
+                    if($row["numRoomK"] != NULL) 
                     { 
-                      echo "<option>".$row["numRoomK"]."</option>";
+                      echo "<option>King</option>";
                     } 
                   }
-              echo "</select>";
-                  mysqli_stmt_close($stmt);
+                  echo "</select>";
                 } 
-
                 ?>
             </div> 
             <label for="check-in">Check-In Date:</label>
@@ -119,6 +124,10 @@
             else if($_GET["error"] == "invalidDate") 
             { 
                 echo "<p>Invalid Check-In/Out Date!</p>";
+            } 
+            else if($_GET["error"] == "stmtfailed") 
+            { 
+              echo "<p>Could not fetch hotel information";
             }
         } 
        ?>
