@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 12, 2021 at 07:24 AM
+-- Generation Time: Nov 17, 2021 at 02:35 AM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.11
 
@@ -95,7 +95,7 @@ INSERT INTO `hotels` (`hotelId`, `hotelName`, `numRoomS`, `numRoomQ`, `numRoomK`
 (8, 'The Magnolia All Suites', 10, 6, 4, 100, 150, 250, 0.25),
 (9, 'The Regency Rooms', 10, 6, 4, 100, 150, 250, 0.25),
 (10, 'Town Inn Budget Rooms', 75, 45, 30, 25, 50, 60, 0.15),
-(22, 'Test 1', 10, 5, 10, 10, 30, 10, 0.5);
+(22, 'Test 1', 10, 5, 10, 10, 30, 50, 0.5);
 
 -- --------------------------------------------------------
 
@@ -104,9 +104,10 @@ INSERT INTO `hotels` (`hotelId`, `hotelName`, `numRoomS`, `numRoomQ`, `numRoomK`
 --
 
 CREATE TABLE `reservations` (
+  `resId` int(11) NOT NULL,
   `usersId` int(100) NOT NULL,
   `hotelName` varchar(100) NOT NULL,
-  `roomType` int(100) NOT NULL,
+  `roomType` varchar(100) NOT NULL,
   `name` varchar(100) NOT NULL,
   `phoneNum` varchar(100) NOT NULL,
   `email` varchar(100) NOT NULL,
@@ -142,7 +143,8 @@ INSERT INTO `users` (`usersId`, `usersName`, `usersEmail`, `usersPhone`, `usersU
 (4, 'Juan Rodriguez', 'qsy775@my.utsa.edu', '1234567899', 'meatman', '$2y$10$AKrOPfHj8Cqvdk0iqL1HZeucaOyTwdig.BxSsFBBsKdzj78knQvtS', NULL),
 (5, 'Amber Sanchez', 'lovelylibra55@gmail.com', '2105361729', 'cashmoney', '$2y$10$ZpI3tEsqhuxAcDacs3SgquML03HvxYc.9Gl13mg/nHAyvJlPw4U8q', NULL),
 (6, 'Dan Dan', 'danielmontaudon909@live.com', '8623242401', 'pooopooo', '$2y$10$mzcGZaAWmVNL3eAezE.gYuNwBtOhk5Q.NVvK8Z3tUlF3xrD8MArxy', 1),
-(7, 'Daniel Ricardo Blom Montaudon', 'danielmontaudon909@live.com', '1234561234', 'yeah', '$2y$10$kyUCceXe0k402U/GQ3yiaOyzohmw0Yf7TpPfGSbRz4ar9G1cs7.Ua', NULL);
+(7, 'Daniel Ricardo Blom Montaudon', 'danielmontaudon909@live.com', '1234561234', 'yeah', '$2y$10$kyUCceXe0k402U/GQ3yiaOyzohmw0Yf7TpPfGSbRz4ar9G1cs7.Ua', NULL),
+(8, 'Daniel Ricardo Blom Montaudon', 'danielmontaudon@live.com', '8623242401', 'yum', '$2y$10$GGLj/0rPkUcYozGCI41G3..G2/.EJgjtwE2d7NQvmQjCxwkEcGHcq', NULL);
 
 --
 -- Indexes for dumped tables
@@ -161,6 +163,12 @@ ALTER TABLE `hotels`
   ADD PRIMARY KEY (`hotelId`);
 
 --
+-- Indexes for table `reservations`
+--
+ALTER TABLE `reservations`
+  ADD PRIMARY KEY (`resId`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -174,19 +182,25 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `amenities`
 --
 ALTER TABLE `amenities`
-  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
 
 --
 -- AUTO_INCREMENT for table `hotels`
 --
 ALTER TABLE `hotels`
-  MODIFY `hotelId` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `hotelId` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+
+--
+-- AUTO_INCREMENT for table `reservations`
+--
+ALTER TABLE `reservations`
+  MODIFY `resId` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `usersId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `usersId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
