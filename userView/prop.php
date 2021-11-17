@@ -83,7 +83,7 @@
             mysqli_stmt_close($stmtA);
         }  
         
-        if(isset($_GET["error"])
+        if(isset($_GET["error"]))
         {
             if($_GET["error"] == "stmtfailed") {
                 echo "<p>Something went wrong!</p>";
