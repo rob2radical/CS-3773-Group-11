@@ -63,53 +63,69 @@
                 if(isset($_POST["sessionID"]))
                 { 
                   $hotelID = $_POST["sessionID"];
-                  #echo "$hotelID"; 
-                  $query = "SELECT * from hotels WHERE hotelId = ?";
+                  echo $hotelID;
                   
-                  $stmt = mysqli_stmt_init($conn);
-                  if (!mysqli_stmt_prepare($stmt, $query)) { 
-                      header("location: reserveProp.php?error=stmtfailed");
-                      exit();
-                  } 
-
-                  mysqli_stmt_bind_param($stmt, "s", $hotelID);
-                  mysqli_stmt_execute($stmt);
-                  // "Get result" returns the results from a prepared statement
-                  $result = mysqli_stmt_get_result($stmt);
-                  $row = mysqli_fetch_assoc($result);
-                  mysqli_stmt_close($stmt);
-             
-                  if($row["numRoomS"] == 0 && $row["numRoomS"] == 0 && $row["numRoomS"] == 0) 
-                  { 
-                    echo "No rooms available";
+                }
+                else if(isset($_GET["hotelID"])) 
+                { 
+                  $hotelID = $_GET["hotelID"];
+                }
+                $userID = $_SESSION["useruid"];
+                $usersID = $_SESSION["userid"];
+                $usersPhone = $_SESSION["usersphone"];
+                $usersEmail = $_SESSION["usersemail"];
+                $query = "SELECT * from hotels WHERE hotelId = ?";
+                  
+                $stmt = mysqli_stmt_init($conn);
+                if (!mysqli_stmt_prepare($stmt, $query)) { 
+                    header("location: reserveProp.php?error=stmtfailed");
                     exit();
-
-                  }
-                  else 
-                  { 
-                    echo "<label for=room_type>Select Room Type:</label>";
-                    echo "<select name=room_type id=room_type>";
-                    if($row["numRoomS"] != NULL)
-                    {  
-                      echo "<option>Standard</option>";
-                    } 
-                    if($row["numRoomQ"] != NULL) 
-                    {  
-                      echo "<option>Queen</option>";
-                    } 
-                    if($row["numRoomK"] != NULL) 
-                    { 
-                      echo "<option>King</option>";
-                    } 
-                  }
-                  echo "</select>";
                 } 
+
+                mysqli_stmt_bind_param($stmt, "s", $hotelID);
+                mysqli_stmt_execute($stmt);
+                // "Get result" returns the results from a prepared statement
+                $result = mysqli_stmt_get_result($stmt);
+                $row = mysqli_fetch_assoc($result);
+                mysqli_stmt_close($stmt);
+                $hotelName = $row["hotelName"];
+            
+                if($row["numRoomS"] == 0 && $row["numRoomQ"] == 0 && $row["numRoomK"] == 0) 
+                { 
+                  echo "No rooms available";
+                  exit();
+
+                }
+                else 
+                { 
+                  echo "<label for=room_type>Select Room Type:</label>";
+                  echo "<select name=room_type id=room_type>";
+                  if($row["numRoomS"] != NULL)
+                  {  
+                    echo "<option>Standard</option>";
+                  } 
+                  if($row["numRoomQ"] != NULL) 
+                  {  
+                    echo "<option>Queen</option>";
+                  } 
+                  if($row["numRoomK"] != NULL) 
+                  { 
+                    echo "<option>King</option>";
+                  } 
+                }
+                echo "</select>"; 
                 ?>
             </div> 
             <label for="check-in">Check-In Date:</label>
             <input type="date" id="check-in" name="check-in">
             <label for="check-out">Check-Out Date:</label>
             <input type="date" id="check-out" name="check-out">
+            <input type="hidden" id="hotelID" name="hotelID" value="<?php echo $hotelID?>">
+            <input type="hidden" id="userName" name="userName" value="<?php echo $userID?>">
+            <input type="hidden" id="usersId" name="usersId" value="<?php echo $usersID?>">
+            <input type="hidden" id="usersPhone" name="usersPhone" value="<?php echo $usersPhone?>">
+            <input type="hidden" id="usersEmail" name="usersEmail" value="<?php echo $usersEmail?>">
+            <input type="hidden" id="hotelName" name="hotelName" value="<?php echo $hotelName?>">
             <button type="submit" name="reserve">Reserve</button> 
         </form>
       </div>
@@ -127,9 +143,14 @@
             } 
             else if($_GET["error"] == "stmtfailed") 
             { 
-              echo "<p>Could not fetch hotel information";
+              echo "<p>Could not fetch hotel information</p>";
+            } 
+            else if($_GET["error"] == "none") 
+            { 
+              echo "<p>You have reserved your room!</p>";
             }
-        } 
+        }
+         
        ?>
        </section>
 

@@ -282,6 +282,31 @@ function createHotelq($conn, $hotelname, $numRoomS, $numRoomQ, $numRoomK, $stand
 	  exit();
   }
 
+  function calTotalPrice($conn, $checkIn, $checkOut) 
+  {
+
+  }
+
+  function createReserve($conn, $hotelID, $usersID, $hotelName, $roomType, $username, $phoneNum, $email, $fromDate, $toDate) 
+  { 
+	  $sql = "INSERT INTO reservations (usersId, hotelName, roomType, uName, phoneNum, email, fromDate, toDate) VALUES (?, ?, ?, ?, ?, ?, ?, ?);"; 
+
+	  $stmt = mysqli_stmt_init($conn); 
+
+	  if(!mysqli_stmt_prepare($stmt, $sql)) 
+	  { 
+		header("location: ../reserveProp.php?error=stmtfailed&hotelID=$hotelID");
+		exit();
+	  }
+	  mysqli_stmt_bind_param($stmt, "ssssssss", $usersID, $hotelName, $roomType, $username, $phoneNum, $email, $fromDate, $toDate);
+	  mysqli_stmt_execute($stmt);
+	  mysqli_stmt_close($stmt);
+	  mysqli_close($conn);
+	  header("location: ../reserveProp.php?error=none&hotelID=$hotelID");
+	  exit();
+
+  }
+
 // Insert new user into table users database
 function createUser($conn, $name, $email, $phone, $username, $pwd) {
   $sql = "INSERT INTO users (usersName, usersEmail, usersPhone, usersUid, usersPwd) VALUES (?, ?, ?, ?, ?);";
