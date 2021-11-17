@@ -16,39 +16,39 @@ if(isset($_POST["updateHot"])) {
     $hweekendDiff = $_POST["hweekendDiff"];
 
     if (invalidHotelName($newHName) !== false) {
-        header("location: ../modProp.php?error=hotelname");
+        header("location: ../modProp.php?error=hotelname&id=$hotelID");
         exit();
     }
     if (hotelExists($conn, $newHName) !== false) {
-        header("location: ../modProp.php?error=hotelexists");
+        header("location: ../modProp.php?error=hotelexists&id=$hotelID");
             exit();
     }
     if (invalidNumberIntS($hnumRoomS) !== false) {
-        header("location: ../modProp.php?error=invalidnumrooms");
+        header("location: ../modProp.php?error=invalidnumrooms&id=$hotelID");
         exit();
     }
     if (invalidNumberInt($hnumRoomQ) !== false) {
-        header("location: ../modProp.php?error=invalidnumroomq");
+        header("location: ../modProp.php?error=invalidnumroomq&id=$hotelID");
         exit();
     }
     if (invalidNumberInt($hnumRoomK) !== false) {
-        header("location: ../modProp.php?error=invalidnumroomk");
+        header("location: ../modProp.php?error=invalidnumroomk&id=$hotelID");
         exit();
     }
     if (invalidNumberFloat($hstandardPrice) !== false) {
-        header("location: ../modProp.php?error=invalidprices");
+        header("location: ../modProp.php?error=invalidprices&id=$hotelID");
         exit();
     }
     if (invalidNumberFloat($hqueenPrice) !== false) {
-        header("location: ../modProp.php?error=invalidpriceq");
+        header("location: ../modProp.php?error=invalidpriceq&id=$hotelID");
         exit();
     }
     if (invalidNumberFloat($hkingPrice) !== false) {
-        header("location: ../modProp.php?error=invalidpricek");
+        header("location: ../modProp.php?error=invalidpricek&id=$hotelID");
         exit();
     }
     if (invalidNumberFloat($hweekendDiff) !== false) {
-        header("location: ../modProp.php?error=invalidweekdiff");
+        header("location: ../modProp.php?error=invalidweekdiff&id=$hotelID");
         exit();
     }
     updateHotel($conn, $hotelID, $newHName, $hnumRoomS, $hnumRoomQ, $hnumRoomK, $hstandardPrice, $hqueenPrice, $hkingPrice, $hweekendDiff);

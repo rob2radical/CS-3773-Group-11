@@ -270,7 +270,7 @@ function createHotelq($conn, $hotelname, $numRoomS, $numRoomQ, $numRoomK, $stand
 	}
 	  $stmt = mysqli_stmt_init($conn);
 	  if (!mysqli_stmt_prepare($stmt, $sql)) {
-		   header("location: ../createHotel.php?error=stmtfailed");
+		   header("location: ../createHotel.php?error=stmtfailed&hotelname=$hotelname");
 		  exit();
 	  }
   
@@ -569,7 +569,7 @@ function updateHotel($conn, $hotelID, $newHName, $hnumRoomS, $hnumRoomQ, $hnumRo
 	$sql = "SELECT * FROM hotels WHERE hotelId = ?"; 
 	$stmt = mysqli_stmt_init($conn);
 	if (!mysqli_stmt_prepare($stmt, $sql)) {
-		header("location: ../modProp.php?error=stmtfailed");
+		header("location: ../modProp.php?error=stmtfailed&id=$hotelID");
 		exit();
 	}
 
@@ -583,7 +583,7 @@ function updateHotel($conn, $hotelID, $newHName, $hnumRoomS, $hnumRoomQ, $hnumRo
 	if(empty($newHName) && empty($hnumRoomS) && empty($hnumRoomQ) && empty($hnumRoomK) && empty($hstandardPrice) && empty($hqueenPrice) && empty($hkingPrice) && empty($hweekendDiff)) 
 	{ 
 		//$result = false;
-		header("location: ../modProp.php?error=updateerror");
+		header("location: ../modProp.php?error=updateerror&id=$hotelID");
 		//return $result;
 	}
 
@@ -687,7 +687,7 @@ function updateHotel($conn, $hotelID, $newHName, $hnumRoomS, $hnumRoomQ, $hnumRo
 	$sqlUpdate = "UPDATE hotels SET hotelName = ?, numRoomS = ?, numRoomQ = ?, numRoomK = ?, standardPrice = ?, queenPrice = ?, kingPrice = ?, weekendDiff = ? WHERE hotelId = ?"; 
 	$updateStmt = mysqli_stmt_init($conn);
 	if (!mysqli_stmt_prepare($updateStmt, $sqlUpdate)) {
-		header("location: ../modProp.php?error=stmtfailed"); 
+		header("location: ../modProp.php?error=stmtfailed&id=$hotelID"); 
 		exit(); 
 	} 
 	mysqli_stmt_bind_param($updateStmt, "sssssssss", $nameChange, $numSChange, $numQChange, $numKChange, $priceSChange, $priceQChange, $priceKChange, $diffChange, $hotelID); 
