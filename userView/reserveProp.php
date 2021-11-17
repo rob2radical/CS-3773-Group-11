@@ -57,18 +57,57 @@
   <section class="signup-form"> 
       <h1>Reservation Information</h2> 
       <div class="signup-form-form"> 
-        <form action="includes/reserveRoom.inc.php" method="post"> 
+        <form action="includes/reserveRoom.inc.php" method="post">
+            <div>
+              <label for="room_type">Select Room Type:</label>
+              <select name="room_type" id="room_type"> 
+                <?php 
+                if(isset($_POST["sessionID"]))
+                { 
+                  echo "hello";
+                  $hotelID = $_POST["sessionID"];
+                  echo "$hotelID"; 
+                  $query = "SELECT * from hotels WHERE hotelId = ?";
+                  
+                  $stmt = mysqli_stmt_init($conn);
+                  if (!mysqli_stmt_prepare($stmt, $query)) { 
+                      header("location: prop.php?error=stmtfailed");
+                      exit();
+                  } 
+
+                  mysqli_stmt_bind_param($stmt, "s", $hotelID);
+                  mysqli_stmt_execute($stmt);
+                  // "Get result" returns the results from a prepared statement
+                  $result = mysqli_stmt_get_result($stmt);
+
+                  while($row = mysqli_fetch_assoc($result)) 
+                  { 
+                    if(!$row["numRoomS"] == NULL) 
+                    { 
+                      echo "<option>".$row["numRoomS"]."</option>";
+                    } 
+                    if(!$row["numRoomQ"] == NULL) 
+                    { 
+                      echo "<option>".$row["numRoomQ"]."</option>";
+                    } 
+                    if(!$row["numRoomK"] == NULL) 
+                    { 
+                      echo "<option>".$row["numRoomK"]."</option>";
+                    } 
+                  }
+              echo "</select>";
+                  mysqli_stmt_close($stmt);
+                } 
+
+                ?>
+            </div> 
             <label for="check-in">Check-In Date:</label>
             <input type="date" id="check-in" name="check-in">
             <label for="check-out">Check-Out Date:</label>
             <input type="date" id="check-out" name="check-out">
-            <input type="text" name="name" placeholder="Full name...">
-            <input type="text" name="email" placeholder="Email...">
-            <input type="text" name="phone" placeholder="Phone Number...">
-            <input type="text" name="uid" placeholder="Username...">
             <button type="submit" name="reserve">Reserve</button> 
         </form>
-        </div>
+      </div>
         <?php 
         
         if(isset($_GET["error"])) 
