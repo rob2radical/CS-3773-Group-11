@@ -29,10 +29,19 @@ $curUser = $_SESSION["userid"];
       $usersphone = $row["usersPhone"];
       $usersuname = $row["usersUid"];
 
-      echo "<h2>" . $username . "</h2>";
+      /* echo "<h2>" . $username . "</h2>";
       echo "<h2>" . $useremail . "</h2>";
       echo "<h2>" . $usersphone . "</h2>";
-      echo "<h2>" . $usersuname . "</h2>";
+      echo "<h2>" . $usersuname . "</h2>"; */
+
+      echo "<u>Full Name</u> - $username<br>";
+      echo "<br>";
+      echo "<u>Email</u> - $useremail<br>";
+      echo "<br>";
+      echo "<u>Phone Number</u> - $usersphone<br>";
+      echo "<br>";
+      echo "<u>Username</u> - $usersuname<br>";
+      echo "<br>";
     }
     ?>
   <h2>Update Account</h2>

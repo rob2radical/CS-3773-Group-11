@@ -1,6 +1,7 @@
 <?php
 
-function emptyInputHotel($hotelname, $numRoomS, $numRoomQ, $numRoomK, $standardPrice, $queenPrice, $kingPrice, $weekendDiff, $numAmenities) {
+//check if hotel name input is empty
+function emptyInputHotel($hotelname) {
 	//$result;
 	//if (empty($hotelname) || empty($numRoomS) || empty($numRoomQ) || empty($numRoomK) || empty($standardPrice) || empty($queenPrice) || empty($kingPrice) || empty($weekendDiff) || empty($numAmenities))
 	if (empty($hotelname)) {
@@ -25,6 +26,7 @@ function emptyReserve($roomType, $checkIn, $checkOut)
 	return $result;
 }
 
+//check for invalid date input
 function invalidDate($checkIn, $checkOut) 
 { 
 	$dt = new DateTime();
@@ -58,6 +60,18 @@ function invalidHotelName($hotelname) {
 function invalidNumberInt($numRoom) { 
 	//$result;
 	if(!preg_match("/^[0-9]*$/", $numRoom)) { 
+		$result = true;
+	} 
+	else { 
+		$result = false;
+	}
+	return $result;
+}
+
+//Check invalid Standard Room Integers (numberOfRooms)
+function invalidNumberIntS($numRoom) { 
+	//$result;
+	if(!preg_match("/^[0-9]*$/", $numRoom) && !empty($numRoom)) { 
 		$result = true;
 	} 
 	else { 
@@ -138,6 +152,7 @@ function pwdMatch($pwd, $pwdrepeat) {
 	return $result;
 }
 
+//check if entered hotel name exists within table hotels database
 function hotelExists($conn, $hotelname) {
 	$sql = "SELECT * FROM hotels WHERE hotelName = ?;";
 	  $stmt = mysqli_stmt_init($conn);
@@ -164,7 +179,7 @@ function hotelExists($conn, $hotelname) {
 	  mysqli_stmt_close($stmt);
   }
 
-// Check if username is in database, if so then return data
+// Check if username is in table users database, if so then return data
 function uidExists($conn, $username) {
   $sql = "SELECT * FROM users WHERE usersUid = ? OR usersEmail = ?;";
 	$stmt = mysqli_stmt_init($conn);
@@ -189,6 +204,7 @@ function uidExists($conn, $username) {
 	mysqli_stmt_close($stmt);
 }
 
+//check if phone number is unique within table users
 function phoneExists($conn, $phone) { 
 	$sql = "SELECT * FROM users WHERE usersPhone = ?;";
 	$stmt = mysqli_stmt_init($conn);
@@ -213,6 +229,7 @@ function phoneExists($conn, $phone) {
 	mysqli_stmt_close($stmt);
 }
 
+//check if email is unique within table users
 function emailExists($conn, $email) { 
 	$sql = "SELECT * FROM users WHERE usersEmail = ?;";
 	$stmt = mysqli_stmt_init($conn);
@@ -237,7 +254,7 @@ function emailExists($conn, $email) {
 	mysqli_stmt_close($stmt);
 }
 
-// Insert new hotel into database
+// Insert new hotel into table hotels database
 function createHotelq($conn, $hotelname, $numRoomS, $numRoomQ, $numRoomK, $standardPrice, $queenPrice, $kingPrice, $weekendDiff, $numAmenities) {
 	$sql = "INSERT INTO hotels (hotelName, numRoomS, numRoomQ, numRoomK, standardPrice, queenPrice, kingPrice, weekendDiff) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
   
@@ -265,7 +282,7 @@ function createHotelq($conn, $hotelname, $numRoomS, $numRoomQ, $numRoomK, $stand
 	  exit();
   }
 
-// Insert new user into database
+// Insert new user into table users database
 function createUser($conn, $name, $email, $phone, $username, $pwd) {
   $sql = "INSERT INTO users (usersName, usersEmail, usersPhone, usersUid, usersPwd) VALUES (?, ?, ?, ?, ?);";
 
@@ -285,7 +302,7 @@ function createUser($conn, $name, $email, $phone, $username, $pwd) {
 	exit();
 }
 
-// Update new user in the existing database
+// Update user in the table users database
 function updateUser($conn, $name, $email, $phone, $username, $userId, $role)
 {
 		$sql = "SELECT * FROM users WHERE usersId = ?"; 
@@ -439,37 +456,54 @@ function loginUser($conn, $username, $pwd) {
 	}
 }
 
+//add modified amenity into amenities table
 function addModAmenity($conn, $hotelID, $amenity){
-	$sql = "INSERT INTO amenities (hotelId, amenity) VALUES (?, ?);";
+	if(!amenityExists($conn, $amenity, $hotelID))
+	{
+		$sql = "INSERT INTO amenities (hotelId, amenity) VALUES (?, ?);";
 
-	$stmt = mysqli_stmt_init($conn);
-	if (!mysqli_stmt_prepare($stmt, $sql)) {
-	 	header("location: ../modProp.php?error=stmtfailed");
+		$stmt = mysqli_stmt_init($conn);
+		if (!mysqli_stmt_prepare($stmt, $sql)) {
+			header("location: ../modProp.php?error=stmtfailed");
+			exit();
+		}
+
+		mysqli_stmt_bind_param($stmt, "ss", $hotelID, $amenity);
+		mysqli_stmt_execute($stmt);
+		mysqli_stmt_close($stmt);
+		mysqli_close($conn);
+		header("location: ../modProp.php?error=none&id=$hotelID&amen=$amenity");
 		exit();
 	}
-
-	mysqli_stmt_bind_param($stmt, "ss", $hotelID, $amenity);
-	mysqli_stmt_execute($stmt);
-	mysqli_stmt_close($stmt);
-	mysqli_close($conn);
-	header("location: ../modProp.php?error=none&id=$hotelID&amen=$amenity");
-	exit();
+	else
+	{
+		header("location: ../modProp.php?error=amenExists&id=$hotelID");
+		exit();
+	}
 }
 
 function remModAmenity($conn, $hotelID, $amenity){
-	$sql = "DELETE FROM amenities WHERE hotelId = ? AND amenity = ?;";
+	if(amenityExists($conn, $amenity, $hotelID))
+	{
+		$sql = "DELETE FROM amenities WHERE hotelId = ? AND amenity = ?;";
 
-	$stmt = mysqli_stmt_init($conn);
-	if (!mysqli_stmt_prepare($stmt, $sql)) {
-	 	header("location: ../modProp.php?error=stmtfailed");
+		$stmt = mysqli_stmt_init($conn);
+		if (!mysqli_stmt_prepare($stmt, $sql)) {
+			header("location: ../modProp.php?error=stmtfailed");
+			exit();
+		}
+
+		mysqli_stmt_bind_param($stmt, "ss", $hotelID, $amenity);
+		mysqli_stmt_execute($stmt);
+		//mysqli_close($conn);
+		header("location: ../modProp.php?error=none&id=$hotelID");
+		mysqli_stmt_close($stmt);
+	}
+	else
+	{
+		header("location: ../modProp.php?error=amenNotExists&id=$hotelID");
 		exit();
 	}
-
-	mysqli_stmt_bind_param($stmt, "ss", $hotelID, $amenity);
-	mysqli_stmt_execute($stmt);
-	//mysqli_close($conn);
-	header("location: ../modProp.php?error=none&id=$hotelID");
-	mysqli_stmt_close($stmt);
 
 }
 

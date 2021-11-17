@@ -25,7 +25,7 @@
     // Error messages
     if (isset($_GET["error"])) {
       if ($_GET["error"] == "emptyinput") {
-        echo "<p>Fill in all fields! 0 is equal to N/A</p>";
+        echo "<p>Must fill out Hotel Name! 0 is equal to N/A</p>";
       }
       //DO THE REST OF VALIDATION ALL THE WAY TO THE BOTTOM (createHotel.inc.php, functions.inc.php must all be in sync)
       else if ($_GET["error"] == "invalidhotelname") {
@@ -35,19 +35,19 @@
         echo "<p>Must type a number!</p>";
       } 
       else if ($_GET["error"] == "invalidnumroomq") { 
-        echo "<p>Must type a number, 0 means N/A!</p>"; 
+        echo "<p>Must type a valid number, 0 means N/A!</p>"; 
       }
       else if ($_GET["error"] == "invalidnumroomk") {
-        echo "<p>Must type a number, 0 means N/A!</p>";
+        echo "<p>Must type a valid number, 0 means N/A!</p>";
       }
       else if ($_GET["error"] == "invalidprices") {
-        echo "<p>Standard rooms was not a valid number!</p>";
+        echo "<p>Standard Price was not a valid number!</p>";
       }
       else if ($_GET["error"] == "invalidpriceq") {
-        echo "<p>Queen rooms was not a valid number!</p>";
+        echo "<p>Queen Price was not a valid number!</p>";
       }
       else if ($_GET["error"] == "invalidpricek") {
-        echo "<p>King rooms was not a valid number!</p>";
+        echo "<p>King Price was not a valid number!</p>";
       }
       else if ($_GET["error"] == "invalidweekdiff") {
         echo "<p>Weekend Differential was not a fraction!</p>";

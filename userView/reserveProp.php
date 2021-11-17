@@ -109,7 +109,7 @@
         </form>
       </div>
         <?php 
-        
+        //echo "<div>" . $_SESSION["userid"] . "</div>";
         if(isset($_GET["error"])) 
         { 
             if($_GET["error"] == "emptyinput") 
