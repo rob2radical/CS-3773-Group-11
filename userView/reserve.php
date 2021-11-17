@@ -47,7 +47,10 @@
 <!--A quick wrapper to align the content (ends in footer.php)-->
 <div class="wrapper">
   <section class="signup-form">
-     
+    <form action="userReservations.php" method="post">
+      <input type="hidden" id="sessionID" name="sessionID" value="<?php echo $_SESSION["userid"]; ?>">
+      <button type="submit" class="button" name="seeReserve">Current Reservations</button>
+    </form>
     <table>   
     <tr>
       <th>Choose a Hotel</th>

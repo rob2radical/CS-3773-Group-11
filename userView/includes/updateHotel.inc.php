@@ -23,7 +23,7 @@ if(isset($_POST["updateHot"])) {
         header("location: ../modProp.php?error=hotelexists");
             exit();
     }
-    if (invalidNumberInt($hnumRoomS) !== false) {
+    if (invalidNumberIntS($hnumRoomS) !== false) {
         header("location: ../modProp.php?error=invalidnumrooms");
         exit();
     }

@@ -100,6 +100,12 @@ include_once "includes/dbh.inc.php";
     else if ($_GET["error"] == "remAmenerror") {
         echo "<p>Something Wrong happened removing Amenity!</p>";
     }
+    else if ($_GET["error"] == "amenExists") {
+        echo "<p>Amenity already exists for this hotel!</p>";
+    }
+    else if ($_GET["error"] == "amenNotExists") {
+        echo "<p>Amenity to delete could not be found for this hotel!</p>";
+    }
   }
   ?>
 </section>
@@ -122,7 +128,12 @@ include_once "includes/dbh.inc.php";
 
             $hotelname = $row["hotelName"];
             //We assume that every property has atleast a Standard Room. King and Queen are optional
+            
+            echo "<u>Hotel Name</u> - " . $hotelname . "<br>";
+            echo "<br>";
+            
             $roomTypes = "Standard";
+    
             $roomPrices = $row["standardPrice"];
             $weekendSPrice = $row["standardPrice"] + ($row["standardPrice"] * $row["weekendDiff"]);
             $weekendString = $weekendSPrice;
@@ -144,10 +155,26 @@ include_once "includes/dbh.inc.php";
 
             
             
-            echo "<h2>" . $hotelname . "</h2>";
-            echo "<h2>" . $roomTypes . "</h2>";
-            echo "<h2>" . $roomPrices . "</h2>";
-            echo "<h2>" . $weekendString . "</h2>";
+            echo "<u>Room Types</u> - " . $roomTypes . "<br>";
+            echo "<br>";
+            echo "<u>Weekday Prices</u> - " . $roomPrices . "<br>";
+            echo "<br>";
+            echo "<u>Weekend Prices</u> - (" . $row["weekendDiff"] . ") " . $weekendString . "<br>";
+            echo "<br>";
+            echo "<u># of Standard Rooms</u> - " . $row["numRoomS"] . "<br>";
+            echo "<br>";
+
+            if($row["numRoomQ"] != NULL)
+            {
+                echo "<u># of Queen Rooms</u> - " . $row["numRoomQ"] . "<br>";
+                echo "<br>";
+            }
+            if($row["numRoomK"] != NULL)
+            {
+                echo "<u># of King Rooms</u> - " . $row["numRoomK"] . "<br>";
+                echo "<br>";
+            }
+        
 
             $sqlA = "SELECT * FROM amenities WHERE hotelId = ?";
             $stmtA = mysqli_stmt_init($conn);

@@ -21,7 +21,7 @@ if (isset($_POST["submit"])) {
 
   // Left inputs empty
   // We set the functions "!== false" since "=== true" has a risk of giving us the wrong outcome
-  if (emptyInputHotel($hotelname, $numRoomS, $numRoomQ, $numRoomK, $standardPrice, $queenPrice, $kingPrice, $weekendDiff, $numAmenities) !== false) {
+  if (emptyInputHotel($hotelname) !== false) {
     header("location: ../createHotel.php?error=emptyinput");
 		exit();
   }
@@ -33,7 +33,7 @@ if (isset($_POST["submit"])) {
     header("location: ../createHotel.php?error=hotelexists");
 		exit();
   }
-  if (invalidNumberInt($numRoomS) !== false) {
+  if (invalidNumberIntS($numRoomS) !== false) {
     header("location: ../createHotel.php?error=invalidnumrooms");
 		exit();
   }

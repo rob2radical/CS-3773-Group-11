@@ -54,6 +54,8 @@ $curUser = $_SESSION["userid"];
       <button type="submit" class="button" name="update">Update Information</button>
     </form>
   </div> 
+
+
   <?php 
   if(isset($_GET["error"])) 
   { 
