@@ -13,7 +13,7 @@ function emptyInputHotel($hotelname) {
 	return $result;
 } 
 
-function emptyReserve($roomtType, $checkIn, $checkOut) 
+function emptyReserve($roomType, $checkIn, $checkOut) 
 { 
 	if(empty($roomType) || empty($checkIn) || empty($checkOut)) 
 	{ 
