@@ -12,9 +12,9 @@ function emptyInputHotel($hotelname, $numRoomS, $numRoomQ, $numRoomK, $standardP
 	return $result;
 } 
 
-function emptyReserve($checkIn, $checkOut, $name, $email, $phone, $username) 
+function emptyReserve($roomType, $checkIn, $checkOut) 
 { 
-	if(empty($checkIn) || empty($checkOut) || empty($name) || empty($email) || empty($phone) || empty($username)) 
+	if(empty($roomType) || empty($checkIn) || empty($checkOut)) 
 	{ 
 		$result = true;
 	}

@@ -12,7 +12,6 @@
         if(isset($_POST["sessionID"]))
         {
             $hotelID = $_POST["sessionID"];
-            //echo $hotelID;
 
             $sql = "SELECT * FROM hotels WHERE hotelId = ?";
             $stmt = mysqli_stmt_init($conn);
