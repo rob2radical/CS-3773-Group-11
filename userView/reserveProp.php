@@ -68,8 +68,7 @@
             <input type="text" name="uid" placeholder="Username...">
             <button type="submit" name="reserve">Reserve</button> 
         </form>
-        
-        </div>
+      </div>
         <?php 
         //echo "<div>" . $_SESSION["userid"] . "</div>";
         if(isset($_GET["error"])) 

@@ -14,9 +14,9 @@ function emptyInputHotel($hotelname) {
 } 
 
 //check if all input fields are empty
-function emptyReserve($checkIn, $checkOut, $name, $email, $phone, $username) 
+function emptyReserve($roomtType, $checkIn, $checkOut) 
 { 
-	if(empty($checkIn) || empty($checkOut) || empty($name) || empty($email) || empty($phone) || empty($username)) 
+	if(empty($roomType) || empty($checkIn) || empty($checkOut)) 
 	{ 
 		$result = true;
 	}
