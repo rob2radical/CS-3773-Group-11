@@ -48,6 +48,11 @@ if (isset($_POST["submit"])) {
 		exit();
   }
 
+  if (emailExists($conn, $email) !== false) {
+    header("location: ../userSignUp.php?error=emailExists");
+		exit();
+  }
+
   // If we get to here, it means there are no user errors
 
   // Now we insert the user into the database
