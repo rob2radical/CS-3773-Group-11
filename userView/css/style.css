@@ -139,7 +139,7 @@ section {
 .signup-form form input {
   width: calc(100% - 16px);
   padding: 6px;
-  margin-bottom: 4px;
+  margin-bottom: 10px;
 }
 
 .signup-form form button {
