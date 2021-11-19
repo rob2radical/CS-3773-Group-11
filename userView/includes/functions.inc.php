@@ -307,6 +307,11 @@ function createHotelq($conn, $hotelname, $numRoomS, $numRoomQ, $numRoomK, $stand
 
   }
 
+  function updateReserve() 
+  { 
+	  
+  }
+
 // Insert new user into table users database
 function createUser($conn, $name, $email, $phone, $username, $pwd) {
   $sql = "INSERT INTO users (usersName, usersEmail, usersPhone, usersUid, usersPwd) VALUES (?, ?, ?, ?, ?);";
