@@ -295,14 +295,14 @@ function createHotelq($conn, $hotelname, $numRoomS, $numRoomQ, $numRoomK, $stand
 
 	  if(!mysqli_stmt_prepare($stmt, $sql)) 
 	  { 
-		header("location: ../reserveProp.php?error=stmtfailed&hotelID=$hotelID");
+		header("location: ../reserveProp.php?error=stmtfailed&hotelID=$hotelID&id=$usersID");
 		exit();
 	  }
 	  mysqli_stmt_bind_param($stmt, "ssssssss", $usersID, $hotelName, $roomType, $username, $phoneNum, $email, $fromDate, $toDate);
 	  mysqli_stmt_execute($stmt);
 	  mysqli_stmt_close($stmt);
 	  mysqli_close($conn);
-	  header("location: ../reserveProp.php?error=none&hotelID=$hotelID");
+	  header("location: ../reserveProp.php?error=none&hotelID=$hotelID&id=$usersID");
 	  exit();
 
   }

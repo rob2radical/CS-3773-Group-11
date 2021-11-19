@@ -19,7 +19,11 @@ if (isset($_POST["submit"])) {
         if(isset($_POST["$amenity"]))
         {
             $amenValue = $_POST["$amenity"];
-            echo $amenValue;
+            if(empty($amenValue))
+            {
+                header("location: ../createHotel.php?error=emptyAmen");
+                exit();
+            }
             if(!amenityExists($conn, $amenValue, $hotelID))
             {
                 //createAmenity($conn, $hotelID, $hotelname, $amenValue);

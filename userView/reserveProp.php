@@ -63,17 +63,67 @@
                 if(isset($_POST["sessionID"]))
                 { 
                   $hotelID = $_POST["sessionID"];
-                  echo $hotelID;
+                  //echo $hotelID;
                   
                 }
                 else if(isset($_GET["hotelID"])) 
                 { 
                   $hotelID = $_GET["hotelID"];
                 }
-                $userID = $_SESSION["useruid"];
-                $usersID = $_SESSION["userid"];
-                $usersPhone = $_SESSION["usersphone"];
-                $usersEmail = $_SESSION["usersemail"];
+
+                if(isset($_POST["usersId"]))
+                {
+                  $usersID = $_POST["usersId"];
+
+                  $sql = "SELECT * FROM users WHERE usersId = ?";
+                  $stmt = mysqli_stmt_init($conn);
+                  if (!mysqli_stmt_prepare($stmt, $sql)) {
+                      header("location: reserveProp.php?error=stmtfailed");
+                      exit();
+                  }
+              
+                  mysqli_stmt_bind_param($stmt, "s", $usersID);
+                  mysqli_stmt_execute($stmt);
+                  // "Get result" returns the results from a prepared statement
+                  $result = mysqli_stmt_get_result($stmt);
+                  $row = mysqli_fetch_assoc($result);
+                  mysqli_stmt_close($stmt);
+
+                  $username = $row["usersUid"];
+                  //$usersID = $row["usersId"];
+                  $usersPhone = $row["usersPhone"];
+                  $usersEmail = $row["usersEmail"];
+                }
+                else if(isset($_GET["usersId"]))
+                {
+                  $usersID = $_GET["usersId"];
+
+                  $sql = "SELECT * FROM users WHERE usersId = ?";
+                  $stmt = mysqli_stmt_init($conn);
+                  if (!mysqli_stmt_prepare($stmt, $sql)) {
+                      header("location: reserveProp.php?error=stmtfailed");
+                      exit();
+                  }
+              
+                  mysqli_stmt_bind_param($stmt, "s", $usersID);
+                  mysqli_stmt_execute($stmt);
+                  // "Get result" returns the results from a prepared statement
+                  $result = mysqli_stmt_get_result($stmt);
+                  $row = mysqli_fetch_assoc($result);
+                  mysqli_stmt_close($stmt);
+
+                  $username = $row["usersUid"];
+                  //$usersID = $row["usersId"];
+                  $usersPhone = $row["usersPhone"];
+                  $usersEmail = $row["usersEmail"];
+                }
+                else
+                {
+                  $username = $_SESSION["useruid"];
+                  $usersID = $_SESSION["userid"];
+                  $usersPhone = $_SESSION["usersphone"];
+                  $usersEmail = $_SESSION["usersemail"];
+                }
                 $query = "SELECT * from hotels WHERE hotelId = ?";
                   
                 $stmt = mysqli_stmt_init($conn);
@@ -121,7 +171,7 @@
             <label for="check-out">Check-Out Date:</label>
             <input type="date" id="check-out" name="check-out">
             <input type="hidden" id="hotelID" name="hotelID" value="<?php echo $hotelID?>">
-            <input type="hidden" id="userName" name="userName" value="<?php echo $userID?>">
+            <input type="hidden" id="userName" name="userName" value="<?php echo $username?>">
             <input type="hidden" id="usersId" name="usersId" value="<?php echo $usersID?>">
             <input type="hidden" id="usersPhone" name="usersPhone" value="<?php echo $usersPhone?>">
             <input type="hidden" id="usersEmail" name="usersEmail" value="<?php echo $usersEmail?>">

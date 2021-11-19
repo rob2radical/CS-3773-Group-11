@@ -17,17 +17,17 @@ if(isset($_POST['reserve']))
 
     if(emptyReserve($roomType, $checkIn, $checkOut) !== false) 
     { 
-        header("location: ../reserveProp.php?error=emptyinput&hotelID=$hotelID");
+        header("location: ../reserveProp.php?error=emptyinput&hotelID=$hotelID&id=$usersID");
         exit();
     }
     if(invalidDate($checkIn, $checkOut) !== false)
     { 
-        header("location: ../reserveProp.php?error=invalidDate&hotelID=$hotelID");
+        header("location: ../reserveProp.php?error=invalidDate&hotelID=$hotelID&id=$usersID");
         exit();
     } 
     if(!hotelExists($conn, $hotelName) !== false) 
     { 
-        header("location: ../reserveProp.php?error=hotelExists&hotelID=$hotelID");
+        header("location: ../reserveProp.php?error=hotelExists&hotelID=$hotelID&id=$usersID");
     } 
 
     createReserve($conn, $hotelID, $usersID, $hotelName, $roomType, $uName, $phone, $email, $checkIn, $checkOut);
