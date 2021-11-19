@@ -57,6 +57,10 @@
 <div class="wrapper">
   <section class="signup-form">
      
+
+    <form action="filteredSearch.php" method="post">
+      <button type="submit" class="button" name="submit">Search</button>
+    </form>
     <table>   
     <tr>
       <th>Hotels</th>
