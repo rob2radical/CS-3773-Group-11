@@ -307,8 +307,9 @@ function createHotelq($conn, $hotelname, $numRoomS, $numRoomQ, $numRoomK, $stand
 
   }
 
-  function updateReserve() 
+  function updateReserve($conn, $resID) 
   { 
+	  $sql = "UPDATE reservations SET hotelName, roomType, fromDate, toDate";
 	  
   }
 
