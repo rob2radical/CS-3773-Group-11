@@ -31,7 +31,7 @@
         {
             while($row = mysqli_fetch_assoc($result))
             {
-                echo "<tr><td>" . $row["hotelname"] . "</td><td>" . $row["fromDate"] . "</td><td>" . $row["toDate"] . "</td><td>" . $row["totalPrice"] ."</td><td>" . $row["roomType"] . "</td></tr>";
+                echo "<tr><td>" . $row["hotelName"] . "</td><td>" . $row["fromDate"] . "</td><td>" . $row["toDate"] . "</td><td>" . $row["roomType"] ."</td><td>";
             }
         }
         else
