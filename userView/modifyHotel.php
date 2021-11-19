@@ -59,7 +59,7 @@
      
     <table>   
     <tr>
-      <th>Hotels</th>
+      <th>Which Hotel To Modify?</th>
     </tr> 
         <?php
           $sql = "SELECT * FROM hotels";

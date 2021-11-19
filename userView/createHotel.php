@@ -58,6 +58,9 @@
       else if ($_GET["error"] == "hotelexists") {
         echo "<p>Hotel already exists!</p>";
       }
+      else if ($_GET["error"] == "emptyAmen") {
+        echo "<p>Amenity entered was empty! Modify Hotel for more options</p>";
+      }
       else if ($_GET["error"] == "stmtfailed") {
         echo "<p>Something went wrong!</p>";
       }

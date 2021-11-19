@@ -86,11 +86,14 @@ $curUser = $_SESSION["userid"];
     <div class="signup-form-form">
     <!--create reservation button-->
       <form action="reserve.php" method="post">
+        <input type="text" name="uEmail" placeholder="Users Email">
         <button type="submit" class="button" name="CreateRes">Create</button>
       </form>
-
+      </div>
+      <div class="signup-form-form">
     <!--modify reservation button-->
       <form action="modifyReservation.php" method="post">
+        <input type="text" name="uEmail" placeholder="Users Email">
         <button type="submit" class="button" name="ModifyRes">Modify</button>
       </form>
     </div>

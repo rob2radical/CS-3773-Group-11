@@ -7,25 +7,6 @@ if (isset($_POST["submit"])) {
 
   // First we get the form data from the URL
     $hotelID = $_POST["hotel"];
-
-    /* $sql = "SELECT * FROM hotels WHERE hotelName = ?;";
-	  $stmt = mysqli_stmt_init($conn);
-	  if (!mysqli_stmt_prepare($stmt, $sql)) {
-		   header("location: ../createHotel.php?error=stmtfailed");
-		  exit();
-	  }
-  
-	  mysqli_stmt_bind_param($stmt, "s", $hotelname);
-	  mysqli_stmt_execute($stmt);
-      $resultData = mysqli_stmt_get_result($stmt);
-      $row = mysqli_fetch_assoc($resultData);
-
-      $hotelID = $row["hotelId"];
-      mysqli_stmt_close($stmt);
-
-    $numAmen = $_POST["numAmen"]; */
-
-    //echo $numAmen . " " . $hotelname . " " . $hotelID;
     $numAmen = $_POST["numAmen"];
     $i = 0;
 
@@ -38,7 +19,11 @@ if (isset($_POST["submit"])) {
         if(isset($_POST["$amenity"]))
         {
             $amenValue = $_POST["$amenity"];
-            echo $amenValue;
+            if(empty($amenValue))
+            {
+                header("location: ../createHotel.php?error=emptyAmen");
+                exit();
+            }
             if(!amenityExists($conn, $amenValue, $hotelID))
             {
                 //createAmenity($conn, $hotelID, $hotelname, $amenValue);
