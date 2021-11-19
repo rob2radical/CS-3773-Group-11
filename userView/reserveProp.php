@@ -63,8 +63,6 @@
                 if(isset($_POST["sessionID"]))
                 { 
                   $hotelID = $_POST["sessionID"];
-                  echo $hotelID;
-                  
                 }
                 else if(isset($_GET["hotelID"])) 
                 { 
