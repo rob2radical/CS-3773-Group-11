@@ -2,8 +2,6 @@
 require_once "dbh.inc.php";
 require_once "functions.inc.php";
 
-echo "we are in updateReserve.inc";
-
 if(isset($_POST["updateReserve"])) 
 { 
     echo "bouta update BITCH";

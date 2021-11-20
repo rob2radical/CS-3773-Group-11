@@ -789,7 +789,7 @@ function updateHotel($conn, $hotelID, $newHName, $hnumRoomS, $hnumRoomQ, $hnumRo
 
 function updatePrice($conn, $resID, $roomType, $checkIn, $checkOut) 
 { 
-	$sql = "SELECT hotels.weekendDiff FROM hotels JOIN reservations ON hotels.hotelName WHERE resId = ?";
+	$sql = "SELECT * FROM hotels JOIN reservations ON hotels.hotelName WHERE resId = ?";
 	$stmt = mysqli_stmt_init($conn);
 	if(!mysqli_stmt_prepare($stmt, $sql)) { 
 		header("location: ../modifyReservation.php?stmtfailed");
