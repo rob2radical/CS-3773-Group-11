@@ -307,9 +307,9 @@ function createHotelq($conn, $hotelname, $numRoomS, $numRoomQ, $numRoomK, $stand
 
   }
 
-  function updateReserve($conn, $resID) 
+  function updateReserve($conn, $resID, $roomType, $checkIn, $checkOut) 
   { 
-	  $sql = "SELECT * FROM reservations WHERE reservations.resId = '$resID'";
+	  $sql = "SELECT * FROM reservations WHERE resId = ?";
 
 	  $stmt = mysqli_stmt_init($conn); 
 	  if(!mysqli_stmt_prepare($stmt, $sql)) { 
@@ -318,7 +318,8 @@ function createHotelq($conn, $hotelname, $numRoomS, $numRoomQ, $numRoomK, $stand
 	  }
 	  mysqli_stmt_bind_param($stmt, "s", $resID);
 	  mysqli_stmt_execute($stmt);
-	  $resultData = mysqli_stmt_get_result($stmt); 
+	  $resultData = mysqli_stmt_get_result($stmt);
+	  $row = mysqli_fetch_assoc() 
 
 	  if($row = mysqli_fetch_assoc($resultData)) { 
 		  return $row;

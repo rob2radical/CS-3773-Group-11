@@ -39,15 +39,6 @@
               echo "<li><a href='userSignUp.php'>Sign up</a></li>";
               echo "<li><a href='userLogin.php'>Log in</a></li>";
             }
-/*             if (isset($_SESSION["useruid"])) {
-              echo "<li><a href='profile.php'>Profile Page</a></li>";
-              echo "<li><a href='reserveProp.php'>Make a Reservation</a></li>";
-              echo "<li><a href='logout.php'>Logout</a></li>";
-            }
-            else {
-              echo "<li><a href='userSignUp.php'>Sign up</a></li>";
-              echo "<li><a href='userLogin.php'>Log in</a></li>";
-            } */
           ?>
         </ul>
       </div>
@@ -177,8 +168,7 @@
             <button type="submit" name="reserve">Reserve</button> 
         </form>
       </div>
-        <?php 
-        //echo "<div>" . $_SESSION["userid"] . "</div>";
+        <?php
         if(isset($_GET["error"])) 
         { 
             if($_GET["error"] == "emptyinput") 
