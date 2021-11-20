@@ -48,7 +48,7 @@
     <div class="signup-form-form"> 
       <form action="includes/updateReserve.inc.php" method="post"> 
           <?php 
-          if(isset($_POST["updateReserve"])) 
+          if(isset($_POST["seeReserve"])) 
           { 
             $resID = $_POST["res"];
           }
@@ -68,13 +68,7 @@
           $result = mysqli_stmt_get_result($stmt);
           $row = mysqli_fetch_assoc($result);
           mysqli_stmt_close($stmt);
-          if($row["numRoomS"] == 0 && $row["numRoomQ"] == 0 && $row["numRoomK"] == 0) 
-          { 
-            echo "No rooms available";
-            exit();
-          }
-          else 
-          { 
+        
             echo "<label for=room_type>Select Room Type:</label>";
             echo "<select name=room_type id=room_type>";
             if($row["numRoomS"] != NULL)
@@ -89,7 +83,6 @@
             { 
               echo "<option>King</option>";
             } 
-          }
           echo "</select>";
           ?>
           <input type="hidden" id="sessionID" name="sessionID" value="<?php echo $resID;?>">
