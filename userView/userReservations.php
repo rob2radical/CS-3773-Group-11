@@ -31,7 +31,7 @@
         { 
             while($row = mysqli_fetch_assoc($result))
             {
-                echo "<tr><td><form action=modifyReservation.php method=post><input type=hidden id=resId name=resId value=" . $row["resId"] . "><button type=submit class=button name=seeReserve>Modify</button></form>" . "</td><td>" . $row["hotelName"] . "</td><td>" . $row["fromDate"] . "</td><td>" . $row["toDate"] . "</td><td>" . $row["roomType"] ."</td><td>";
+                echo "<tr><td><form action=modifyReservation.php method=post><input type=hidden id=resId name=resId value=" . $row["resId"] . "><button type=submit class=button name=seeReserve>Modify</button></form>" . "</td><td>" . $row["hotelName"] . "</td><td>" . $row["fromDate"] . "</td><td>" . $row["toDate"] . "</td><td>" . $row["roomType"] ."</td><td>" . $row["totalPrice"] ."</td><td>";
             }
         }
         else
