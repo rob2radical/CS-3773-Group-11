@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 17, 2021 at 02:35 AM
+-- Generation Time: Nov 20, 2021 at 03:12 AM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.11
 
@@ -108,13 +108,24 @@ CREATE TABLE `reservations` (
   `usersId` int(100) NOT NULL,
   `hotelName` varchar(100) NOT NULL,
   `roomType` varchar(100) NOT NULL,
-  `name` varchar(100) NOT NULL,
+  `uName` varchar(100) NOT NULL,
   `phoneNum` varchar(100) NOT NULL,
   `email` varchar(100) NOT NULL,
-  `totalPrice` double NOT NULL,
   `fromDate` date NOT NULL,
-  `toDate` date NOT NULL
+  `toDate` date NOT NULL,
+  `totalPrice` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `reservations`
+--
+
+INSERT INTO `reservations` (`resId`, `usersId`, `hotelName`, `roomType`, `uName`, `phoneNum`, `email`, `fromDate`, `toDate`, `totalPrice`) VALUES
+(1, 1, 'Park North Hotel', 'Standard', 'rob2radical', '9152471933', 'qrobert@rocketmail.com', '2021-11-24', '2021-11-26', 0),
+(2, 1, 'Park North Hotel', 'Queen', 'rob2radical', '9152471933', 'qrobert@rocketmail.com', '2021-11-24', '2021-11-26', 0),
+(3, 3, 'HomeAway Inn', 'Standard', 'bruh', '5555555555', 'dragonz4twenty@gmail.com', '2021-11-25', '2021-11-27', 0),
+(4, 1, 'The Lofts at Town Centre', 'King', 'rob2radical', '9152471933', 'qrobert@rocketmail.com', '2021-11-30', '2021-12-09', 0),
+(5, 1, 'HomeAway Inn', 'Standard', 'rob2radical', '9152471933', 'qrobert@rocketmail.com', '2021-11-30', '2021-12-16', 0);
 
 -- --------------------------------------------------------
 
@@ -139,7 +150,7 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`usersId`, `usersName`, `usersEmail`, `usersPhone`, `usersUid`, `usersPwd`, `isAdmin`) VALUES
 (1, 'Robert Quintanilla', 'qrobert@rocketmail.com', '9152471933', 'rob2radical', '$2y$10$i4RuORwBpiCzKGo257WveuVb6Rdz.W/vdrUQ1PBeBWfHiqs0nokcm', 0),
 (2, 'Rogelio Myres', 'myres555@gmail.com', '5555555555', 'quickchecks', '$2y$10$il0EU0dxJGuBSGm19U/5HOffpil3Q7FqBFoUyZx8ZWHM3uQTarXHO', 0),
-(3, 'course', 'dragonz4twenty@gmail.com', '5555555555', 'bruh', '$2y$10$qYgpmKxHHdi8gYxH3ZadEeKxJTI5ZM2eXhB6ZjFwX8DAwRMEpLli2', 1),
+(3, 'coures bruh', 'dragonz4twenty@gmail.com', '5555555555', 'bruh', '$2y$10$qYgpmKxHHdi8gYxH3ZadEeKxJTI5ZM2eXhB6ZjFwX8DAwRMEpLli2', 1),
 (4, 'Juan Rodriguez', 'qsy775@my.utsa.edu', '1234567899', 'meatman', '$2y$10$AKrOPfHj8Cqvdk0iqL1HZeucaOyTwdig.BxSsFBBsKdzj78knQvtS', NULL),
 (5, 'Amber Sanchez', 'lovelylibra55@gmail.com', '2105361729', 'cashmoney', '$2y$10$ZpI3tEsqhuxAcDacs3SgquML03HvxYc.9Gl13mg/nHAyvJlPw4U8q', NULL),
 (6, 'Dan Dan', 'danielmontaudon909@live.com', '8623242401', 'pooopooo', '$2y$10$mzcGZaAWmVNL3eAezE.gYuNwBtOhk5Q.NVvK8Z3tUlF3xrD8MArxy', 1),
@@ -194,13 +205,13 @@ ALTER TABLE `hotels`
 -- AUTO_INCREMENT for table `reservations`
 --
 ALTER TABLE `reservations`
-  MODIFY `resId` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `resId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `usersId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `usersId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
