@@ -52,7 +52,6 @@ if(isset($_POST["updateHot"])) {
         exit();
     }
     updateHotel($conn, $hotelID, $newHName, $hnumRoomS, $hnumRoomQ, $hnumRoomK, $hstandardPrice, $hqueenPrice, $hkingPrice, $hweekendDiff);
-    //updateAmenitiesForHotel($conn, $hotelname, $newHName, $hotelID); 
 } 
 else {
 	header("location: ../modProp.php?error=updateerror");
