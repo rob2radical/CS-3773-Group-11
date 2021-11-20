@@ -810,3 +810,58 @@ function getPrice($conn, $hotelID, $usersID, $roomType, $checkIn, $checkOut)
 
 	return $price;
 }
+
+function checkDateAvail($conn, $hotelID, $usersID, $roomType, $checkIn, $checkOut)
+{
+	$sql = "SELECT * from hotels where hotelId = ?";
+	$stmt = mysqli_stmt_init($conn);
+	if (!mysqli_stmt_prepare($stmt, $sql)) {
+		header("location: ../reserveProp.php?error=stmtfailed&hotelID=$hotelID&id=$usersID");
+		
+		exit();
+	}
+
+	mysqli_stmt_bind_param($stmt, "s", $hotelID);
+	mysqli_stmt_execute($stmt);
+	// "Get result" returns the results from a prepared statement
+	$resultData = mysqli_stmt_get_result($stmt);
+	$row = mysqli_fetch_assoc($resultData);
+	mysqli_stmt_close($stmt); 
+
+	if($roomType == "Standard")
+	{
+		$numRoom = $row["numRoomS"];
+	}
+	else if($roomType == "Queen")
+	{
+		$numRoom = $row["numRoomQ"];
+	}
+	else if($roomType == "King")
+	{
+		$numRoom = $row["numRoomK"];
+	}
+
+	
+	$sql = "SELECT * from reservations where (fromDate > ? and toDate < ?) or (fromDate < ? and toDate > ?)";
+	$stmt = mysqli_stmt_init($conn);
+	if (!mysqli_stmt_prepare($stmt, $sql)) {
+		header("location: ../reserveProp.php?error=stmtfailed&hotelID=$hotelID&id=$usersID");
+		exit();
+	}
+
+	mysqli_stmt_bind_param($stmt, "ssss", $checkIn, $checkIn, $checkOut, $checkOut);
+	mysqli_stmt_execute($stmt);
+	// "Get result" returns the results from a prepared statement
+	$resultData1 = mysqli_stmt_get_result($stmt);
+	mysqli_stmt_close($stmt); 
+
+	if(sqli_num_rows($resultData1) < $numRoom)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+
+}
