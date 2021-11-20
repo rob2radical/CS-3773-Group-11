@@ -50,11 +50,11 @@
           <?php 
           if(isset($_POST["updateReserve"])) 
           { 
-            $resID = $_POST["res"];
+            $resID = $_POST["resId"];
           }
           else 
           { 
-            echo "error";
+            echo "error in modifyReservation";
           }
           $sql = "SELECT hotels.numRoomS, hotels.numRoomQ, hotels.numRoomK FROM hotels JOIN reservations ON hotels.hotelName = reservations.hotelName WHERE resId = ? "; 
           $stmt = mysqli_stmt_init($conn); 
@@ -68,27 +68,19 @@
           $result = mysqli_stmt_get_result($stmt);
           $row = mysqli_fetch_assoc($result);
           mysqli_stmt_close($stmt);
-          if($row["numRoomS"] == 0 && $row["numRoomQ"] == 0 && $row["numRoomK"] == 0) 
+          echo "<label for=room_type>Select Room Type:</label>";
+          echo "<select name=room_type id=room_type>";
+          if($row["numRoomS"] != NULL)
+          {  
+            echo "<option>Standard</option>";
+          } 
+          if($row["numRoomQ"] != NULL) 
+          {  
+            echo "<option>Queen</option>";
+          } 
+          if($row["numRoomK"] != NULL) 
           { 
-            echo "No rooms available";
-            exit();
-          }
-          else 
-          { 
-            echo "<label for=room_type>Select Room Type:</label>";
-            echo "<select name=room_type id=room_type>";
-            if($row["numRoomS"] != NULL)
-            {  
-              echo "<option>Standard</option>";
-            } 
-            if($row["numRoomQ"] != NULL) 
-            {  
-              echo "<option>Queen</option>";
-            } 
-            if($row["numRoomK"] != NULL) 
-            { 
-              echo "<option>King</option>";
-            } 
+            echo "<option>King</option>";
           }
           echo "</select>";
           ?>
@@ -98,7 +90,7 @@
           <input type="date" id="check-in" name="check-in">
           <label for="check-out">Check-Out Date:</label>
           <input type="date" id="check-out" name="check-out">
-          <button type="submit" name="reserve">Update Reservation</button>  
+          <button type="submit" name="updateReserve">Update Reservation</button>  
         </form> 
       </div> 
     </div> 

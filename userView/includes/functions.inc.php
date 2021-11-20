@@ -319,17 +319,55 @@ function createHotelq($conn, $hotelname, $numRoomS, $numRoomQ, $numRoomK, $stand
 	  mysqli_stmt_bind_param($stmt, "s", $resID);
 	  mysqli_stmt_execute($stmt);
 	  $resultData = mysqli_stmt_get_result($stmt);
-	  //$row = mysqli_fetch_assoc(); 
-
-	  if($row = mysqli_fetch_assoc($resultData)) { 
-		  return $row;
-	  }
-	  else { 
-		  $result = false;
-		  return $result;
-	  }
+	  $row = mysqli_fetch_assoc($resultData);
 	  mysqli_stmt_close($stmt);
-	  
+
+	  // room type
+	  if(!empty($roomType) && $roomType != $row["roomType"]) 
+	  { 
+		  $roomTypeChange = $roomType;
+		  $result = true; 
+	  } 
+	  else 
+	  { 
+		$roomTypeChange = $row["roomType"];
+		$result = false; 
+	  } 
+	  // check in/fromDate 
+	  if(!empty($checkIn) && $checkIn != $row["fromDate"]) 
+	  { 
+		  $checkInChange = $checkIn;
+		  $result = true;
+	  } 
+	  else 
+	  { 
+		$checkInChange = $row["fromDate"];
+		$result = false;
+	  }
+	  if(!empty($checkOut) && $checkOut != $row["toDate"]) 
+	  { 
+		  $checkOutChange = $checkOut;
+		  $result = true;
+	  }
+	  else 
+	  { 
+		  $checkOutChange = $row["toDate"];
+		  $result = false;
+	  } 
+	  $totalPrice = updatePrice($conn, $resID, $roomTypeChange, $checkInChange, $checkOutChange);
+
+	  $sqlUpdate = "UPDATE reservations SET roomType = ?, fromDate = ?, toDate = ? totalPrice = ?";
+	  $updateStmt = mysqli_stmt_init($conn); 
+
+	  if(!mysqli_stmt_prepare($updateStmt, $sqlUpdate)) { 
+		  header("location: ../modifyReservation.php?error=stmtfailed");
+		  exit();
+	  }
+	  mysqli_stmt_bind_param($updateStmt, "sssd", $roomTypeChange, $checkInChange, $checkOutChange, $totalPrice);
+	  mysqli_stmt_execute($updateStmt);
+	  header("location: ../modifyReservation.php?error=none");
+	  mysqli_stmt_close($updateStmt);
+	  return $result;
   }
 
 // Insert new user into table users database
@@ -747,6 +785,65 @@ function updateHotel($conn, $hotelID, $newHName, $hnumRoomS, $hnumRoomQ, $hnumRo
 	mysqli_stmt_close($updateStmt);
 	//return $result;
 	
+}
+
+function updatePrice($conn, $resID, $roomType, $checkIn, $checkOut) 
+{ 
+	$sql = "SELECT hotels.weekendDiff FROM hotels JOIN reservations ON hotels.hotelName WHERE resId = ?";
+	$stmt = mysqli_stmt_init($conn);
+	if(!mysqli_stmt_prepare($stmt, $sql)) { 
+		header("location: ../modifyReservation.php?stmtfailed");
+		exit();
+	}
+	mysqli_stmt_bind_param($stmt, "s", $resID);
+	mysqli_stmt_execute($stmt);
+	$resultData = mysqli_stmt_get_result($stmt);
+	$row = mysqli_fetch_assoc($resultData);
+	mysqli_stmt_close($stmt);
+
+	$weekendDiff = $row["weekendDiff"];
+	if($roomType == "Standard")
+	{
+		$priceR = $row["standardPrice"];
+	}
+	else if($roomType == "Queen")
+	{
+		$priceR = $row["queenPrice"];
+	}
+	else if($roomType == "King")
+	{
+		$priceR = $row["kingPrice"];
+	}
+
+	$start = strtotime($checkIn);
+	$end = strtotime($checkOut);
+	$price = 0;
+	$numberOfDays = ceil(abs($end - $start) / 86400);
+	// 0 (for Sunday) through 6 (for Saturday)
+	$dayValue = date("w", $start);
+	$i = 0;
+	for($i = 0; $i <= $numberOfDays; $i++)
+	{
+		//Sunday or Sturday
+		if($dayValue == 0 || $dayValue == 6)
+		{
+			$price = $price + (($weekendDiff * $priceR) + $priceR);
+			if($dayValue == 6)
+			{
+				$dayValue = 0;
+			}
+			else
+			{
+				$dayValue++;
+			}
+		}
+		else
+		{
+			$price = $price + $priceR;
+			$dayValue++;
+		}
+	} 
+	return $price;
 }
 
 function getPrice($conn, $hotelID, $usersID, $roomType, $checkIn, $checkOut)
