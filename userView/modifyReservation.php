@@ -48,14 +48,9 @@
     <div class="signup-form-form"> 
       <form action="includes/updateReserve.inc.php" method="post"> 
           <?php 
-          if(isset($_POST["updateReserve"])) 
+          if(isset($_POST["reserveStart"])) 
           { 
             $resID = $_POST["resId"]; 
-            // testing my ssh remote origin link
-          }
-          else 
-          { 
-            echo "error in modifyReservation";
           }
           $sql = "SELECT hotels.numRoomS, hotels.numRoomQ, hotels.numRoomK FROM hotels JOIN reservations ON hotels.hotelName = reservations.hotelName WHERE resId = ? "; 
           $stmt = mysqli_stmt_init($conn); 
