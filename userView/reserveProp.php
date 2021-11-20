@@ -49,7 +49,6 @@
       <h1>Reservation Information</h2> 
       <div class="signup-form-form"> 
         <form action="includes/reserveRoom.inc.php" method="post">
-            <div>
                 <?php 
                 if(isset($_POST["sessionID"]))
                 { 
@@ -83,9 +82,10 @@
                   $usersPhone = $row["usersPhone"];
                   $usersEmail = $row["usersEmail"];
                 }
-                else if(isset($_GET["usersId"]))
+                else if(isset($_GET["id"]))
                 {
-                  $usersID = $_GET["usersId"];
+                  //usersId
+                  $usersID = $_GET["id"];
 
                   $sql = "SELECT * FROM users WHERE usersId = ?";
                   $stmt = mysqli_stmt_init($conn);
@@ -128,6 +128,7 @@
                 $row = mysqli_fetch_assoc($result);
                 mysqli_stmt_close($stmt);
                 $hotelName = $row["hotelName"];
+                $weekendDiff = $row["weekendDiff"];
             
                 if($row["numRoomS"] == 0 && $row["numRoomQ"] == 0 && $row["numRoomK"] == 0) 
                 { 
@@ -154,7 +155,7 @@
                 }
                 echo "</select>"; 
                 ?>
-            </div> 
+            
             <label for="check-in">Check-In Date:</label>
             <input type="date" id="check-in" name="check-in">
             <label for="check-out">Check-Out Date:</label>
@@ -165,7 +166,10 @@
             <input type="hidden" id="usersPhone" name="usersPhone" value="<?php echo $usersPhone?>">
             <input type="hidden" id="usersEmail" name="usersEmail" value="<?php echo $usersEmail?>">
             <input type="hidden" id="hotelName" name="hotelName" value="<?php echo $hotelName?>">
-            <button type="submit" name="reserve">Reserve</button> 
+            <input type="hidden" id="weekDiff" name="weekDiff" value="<?php echo $weekendDiff?>">
+            <button type="submit" class="button" name="reserve">Reserve</button>
+            <button type="submit" class="button" name="quote">Get Quote</button>
+             
         </form>
       </div>
         <?php
@@ -185,7 +189,16 @@
             } 
             else if($_GET["error"] == "none") 
             { 
-              echo "<p>You have reserved your room!</p>";
+              if(isset($_GET["price"]))
+              {
+                $price = $_GET["price"];
+                echo "<p>You have reserved your room!<br>This will come out to $$price<br>Check out your Current Reservations to modify</p>";
+              }
+              else if(isset($_GET["qPrice"]))
+              {
+                $price = $_GET["qPrice"];
+                echo "<p>This will come out to $$price</p>";
+              }
             }
         }
          

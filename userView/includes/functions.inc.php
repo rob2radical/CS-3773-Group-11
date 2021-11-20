@@ -282,14 +282,11 @@ function createHotelq($conn, $hotelname, $numRoomS, $numRoomQ, $numRoomK, $stand
 	  exit();
   }
 
-  function calTotalPrice($conn, $checkIn, $checkOut) 
-  {
-
-  }
-
   function createReserve($conn, $hotelID, $usersID, $hotelName, $roomType, $username, $phoneNum, $email, $fromDate, $toDate) 
   { 
-	  $sql = "INSERT INTO reservations (usersId, hotelName, roomType, uName, phoneNum, email, fromDate, toDate) VALUES (?, ?, ?, ?, ?, ?, ?, ?);"; 
+	  $price = getPrice($conn, $hotelID, $usersID, $roomType,  $fromDate, $toDate);
+
+	  $sql = "INSERT INTO reservations (usersId, hotelName, roomType, uName, phoneNum, email, totalPrice, fromDate, toDate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);"; 
 
 	  $stmt = mysqli_stmt_init($conn); 
 
@@ -298,11 +295,14 @@ function createHotelq($conn, $hotelname, $numRoomS, $numRoomQ, $numRoomK, $stand
 		header("location: ../reserveProp.php?error=stmtfailed&hotelID=$hotelID&id=$usersID");
 		exit();
 	  }
-	  mysqli_stmt_bind_param($stmt, "ssssssss", $usersID, $hotelName, $roomType, $username, $phoneNum, $email, $fromDate, $toDate);
+	  mysqli_stmt_bind_param($stmt, "sssssssss", $usersID, $hotelName, $roomType, $username, $phoneNum, $email, $price, $fromDate, $toDate);
 	  mysqli_stmt_execute($stmt);
 	  mysqli_stmt_close($stmt);
 	  mysqli_close($conn);
-	  header("location: ../reserveProp.php?error=none&hotelID=$hotelID&id=$usersID");
+
+	  //insertprice function
+
+	  header("location: ../reserveProp.php?error=none&hotelID=$hotelID&id=$usersID&price=$price");
 	  exit();
 
   }
@@ -319,7 +319,8 @@ function createHotelq($conn, $hotelname, $numRoomS, $numRoomQ, $numRoomK, $stand
 	  mysqli_stmt_bind_param($stmt, "s", $resID);
 	  mysqli_stmt_execute($stmt);
 	  $resultData = mysqli_stmt_get_result($stmt);
-	  $row = mysqli_fetch_assoc($resultData);
+	  //$row = mysqli_fetch_assoc(); 
+
 	  if($row = mysqli_fetch_assoc($resultData)) { 
 		  return $row;
 	  }
@@ -748,15 +749,64 @@ function updateHotel($conn, $hotelID, $newHName, $hnumRoomS, $hnumRoomQ, $hnumRo
 	
 }
 
-/* function updateAmenitiesForHotel($conn, $hotelname, $newHName, $hotelID){
-	$sqlUpdate = "UPDATE amenities SET hotelName = ? WHERE hotelName = ?"; 
-	$updateStmt = mysqli_stmt_init($conn);
-	if (!mysqli_stmt_prepare($updateStmt, $sqlUpdate)) {
-		header("location: ../modProp.php?error=stmtfailed"); 
-		exit(); 
-	} 
-	mysqli_stmt_bind_param($updateStmt, "ss", $newHName, $hotelname); 
-	mysqli_stmt_execute($updateStmt); 
-	header("location: ../modProp.php?error=none&id=$hotelID");
-	mysqli_stmt_close($updateStmt);
-} */
+function getPrice($conn, $hotelID, $usersID, $roomType, $checkIn, $checkOut)
+{
+	$sql = "SELECT * FROM hotels WHERE hotelId = ?"; 
+	$stmt = mysqli_stmt_init($conn);
+	if (!mysqli_stmt_prepare($stmt, $sql)) {
+		header("location: ../reserveProp.php?error=stmtfailed&hotelID=$hotelID&id=$usersID");
+		exit();
+	}
+
+	mysqli_stmt_bind_param($stmt, "s", $hotelID);
+	mysqli_stmt_execute($stmt);
+	// "Get result" returns the results from a prepared statement
+	$resultData = mysqli_stmt_get_result($stmt);
+	$row = mysqli_fetch_assoc($resultData);
+	mysqli_stmt_close($stmt); 
+
+	$weekendDiff = $row["weekendDiff"];
+	if($roomType == "Standard")
+	{
+		$priceR = $row["standardPrice"];
+	}
+	else if($roomType == "Queen")
+	{
+		$priceR = $row["queenPrice"];
+	}
+	else if($roomType == "King")
+	{
+		$priceR = $row["kingPrice"];
+	}
+
+	$start = strtotime($checkIn);
+	$end = strtotime($checkOut);
+	$price = 0;
+	$numberOfDays = ceil(abs($end - $start) / 86400);
+	// 0 (for Sunday) through 6 (for Saturday)
+	$dayValue = date("w", $start);
+	$i = 0;
+	for($i = 0; $i <= $numberOfDays; $i++)
+	{
+		//Sunday or Sturday
+		if($dayValue == 0 || $dayValue == 6)
+		{
+			$price = $price + (($weekendDiff * $priceR) + $priceR);
+			if($dayValue == 6)
+			{
+				$dayValue = 0;
+			}
+			else
+			{
+				$dayValue++;
+			}
+		}
+		else
+		{
+			$price = $price + $priceR;
+			$dayValue++;
+		}
+	}
+
+	return $price;
+}

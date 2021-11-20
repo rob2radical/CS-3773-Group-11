@@ -68,8 +68,13 @@
 <div class="wrapper">
   <section class="signup-form">
     <form action="userReservations.php" method="post">
-      <input type="hidden" id="sessionID" name="sessionID" value="<?php echo $_SESSION["userid"]; ?>">
-      <button type="submit" class="button" name="seeReserve">Current Reservations</button>
+      <?php
+      if($_SESSION["isAdmin"] != 1)
+      {
+        echo "<input type=hidden id=sessionID name=sessionID value=" . $_SESSION["userid"] . ">";
+        echo "<button type=submit class=button name=seeReserve>Current Reservations</button>";
+      }
+      ?>
     </form>
     <table>   
     <tr>
