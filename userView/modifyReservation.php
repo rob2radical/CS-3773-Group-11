@@ -50,7 +50,8 @@
           <?php 
           if(isset($_POST["updateReserve"])) 
           { 
-            $resID = $_POST["resId"];
+            $resID = $_POST["resId"]; 
+            // testing my ssh remote origin link
           }
           else 
           { 
