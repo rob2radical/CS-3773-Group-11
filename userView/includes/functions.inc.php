@@ -840,16 +840,16 @@ function checkDateAvail($conn, $hotelID, $usersID, $roomType, $checkIn, $checkOu
 	{
 		$numRoom = $row["numRoomK"];
 	}
-
+	$hotelName = $row["hotelName"];
 	
-	$sql = "SELECT * from reservations where (fromDate > ? and toDate < ?) or (fromDate < ? and toDate > ?)";
+	$sql = "SELECT * from reservations where hotelName = ? and ((fromDate > ? and fromDate < ?) or (toDate > ? and toDate < ?))";
 	$stmt = mysqli_stmt_init($conn);
 	if (!mysqli_stmt_prepare($stmt, $sql)) {
 		header("location: ../reserveProp.php?error=stmtfailed&hotelID=$hotelID&id=$usersID");
 		exit();
 	}
 
-	mysqli_stmt_bind_param($stmt, "ssss", $checkIn, $checkIn, $checkOut, $checkOut);
+	mysqli_stmt_bind_param($stmt, "sssss", $hotelName, $checkIn, $checkOut, $checkIn, $checkOut);
 	mysqli_stmt_execute($stmt);
 	// "Get result" returns the results from a prepared statement
 	$resultData1 = mysqli_stmt_get_result($stmt);
