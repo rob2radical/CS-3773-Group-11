@@ -319,7 +319,7 @@ function createHotelq($conn, $hotelname, $numRoomS, $numRoomQ, $numRoomK, $stand
 	  mysqli_stmt_bind_param($stmt, "s", $resID);
 	  mysqli_stmt_execute($stmt);
 	  $resultData = mysqli_stmt_get_result($stmt);
-	  $row = mysqli_fetch_assoc() 
+	  //$row = mysqli_fetch_assoc(); 
 
 	  if($row = mysqli_fetch_assoc($resultData)) { 
 		  return $row;
