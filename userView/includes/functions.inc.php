@@ -284,26 +284,34 @@ function createHotelq($conn, $hotelname, $numRoomS, $numRoomQ, $numRoomK, $stand
 
   function createReserve($conn, $hotelID, $usersID, $hotelName, $roomType, $username, $phoneNum, $email, $fromDate, $toDate) 
   { 
-	  $price = getPrice($conn, $hotelID, $usersID, $roomType,  $fromDate, $toDate);
+	  if(checkDateAvail($conn, $hotelID, $usersID, $roomType, $fromDate, $toDate))
+	  {
+		$price = getPrice($conn, $hotelID, $usersID, $roomType,  $fromDate, $toDate);
 
-	  $sql = "INSERT INTO reservations (usersId, hotelName, roomType, uName, phoneNum, email, totalPrice, fromDate, toDate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);"; 
+		$sql = "INSERT INTO reservations (usersId, hotelName, roomType, uName, phoneNum, email, totalPrice, fromDate, toDate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);"; 
 
-	  $stmt = mysqli_stmt_init($conn); 
+		$stmt = mysqli_stmt_init($conn); 
 
-	  if(!mysqli_stmt_prepare($stmt, $sql)) 
-	  { 
-		header("location: ../reserveProp.php?error=stmtfailed&hotelID=$hotelID&id=$usersID");
+		if(!mysqli_stmt_prepare($stmt, $sql)) 
+		{ 
+			header("location: ../reserveProp.php?error=stmtfailed&hotelID=$hotelID&id=$usersID");
+			exit();
+		}
+		mysqli_stmt_bind_param($stmt, "sssssssss", $usersID, $hotelName, $roomType, $username, $phoneNum, $email, $price, $fromDate, $toDate);
+		mysqli_stmt_execute($stmt);
+		mysqli_stmt_close($stmt);
+		mysqli_close($conn);
+
+		//insertprice function
+
+		header("location: ../reserveProp.php?error=none&hotelID=$hotelID&id=$usersID&price=$price");
 		exit();
-	  }
-	  mysqli_stmt_bind_param($stmt, "sssssssss", $usersID, $hotelName, $roomType, $username, $phoneNum, $email, $price, $fromDate, $toDate);
-	  mysqli_stmt_execute($stmt);
-	  mysqli_stmt_close($stmt);
-	  mysqli_close($conn);
-
-	  //insertprice function
-
-	  header("location: ../reserveProp.php?error=none&hotelID=$hotelID&id=$usersID&price=$price");
-	  exit();
+	}
+	else
+	{
+		header("location: ../reserveProp.php?error=notAvail&hotelID=$hotelID&id=$usersID");
+		exit();
+	}
 
   }
 
@@ -362,7 +370,7 @@ function createHotelq($conn, $hotelname, $numRoomS, $numRoomQ, $numRoomK, $stand
 
 	  $stmt = mysqli_stmt_init($conn); 
 	  if(!mysqli_stmt_prepare($stmt, $sql)) { 
-		  header("location: ../modifyReservation.php?stmtfailed&fail=1");
+		  header("location: ../modifyReservation.php?error=stmtfailed&fail=1");
 		  exit();
 	  }
 	  mysqli_stmt_bind_param($stmt, "s", $hotelName);
@@ -372,21 +380,29 @@ function createHotelq($conn, $hotelname, $numRoomS, $numRoomQ, $numRoomK, $stand
 	  mysqli_stmt_close($stmt);
 
 	  $hotelID = $row1["hotelId"];
-	  $totalPrice = getPrice($conn, $hotelID, $usersID, $roomTypeChange, $checkInChange, $checkOutChange);
-	  //$totalPrice = updatePrice($conn, $resID, $roomTypeChange, $checkInChange, $checkOutChange);
-	  //($conn, $hotelID, $usersID, $roomType, $checkIn, $checkOut)
 
-	  $sqlUpdate = "UPDATE reservations SET roomType = ?, fromDate = ?, toDate = ?, totalPrice = ? WHERE resId = ?;";
-	  $updateStmt = mysqli_stmt_init($conn); 
+	  if(checkDateAvail($conn, $hotelID, $usersID, $roomTypeChange, $checkInChange, $checkOutChange))
+	  {
+		$totalPrice = getPrice($conn, $hotelID, $usersID, $roomTypeChange, $checkInChange, $checkOutChange);
+		//$totalPrice = updatePrice($conn, $resID, $roomTypeChange, $checkInChange, $checkOutChange);
+		//($conn, $hotelID, $usersID, $roomType, $checkIn, $checkOut)
 
-	  if(!mysqli_stmt_prepare($updateStmt, $sqlUpdate)) { 
-		  header("location: ../modifyReservation.php?error=stmtfailed&fail=2");
-		  exit();
+		$sqlUpdate = "UPDATE reservations SET roomType = ?, fromDate = ?, toDate = ?, totalPrice = ? WHERE resId = ?;";
+		$updateStmt = mysqli_stmt_init($conn); 
+
+		if(!mysqli_stmt_prepare($updateStmt, $sqlUpdate)) { 
+			header("location: ../modifyReservation.php?error=stmtfailed&fail=2");
+			exit();
+		}
+		mysqli_stmt_bind_param($updateStmt, "sssss", $roomTypeChange, $checkInChange, $checkOutChange, $totalPrice, $resID);
+		mysqli_stmt_execute($updateStmt);
+		header("location: ../userReservations.php?error=none&userid=$usersID");
+		mysqli_stmt_close($updateStmt);
 	  }
-	  mysqli_stmt_bind_param($updateStmt, "sssss", $roomTypeChange, $checkInChange, $checkOutChange, $totalPrice, $resID);
-	  mysqli_stmt_execute($updateStmt);
-	  header("location: ../userReservations.php?error=none&userid=$usersID");
-	  mysqli_stmt_close($updateStmt);
+	  else
+	  {
+		header("location: ../modifyReservation.php?error=notAvail&resId=$resID");
+	  }
 	  //return $result;
   }
 
@@ -685,13 +701,42 @@ function deleteHotel($conn, $hotelID)
 	mysqli_stmt_close($stmt);
 }
 
+function deleteHotelReserve($conn, $hotelID)
+{
+	$sql = "SELECT * FROM hotels WHERE hotelId = ?"; 
+	$stmt = mysqli_stmt_init($conn);
+	if (!mysqli_stmt_prepare($stmt, $sql)) {
+		header("location: ../modProp.php?error=stmtfailed&id=$hotelID");
+		exit();
+	}
+
+	mysqli_stmt_bind_param($stmt, "s", $hotelID);
+	mysqli_stmt_execute($stmt);
+	// "Get result" returns the results from a prepared statement
+	$resultData = mysqli_stmt_get_result($stmt);
+	$row = mysqli_fetch_assoc($resultData);
+	mysqli_stmt_close($stmt); 
+
+	$hotelName = $row["hotelName"];
+
+	$sql = "DELETE FROM reservations WHERE hotelName = ?;";
+	$stmt = mysqli_stmt_init($conn);
+	if (!mysqli_stmt_prepare($stmt, $sql)) {
+	 	header("location: ../modProp.php?error=stmtfailed&id=$hotelID");
+		exit();
+	}
+	mysqli_stmt_bind_param($stmt, "s", $hotelName);
+	mysqli_stmt_execute($stmt);
+
+	mysqli_stmt_close($stmt);
+}
 //change to hotelID
 function deleteAmenities($conn, $hotelID)
 {
 	$sql = "DELETE FROM amenities WHERE hotelId = ?;";
 	$stmt = mysqli_stmt_init($conn);
 	if (!mysqli_stmt_prepare($stmt, $sql)) {
-	 	header("location: ../modProp.php?error=stmtfailed");
+	 	header("location: ../modProp.php?error=stmtfailed&id=$hotelID");
 		exit();
 	}
 
@@ -988,7 +1033,7 @@ function checkDateAvail($conn, $hotelID, $usersID, $roomType, $checkIn, $checkOu
 	}
 	$hotelName = $row["hotelName"];
 	
-	$sql = "SELECT * from reservations where hotelName = ? and ((fromDate > ? and fromDate < ?) or (toDate > ? and toDate < ?))";
+	$sql = "SELECT * from reservations where hotelName = ? and ((fromDate >= ? and fromDate <= ?) or (toDate >= ? and toDate <= ?))";
 	$stmt = mysqli_stmt_init($conn);
 	if (!mysqli_stmt_prepare($stmt, $sql)) {
 		header("location: ../reserveProp.php?error=stmtfailed&hotelID=$hotelID&id=$usersID");

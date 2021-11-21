@@ -5,14 +5,16 @@ WHERE (fromDate >= inputF and toDate <= inputF) or (fromDate < ? and toDate > ? 
 ?>
 <div class="wrapper">
 
+
     <section class="signup-form">
+        <h2>Filtered Search Hotels</h2>
         <div class="signup-form-form">
             <form action="includes/searchFilter.inc.php" method="post">
-                <input type="text" name="sPrice" placeholder="Price Range">
                 <label for="check-in">Check-In Date:</label>
                 <input type="date" id="sCheck-in" name="sCheck-in">
                 <label for="check-out">Check-Out Date:</label>
                 <input type="date" id="sCheck-out" name="sCheck-out">
+                <input type="text" name="sPrice" placeholder="Price per Night">
                 <input type="text" name="sAmenity" placeholder="Amenities">
                 <input type="text" name="sAvail" placeholder="Room Availability">
                 <button type="submit" class="button" name="search">Filter</button>

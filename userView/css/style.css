@@ -140,7 +140,7 @@ section {
 }
 
 .signup-form form {
-  width: 25%;
+  width: 30%;
   text-align: center;
 }
 
@@ -152,7 +152,7 @@ section {
 
 .signup-form form button {
   display: block;
-  padding: 10px 20px;
+  padding: 15px 35px;
   margin: 10px auto;
   cursor: pointer;
 }

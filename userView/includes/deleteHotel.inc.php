@@ -6,7 +6,8 @@ if(isset($_POST["deleteHot"])) {
 
     $hotelID = $_POST["hotelID"];
 
-    deleteHotel($conn, $hotelID); 
+    deleteHotelReserve($conn, $hotelID);
+    deleteHotel($conn, $hotelID);
     deleteAmenities($conn, $hotelID);
 } 
 else {

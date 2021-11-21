@@ -69,10 +69,9 @@ $curUser = $_SESSION["userid"];
     }
   }
   ?>
-  <div>
-    <h2>Hotels</h2>
+   <h2>Hotels</h2>
+  <div class="signup-form-form">
     <!--create hotel button-->
-    <div class="signup-form-form">
       <form action="createHotel.php" method="post">
         <button type="submit" class="button" name="CreateHot">Create</button>
       </form>
@@ -81,17 +80,14 @@ $curUser = $_SESSION["userid"];
       <form action="modifyHotel.php" method="post">
         <button type="submit" class="button" name="ModifyHot">Modify</button>
       </form>
-    </div>
-
-    <h2>Reservations</h2>
+  </div>
+  <h2>Reservations</h2>
     <div class="signup-form-form">
     <!--create reservation button-->
       <form action="reserve.php" method="post">
         <input type="text" name="uEmail" placeholder="Users Email">
         <button type="submit" class="button" name="CreateRes">Create</button>
       </form>
-      </div>
-      <div class="signup-form-form">
     <!--modify reservation button-->
       <form action="userReservations.php" method="post">
         <input type="text" name="uEmail" placeholder="Users Email">
