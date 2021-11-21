@@ -48,15 +48,12 @@
     <div class="signup-form-form"> 
       <form action="includes/updateReserve.inc.php" method="post"> 
           <?php 
-          if(isset($_POST["seeReserve"])) 
+          if(isset($_POST["reserveStart"])) 
           { 
-            $resID = $_POST["res"];
+            $resID = $_POST["resId"];
+            $hotelName = $_POST["hotelName"]; 
           }
-          else 
-          { 
-            echo "error";
-          }
-          $sql = "SELECT hotels.numRoomS, hotels.numRoomQ, hotels.numRoomK FROM hotels JOIN reservations ON hotels.hotelName = reservations.hotelName WHERE resId = ? "; 
+          $sql = "SELECT * FROM hotels JOIN reservations ON hotels.hotelName = reservations.hotelName WHERE resId = ? "; 
           $stmt = mysqli_stmt_init($conn); 
           if(!mysqli_stmt_prepare($stmt, $sql)) { 
             header("location: modifyReservation.php?error=stmtfailed");
@@ -68,30 +65,30 @@
           $result = mysqli_stmt_get_result($stmt);
           $row = mysqli_fetch_assoc($result);
           mysqli_stmt_close($stmt);
-        
-            echo "<label for=room_type>Select Room Type:</label>";
-            echo "<select name=room_type id=room_type>";
-            if($row["numRoomS"] != NULL)
-            {  
-              echo "<option>Standard</option>";
-            } 
-            if($row["numRoomQ"] != NULL) 
-            {  
-              echo "<option>Queen</option>";
-            } 
-            if($row["numRoomK"] != NULL) 
-            { 
-              echo "<option>King</option>";
-            } 
+
+          echo "<label for=room_type>Select Room Type:</label>";
+          echo "<select name=room_type id=room_type>";
+          if($row["numRoomS"] != NULL)
+          {  
+            echo "<option>Standard</option>";
+          } 
+          if($row["numRoomQ"] != NULL) 
+          {  
+            echo "<option>Queen</option>";
+          } 
+          if($row["numRoomK"] != NULL) 
+          { 
+            echo "<option>King</option>";
+          }
           echo "</select>";
           ?>
-          <input type="hidden" id="sessionID" name="sessionID" value="<?php echo $resID;?>">
+          <input type="hidden" id="hotelName" name="hotelName" value="<?php echo $hotelName;?>">
           <input type="hidden" id="resid" name="resid" value="<?php echo $resID;?>">
           <label for="check-in">Check-In Date:</label>
           <input type="date" id="check-in" name="check-in">
           <label for="check-out">Check-Out Date:</label>
           <input type="date" id="check-out" name="check-out">
-          <button type="submit" name="reserve">Update Reservation</button>  
+          <button type="submit" name="updateReserve">Update Reservation</button>  
         </form> 
       </div> 
     </div> 
