@@ -1101,7 +1101,7 @@ function checkDateAvailFilter($conn, $hotelID, $roomType, $checkIn, $checkOut)
 	$resultData1 = mysqli_stmt_get_result($stmt);
 	mysqli_stmt_close($stmt); 
 
-	if(mysqli_num_rows($resultData1) <= $numRoom)
+	if(mysqli_num_rows($resultData1) < $numRoom)
 	{
 		return true;
 	}

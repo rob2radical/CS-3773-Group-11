@@ -180,7 +180,7 @@
                     }
                     else
                     {
-                        echo "<td></td>";
+                        echo "<td>No Amenities</td>";
                     }
                     mysqli_stmt_close($stmtA);
 
