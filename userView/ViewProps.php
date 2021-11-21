@@ -59,7 +59,7 @@
      
 
     <form action="filteredSearch.php" method="post">
-      <button type="submit" class="button" name="submit">Search</button>
+      <button type="submit" class="button" name="submit">Filter Search</button>
     </form>
     <table>   
     <tr>
