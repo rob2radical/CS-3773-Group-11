@@ -313,7 +313,7 @@ function createHotelq($conn, $hotelname, $numRoomS, $numRoomQ, $numRoomK, $stand
 
 	  $stmt = mysqli_stmt_init($conn); 
 	  if(!mysqli_stmt_prepare($stmt, $sql)) { 
-		  header("location: ../modifyReservation.php?stmtfailed");
+		  header("location: ../modifyReservation.php?stmtfailed&fail=1");
 		  exit();
 	  }
 	  mysqli_stmt_bind_param($stmt, "s", $resID);
@@ -321,6 +321,8 @@ function createHotelq($conn, $hotelname, $numRoomS, $numRoomQ, $numRoomK, $stand
 	  $resultData = mysqli_stmt_get_result($stmt);
 	  $row = mysqli_fetch_assoc($resultData);
 	  mysqli_stmt_close($stmt);
+
+	  $usersID = $row["usersId"];
 
 	  // room type
 	  if(!empty($roomType) && $roomType != $row["roomType"]) 
@@ -354,20 +356,38 @@ function createHotelq($conn, $hotelname, $numRoomS, $numRoomQ, $numRoomK, $stand
 		  $checkOutChange = $row["toDate"];
 		  $result = false;
 	  } 
-	  $totalPrice = updatePrice($conn, $resID, $roomTypeChange, $checkInChange, $checkOutChange);
 
-	  $sqlUpdate = "UPDATE reservations SET roomType = ?, fromDate = ?, toDate = ? totalPrice = ?";
+	  $hotelName = $row["hotelName"];
+	  $sql = "SELECT * FROM hotels WHERE hotelName = ?";
+
+	  $stmt = mysqli_stmt_init($conn); 
+	  if(!mysqli_stmt_prepare($stmt, $sql)) { 
+		  header("location: ../modifyReservation.php?stmtfailed&fail=1");
+		  exit();
+	  }
+	  mysqli_stmt_bind_param($stmt, "s", $hotelName);
+	  mysqli_stmt_execute($stmt);
+	  $resultData1 = mysqli_stmt_get_result($stmt);
+	  $row1 = mysqli_fetch_assoc($resultData1);
+	  mysqli_stmt_close($stmt);
+
+	  $hotelID = $row1["hotelId"];
+	  $totalPrice = getPrice($conn, $hotelID, $usersID, $roomTypeChange, $checkInChange, $checkOutChange);
+	  //$totalPrice = updatePrice($conn, $resID, $roomTypeChange, $checkInChange, $checkOutChange);
+	  //($conn, $hotelID, $usersID, $roomType, $checkIn, $checkOut)
+
+	  $sqlUpdate = "UPDATE reservations SET roomType = ?, fromDate = ?, toDate = ?, totalPrice = ? WHERE resId = ?;";
 	  $updateStmt = mysqli_stmt_init($conn); 
 
 	  if(!mysqli_stmt_prepare($updateStmt, $sqlUpdate)) { 
-		  header("location: ../modifyReservation.php?error=stmtfailed");
+		  header("location: ../modifyReservation.php?error=stmtfailed&fail=2");
 		  exit();
 	  }
-	  mysqli_stmt_bind_param($updateStmt, "sssd", $roomTypeChange, $checkInChange, $checkOutChange, $totalPrice);
+	  mysqli_stmt_bind_param($updateStmt, "sssss", $roomTypeChange, $checkInChange, $checkOutChange, $totalPrice, $resID);
 	  mysqli_stmt_execute($updateStmt);
-	  header("location: ../modifyReservation.php?error=none");
+	  header("location: ../userReservations.php?error=none&userid=$usersID");
 	  mysqli_stmt_close($updateStmt);
-	  return $result;
+	  //return $result;
   }
 
 // Insert new user into table users database
@@ -792,7 +812,7 @@ function updatePrice($conn, $resID, $roomType, $checkIn, $checkOut)
 	$sql = "SELECT * FROM hotels JOIN reservations ON hotels.hotelName WHERE resId = ?";
 	$stmt = mysqli_stmt_init($conn);
 	if(!mysqli_stmt_prepare($stmt, $sql)) { 
-		header("location: ../modifyReservation.php?stmtfailed");
+		header("location: ../modifyReservation.php?stmtfailed&fail=3");
 		exit();
 	}
 	mysqli_stmt_bind_param($stmt, "s", $resID);
