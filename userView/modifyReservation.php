@@ -88,7 +88,6 @@
           }
           echo "</select>";
           ?>
-          <input type="hidden" id="hotelName" name="hotelName" value="<?php echo $hotelName;?>">
           <input type="hidden" id="resid" name="resid" value="<?php echo $resID;?>">
           <label for="check-in">Check-In Date:</label>
           <input type="date" id="check-in" name="check-in">
@@ -96,7 +95,16 @@
           <input type="date" id="check-out" name="check-out">
           <button type="submit" class="button" name="updateReserve">Update Reservation</button>
           <button type="submit" class="button" name="deleteReserve">Cancel Reservation</button>   
-        </form> 
+        </form>
+          <?php
+            if(isset($_GET["error"]))
+            {
+              if($_GET["error"] == "notAvail")
+              {
+                echo "<p>The updated date you request is not available.</p>";
+              }
+            }
+          ?>
       </div> 
     </div> 
   </div> 

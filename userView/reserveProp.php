@@ -187,6 +187,10 @@
             { 
               echo "<p>Could not fetch hotel information</p>";
             } 
+            else if($_GET["error"] == "notAvail") 
+            { 
+              echo "<p>We do not have a room available during your requested dates.</p>";
+            } 
             else if($_GET["error"] == "none") 
             { 
               if(isset($_GET["price"]))
