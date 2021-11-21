@@ -2,25 +2,40 @@
   session_start();
   include_once 'includes/functions.inc.php';
   include_once 'includes/dbh.inc.php';
-  if(isset($_POST["uEmail"]))
+  if(isset($_POST["CreateRes"]))
   {
-    $usersEmail = $_POST["uEmail"];
-
-    $sql = "SELECT * FROM users WHERE usersEmail = ?";
-    $stmt = mysqli_stmt_init($conn);
-    if (!mysqli_stmt_prepare($stmt, $sql)) {
-      header("location: adminProfile.php?error=stmtfailed");
+    if(!empty($_POST["uEmail"]))
+    {
+      $usersEmail = $_POST["uEmail"];
+      $sql = "SELECT * FROM users WHERE usersEmail = ?";
+      $stmt = mysqli_stmt_init($conn);
+      if (!mysqli_stmt_prepare($stmt, $sql)) {
+        header("location: adminProfile.php?error=stmtfailed");
+        exit();
+      }
+                
+      mysqli_stmt_bind_param($stmt, "s", $usersEmail);
+      mysqli_stmt_execute($stmt);
+      // "Get result" returns the results from a prepared statement
+      $result = mysqli_stmt_get_result($stmt);
+      if($result->num_rows > 0)
+      {
+        $row = mysqli_fetch_assoc($result);
+        mysqli_stmt_close($stmt);
+        
+        $usersId = $row["usersId"];
+      }
+      else
+      {
+        header("location: adminProfile.php?error=uNoExist");
+      exit();
+      }
+    }
+    else
+    {
+      header("location: adminProfile.php?error=emptyEmail");
       exit();
     }
-              
-    mysqli_stmt_bind_param($stmt, "s", $usersEmail);
-    mysqli_stmt_execute($stmt);
-    // "Get result" returns the results from a prepared statement
-    $result = mysqli_stmt_get_result($stmt);
-    $row = mysqli_fetch_assoc($result);
-    mysqli_stmt_close($stmt);
-    
-    $usersId = $row["usersId"];
   }
 ?> 
 

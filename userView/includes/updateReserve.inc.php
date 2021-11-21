@@ -6,25 +6,16 @@ if(isset($_POST["updateReserve"]))
 { 
     echo "bouta update BITCH";
     $resID = $_POST["resid"];
-    $hotelName = $_POST["hotelName"];
+    //$hotelName = $_POST["hotelName"];
     $roomType = $_POST["room_type"];
     $checkIn = $_POST["check-in"];
-    $checkOut = $_POST["check-out"];
-
-    if(emptyReserve($roomType, $checkIn, $checkOut) !== false) 
-    { 
-        header("location: ../modifyReservations.php?error=emptyinput&hotelID=$hotelID&id=$usersID");
-        exit();
-    }
-    if(invalidDate($checkIn, $checkOut) !== false)
-    { 
-        header("location: ../modifyReservations.php?error=invalidDate&hotelID=$hotelID&id=$usersID");
-        exit();
-    } 
-    if(!hotelExists($conn, $hotelName) !== false) 
-    { 
-        header("location: ../modifyReservations.php?error=hotelExists&hotelID=$hotelID&id=$usersID");
-    }
+    $checkOut = $_POST["check-out"]; 
 
     updateReserve($conn, $resID, $roomType, $checkIn, $checkOut);
+}
+else if(isset($_POST["deleteReserve"]))
+{
+    $resID = $_POST["resid"];
+
+    deleteReserve($conn, $resID);
 }
