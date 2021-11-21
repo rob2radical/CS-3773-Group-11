@@ -51,7 +51,12 @@
           if(isset($_POST["reserveStart"])) 
           { 
             $resID = $_POST["resId"];
-            $hotelName = $_POST["hotelName"]; 
+            //$hotelName = $_POST["hotelName"]; 
+          }
+          else if(isset($_GET["resId"]))
+          {
+            $resID = $_GET["resId"];
+            //$hotelName = $_GET["hotelName"];
           }
           $sql = "SELECT * FROM hotels JOIN reservations ON hotels.hotelName = reservations.hotelName WHERE resId = ? "; 
           $stmt = mysqli_stmt_init($conn); 
@@ -66,6 +71,7 @@
           $row = mysqli_fetch_assoc($result);
           mysqli_stmt_close($stmt);
 
+          //$hotelName = $row["hotelName"];
           echo "<label for=room_type>Select Room Type:</label>";
           echo "<select name=room_type id=room_type>";
           if($row["numRoomS"] != NULL)
@@ -88,7 +94,8 @@
           <input type="date" id="check-in" name="check-in">
           <label for="check-out">Check-Out Date:</label>
           <input type="date" id="check-out" name="check-out">
-          <button type="submit" name="updateReserve">Update Reservation</button>  
+          <button type="submit" class="button" name="updateReserve">Update Reservation</button>
+          <button type="submit" class="button" name="deleteReserve">Cancel Reservation</button>   
         </form> 
       </div> 
     </div> 

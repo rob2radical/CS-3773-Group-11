@@ -390,6 +390,35 @@ function createHotelq($conn, $hotelname, $numRoomS, $numRoomQ, $numRoomK, $stand
 	  //return $result;
   }
 
+  function deleteReserve($conn, $resID)
+  {
+	$sql = "SELECT reservations.usersId FROM reservations WHERE resId = ?";
+
+	$stmt = mysqli_stmt_init($conn); 
+	if(!mysqli_stmt_prepare($stmt, $sql)) { 
+		header("location: ../modifyReservation.php?stmtfailed&fail=1");
+		exit();
+	}
+	mysqli_stmt_bind_param($stmt, "s", $resID);
+	mysqli_stmt_execute($stmt);
+	$resultData = mysqli_stmt_get_result($stmt);
+	$row = mysqli_fetch_assoc($resultData);
+	mysqli_stmt_close($stmt);
+
+	$usersID = $row["usersId"];
+
+	$sql = "DELETE FROM reservations WHERE resId = ?;";
+	$stmt = mysqli_stmt_init($conn);
+	if (!mysqli_stmt_prepare($stmt, $sql)) {
+	 	header("location: ../modifyReservation.php?error=stmtfailed");
+		exit();
+	}
+	mysqli_stmt_bind_param($stmt, "s", $resID);
+	mysqli_stmt_execute($stmt);
+	header("location: ../userReservations.php?error=none&userid=$usersID");
+	mysqli_stmt_close($stmt);	
+  }
+
 // Insert new user into table users database
 function createUser($conn, $name, $email, $phone, $username, $pwd) {
   $sql = "INSERT INTO users (usersName, usersEmail, usersPhone, usersUid, usersPwd) VALUES (?, ?, ?, ?, ?);";

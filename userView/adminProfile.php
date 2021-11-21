@@ -69,6 +69,7 @@ $curUser = $_SESSION["userid"];
     }
   }
   ?>
+  <div>
     <h2>Hotels</h2>
     <!--create hotel button-->
     <div class="signup-form-form">
@@ -92,11 +93,25 @@ $curUser = $_SESSION["userid"];
       </div>
       <div class="signup-form-form">
     <!--modify reservation button-->
-      <form action="modifyReservation.php" method="post">
+      <form action="userReservations.php" method="post">
         <input type="text" name="uEmail" placeholder="Users Email">
         <button type="submit" class="button" name="ModifyRes">Modify</button>
       </form>
     </div>
+    <?php 
+    if(isset($_GET["error"])) 
+    { 
+      if($_GET["error"] == "emptyEmail") 
+      { 
+        echo "<p>Email field was empty!</p>"; 
+      }
+      else if($_GET["error"] == "uNoExist") 
+      { 
+        echo "<p>Email entered does not exist in the system!</p>"; 
+      }
+    }
+    ?>
+</div>
 </section>
 <?php
   include_once 'footer.php';

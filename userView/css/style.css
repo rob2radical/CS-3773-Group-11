@@ -43,12 +43,20 @@ table {
   width: 100%;
   color: black;
   font-size: 25px;
+  font-family: 'Roboto', sans-serif;
   text-align: center;
+  vertical-align: middle;
 }
 
 th {
-  background-color: black;
+  font-family: 'Roboto', sans-serif;
+  background-color: rgb(19, 25, 27);
   color: white;
+}
+
+td {
+  text-align: center; 
+  vertical-align: middle;
 }
 
 tr:nth-child(even) {background-color: #f2f2f2}
@@ -159,13 +167,15 @@ section {
 .button {
   background-color: #1c232c;
   border: none;
+  margin-top: 10px;
   margin-bottom: 10px;
   justify-content: normal;
   color: white;
   padding: 15px 40px;
   text-decoration: none;
-  display: flex;
   font-size: 20px;
+  text-align: center; 
+  vertical-align: middle;
 }
 
 .redbutton {

@@ -48,11 +48,12 @@
                 $weekendKPrice = $row["kingPrice"] + ($row["kingPrice"] * $row["weekendDiff"]);
                 $weekendString = $weekendString . " - " . $weekendKPrice;
             }
-            
-            echo "<h2><u>Hotel Name</u> - $hotelname<h2><br>";
-            echo "<h2><u>Room Types</u> - $roomTypes<h2><br>";
-            echo "<h2><u>Room Prices</u> - $roomPrices<h2><br>";
-            echo "<h2><u>Weekend Prices</u> - $weekendString<h2><br>";
+            echo "<h2>";
+            echo "<u>Hotel Name</u> - $hotelname<br><br>";
+            echo "<u>Room Types</u> - $roomTypes<br><br>";
+            echo "<u>Room Prices</u> - $roomPrices<br><br>";
+            echo "<u>Weekend Prices</u> - $weekendString<br><br>";
+            echo "</h2>";
 
             $sqlA = "SELECT * FROM amenities WHERE hotelId = ?";
             $stmtA = mysqli_stmt_init($conn);
