@@ -288,7 +288,7 @@ function createHotelq($conn, $hotelname, $numRoomS, $numRoomQ, $numRoomK, $stand
 	  {
 		$price = getPrice($conn, $hotelID, $usersID, $roomType,  $fromDate, $toDate);
 
-		$sql = "INSERT INTO reservations (usersId, hotelName, roomType, uName, phoneNum, email, totalPrice, fromDate, toDate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);"; 
+		$sql = "INSERT INTO reservations (usersId, hotelName, roomType, name, phoneNum, email, totalPrice, fromDate, toDate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);"; 
 
 		$stmt = mysqli_stmt_init($conn); 
 

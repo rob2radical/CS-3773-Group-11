@@ -1,5 +1,5 @@
 body {
-  background-color: #333333;
+  background-color: rgb(1, 15, 17);
 }
 
 .wrapper {
@@ -9,7 +9,7 @@ body {
 
 h1, h2, h3, h4, h5, h6, p {
   font-family: 'Roboto', sans-serif;
-  color: #111;
+  color: rgb(173, 172, 172);
   line-height: 24px;
 }
 
@@ -61,7 +61,7 @@ td {
   vertical-align: middle;
 }
 
-tr:nth-child(even) {background-color: #f2f2f2}
+tr:nth-child(even) {background-color: rgb(152, 174, 187)}
 
 nav {
   width: 100%;
@@ -100,7 +100,7 @@ nav ul li a:hover {
 }
 
 section {
-  background-color: #fff;
+  background-color: rgb(81, 105, 121);
   width: 94%;
   padding: 20px 3%;
   width: auto;

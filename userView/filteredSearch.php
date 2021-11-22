@@ -139,7 +139,7 @@
                     $dateFilter = true;
                 }
 
-                if(!$emptyPrice)
+                if(!$emptyPrice && $roomPossible)
                 {
                     if($roomPrice <= $priceRange)
                     {
