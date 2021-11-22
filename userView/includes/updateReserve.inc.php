@@ -4,7 +4,6 @@ require_once "functions.inc.php";
 
 if(isset($_POST["updateReserve"])) 
 { 
-    echo "bouta update BITCH";
     $resID = $_POST["resid"];
     //$hotelName = $_POST["hotelName"];
     $roomType = $_POST["room_type"];

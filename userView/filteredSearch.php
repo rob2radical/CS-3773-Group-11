@@ -39,8 +39,7 @@
             mysqli_stmt_execute($stmt);
             // "Get result" returns the results from a prepared statement
             $result = mysqli_stmt_get_result($stmt);
-            $row = mysqli_fetch_assoc($result);
-            mysqli_stmt_close($stmt);
+            //$row = mysqli_fetch_assoc($result);
 
             $emptyDates = false;
             $emptyPrice = false;
@@ -62,7 +61,13 @@
             else
             {
                 $priceRange = $_POST["sPrice"];
+                if(invalidNumberFloat($priceRange))
+                {
+                    header("location: filteredSearch.php?error=invalidPrice");
+                    exit();
+                }
             }
+
 
             echo "<table>";
             echo "<tr><th>Hotel</th><th>Amenities</th><th>Standard</th><th>Queen</th><th>King</th></tr>";
@@ -187,21 +192,34 @@
                     if($row["numRoomS"] != NULL)
                     {
                         $sPrice = $row["standardPrice"];
-                        echo "<td>$sPrice</td>";
+                        echo "<td>$$sPrice</td>";
+                    }
+                    else
+                    {
+                        echo "<td></td>";
                     }
                     if($row["numRoomQ"] != NULL)
                     {
                         $qPrice = $row["queenPrice"];
-                        echo "<td>$qPrice</td>";
+                        echo "<td>$$qPrice</td>";
+                    }
+                    else
+                    {
+                        echo "<td></td>";
                     }
                     if($row["numRoomK"] != NULL)
                     {
                         $kPrice = $row["kingPrice"];
-                        echo "<td>$kPrice</td>";
+                        echo "<td>$$kPrice</td>";
+                    }
+                    else
+                    {
+                        echo "<td></td>";
                     }
                 }            
                 echo "</tr>";
             }
+            mysqli_stmt_close($stmt);
             echo "</table>";
         }
 
@@ -215,6 +233,11 @@
             {
                 echo "<p>You must fill both dates or none!</p>";
             }
+            else if($_GET["error"] == "invalidPrice")
+            {
+                echo "<p>Price entered was not a numerical value!</p>";
+            }
+            
         }
         //ADD TABLE TO SHOW RESULTS
         ?>

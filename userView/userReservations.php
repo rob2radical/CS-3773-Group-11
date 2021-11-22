@@ -91,7 +91,7 @@ function showReserves($conn, $userID)
     { 
         while($row = mysqli_fetch_assoc($result))
         {
-            echo "<tr><td><form action=modifyReservation.php method=post><input type=hidden id=resId name=resId value=" . $row["resId"] . "><button type=submit class=button name=reserveStart>Modify</button></form>" . "</td><td><u>" . $row["hotelName"] . "</u></td><td><u>" . $row["fromDate"] . "</u></td><td><u>" . $row["toDate"] . "</u></td><td><u>" . $row["roomType"] ."</u></td><td><u>" . $row["totalPrice"] ."</u></td><td>";
+            echo "<tr><td><form action=modifyReservation.php method=post><input type=hidden id=resId name=resId value=" . $row["resId"] . "><button type=submit class=button name=reserveStart>Modify</button></form>" . "</td><td><u>" . $row["hotelName"] . "</u></td><td><u>" . date("M. d", strtotime($row["fromDate"])) . "</u></td><td><u>" . date("M. d", strtotime($row["toDate"])) . "</u></td><td><u>" . $row["roomType"] ."</u></td><td><u>" . $row["totalPrice"] ."</u></td><td>";
         }
     }
     else

@@ -52,12 +52,12 @@ th {
   font-family: 'Roboto', sans-serif;
   background-color: rgb(19, 25, 27);
   color: white;
-  width: 40px;
+  width: 20%;
 }
 
 td {
   text-align: center; 
-  width: 40px;
+  width: 20%;
   vertical-align: middle;
 }
 
