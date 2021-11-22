@@ -28,6 +28,7 @@ $curUser = $_SESSION["userid"];
       $useremail = $row["usersEmail"];
       $usersphone = $row["usersPhone"];
       $usersuname = $row["usersUid"];
+      $userRole = $row["isAdmin"];
 
       /* echo "<h2>" . $username . "</h2>";
       echo "<h2>" . $useremail . "</h2>";
@@ -66,6 +67,18 @@ $curUser = $_SESSION["userid"];
     else if($_GET["error"] == "updaterror") 
     { 
       echo "<p>An error occurred when attempting to update your information</p>"; 
+    }
+    else if($_GET["error"] == "emailExistserror") 
+    { 
+      echo "<p>Email address not available.</p>"; 
+    }
+    else if($_GET["error"] == "phoneExistserror") 
+    { 
+      echo "<p>Phone number not available.</p>"; 
+    }
+    else if($_GET["error"] == "uidExistserror") 
+    { 
+      echo "<p>Username not available.</p>"; 
     }
   }
   ?>
