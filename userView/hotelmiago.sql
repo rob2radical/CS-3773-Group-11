@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 20, 2021 at 03:12 AM
+-- Generation Time: Nov 23, 2021 at 11:07 PM
 -- Server version: 10.4.21-MariaDB
--- PHP Version: 8.0.11
+-- PHP Version: 8.0.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -60,7 +60,9 @@ INSERT INTO `amenities` (`id`, `hotelId`, `amenity`) VALUES
 (20, 4, 'Gym'),
 (21, 1, 'Pool'),
 (22, 1, 'Business Office'),
-(23, 3, 'Pool');
+(23, 3, 'Pool'),
+(53, 44, 'Pool'),
+(54, 44, 'Gym');
 
 -- --------------------------------------------------------
 
@@ -95,7 +97,7 @@ INSERT INTO `hotels` (`hotelId`, `hotelName`, `numRoomS`, `numRoomQ`, `numRoomK`
 (8, 'The Magnolia All Suites', 10, 6, 4, 100, 150, 250, 0.25),
 (9, 'The Regency Rooms', 10, 6, 4, 100, 150, 250, 0.25),
 (10, 'Town Inn Budget Rooms', 75, 45, 30, 25, 50, 60, 0.15),
-(22, 'Test 1', 10, 5, 10, 10, 30, 50, 0.5);
+(44, 'Testing', 3, 5, 5, 30, 65, 80, 0.25);
 
 -- --------------------------------------------------------
 
@@ -121,11 +123,9 @@ CREATE TABLE `reservations` (
 --
 
 INSERT INTO `reservations` (`resId`, `usersId`, `hotelName`, `roomType`, `uName`, `phoneNum`, `email`, `fromDate`, `toDate`, `totalPrice`) VALUES
-(1, 1, 'Park North Hotel', 'Standard', 'rob2radical', '9152471933', 'qrobert@rocketmail.com', '2021-11-24', '2021-11-26', 0),
-(2, 1, 'Park North Hotel', 'Queen', 'rob2radical', '9152471933', 'qrobert@rocketmail.com', '2021-11-24', '2021-11-26', 0),
-(3, 3, 'HomeAway Inn', 'Standard', 'bruh', '5555555555', 'dragonz4twenty@gmail.com', '2021-11-25', '2021-11-27', 0),
-(4, 1, 'The Lofts at Town Centre', 'King', 'rob2radical', '9152471933', 'qrobert@rocketmail.com', '2021-11-30', '2021-12-09', 0),
-(5, 1, 'HomeAway Inn', 'Standard', 'rob2radical', '9152471933', 'qrobert@rocketmail.com', '2021-11-30', '2021-12-16', 0);
+(18, 12, 'Testing', 'Standard', 'rob2radical', '9152471933', 'qrobert@rocketmail.com', '2021-12-06', '2021-12-07', 60),
+(19, 12, 'Testing', 'Standard', 'rob2radical', '9152471933', 'qrobert@rocketmail.com', '2021-12-06', '2021-12-07', 60),
+(20, 12, 'Testing', 'Standard', 'rob2radical', '9152471933', 'qrobert@rocketmail.com', '2021-12-06', '2021-12-07', 60);
 
 -- --------------------------------------------------------
 
@@ -148,14 +148,10 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`usersId`, `usersName`, `usersEmail`, `usersPhone`, `usersUid`, `usersPwd`, `isAdmin`) VALUES
-(1, 'Robert Quintanilla', 'qrobert@rocketmail.com', '9152471933', 'rob2radical', '$2y$10$i4RuORwBpiCzKGo257WveuVb6Rdz.W/vdrUQ1PBeBWfHiqs0nokcm', 0),
-(2, 'Rogelio Myres', 'myres555@gmail.com', '5555555555', 'quickchecks', '$2y$10$il0EU0dxJGuBSGm19U/5HOffpil3Q7FqBFoUyZx8ZWHM3uQTarXHO', 0),
-(3, 'coures bruh', 'dragonz4twenty@gmail.com', '5555555555', 'bruh', '$2y$10$qYgpmKxHHdi8gYxH3ZadEeKxJTI5ZM2eXhB6ZjFwX8DAwRMEpLli2', 1),
-(4, 'Juan Rodriguez', 'qsy775@my.utsa.edu', '1234567899', 'meatman', '$2y$10$AKrOPfHj8Cqvdk0iqL1HZeucaOyTwdig.BxSsFBBsKdzj78knQvtS', NULL),
-(5, 'Amber Sanchez', 'lovelylibra55@gmail.com', '2105361729', 'cashmoney', '$2y$10$ZpI3tEsqhuxAcDacs3SgquML03HvxYc.9Gl13mg/nHAyvJlPw4U8q', NULL),
-(6, 'Dan Dan', 'danielmontaudon909@live.com', '8623242401', 'pooopooo', '$2y$10$mzcGZaAWmVNL3eAezE.gYuNwBtOhk5Q.NVvK8Z3tUlF3xrD8MArxy', 1),
-(7, 'Daniel Ricardo Blom Montaudon', 'danielmontaudon909@live.com', '1234561234', 'yeah', '$2y$10$kyUCceXe0k402U/GQ3yiaOyzohmw0Yf7TpPfGSbRz4ar9G1cs7.Ua', NULL),
-(8, 'Daniel Ricardo Blom Montaudon', 'danielmontaudon@live.com', '8623242401', 'yum', '$2y$10$GGLj/0rPkUcYozGCI41G3..G2/.EJgjtwE2d7NQvmQjCxwkEcGHcq', NULL);
+(12, 'Robert Quintanilla', 'qrobert@rocketmail.com', '9152471933', 'rob2radical', '$2y$10$lhQ55nPOQ8vWU/lxDsJ9puKvDUYULkSESIs2DrkBYmPPt030DOOhK', NULL),
+(13, 'Daniel Montaudon', 'danielmontaudon909@live.com', '2105361729', 'gooseloverdog', '$2y$10$kIzkbag0k0NSxayLTzCSSuqSXPhH7Vg/AvmhKgUHCF/jJPQFZ0KMa', NULL),
+(14, 'Rogelio Myres', 'myres55@gmail.com', '9151259845', 'rogmyres55', '$2y$10$zWmjHihuhcSeSX8qOOa.CuuMIlFm3rVaWgVDu27WAD98xBwh9.Xq2', 1),
+(15, 'Joan Tarin', 'tarn@gmail.com', '3695741236', 'tarin66', '$2y$10$r9kA7esZl/6iyEdiXHaUSOoEXG66q2U7SPlBCTUmnGowCslcwBSeC', NULL);
 
 --
 -- Indexes for dumped tables
@@ -193,25 +189,25 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `amenities`
 --
 ALTER TABLE `amenities`
-  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
 
 --
 -- AUTO_INCREMENT for table `hotels`
 --
 ALTER TABLE `hotels`
-  MODIFY `hotelId` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+  MODIFY `hotelId` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 
 --
 -- AUTO_INCREMENT for table `reservations`
 --
 ALTER TABLE `reservations`
-  MODIFY `resId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `resId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `usersId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `usersId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
